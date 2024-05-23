@@ -28,7 +28,6 @@ export function CanvasLayerControl({ layerIndex, layerLength, layerPercentage, o
 
   const onInputChangeByValue = (value: any) => {
     var state = calcLayerStateByValue(parseInt(value), layerLength);
-    console.log(state)
     onChange(state)
   };
 
