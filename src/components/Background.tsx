@@ -11,15 +11,6 @@ export const Background = ({ children, className = defaultStyle }: BackgroundPro
   const [circlePos, setCirclePos] = useState({ x: 152, y: 460, r: 321 });
   const [translate, setTranslate] = useState("translate(30,100)");
 
-  // useEffect(() => { 
-  //   // setInterval(() => {
-  //   // })
-  //   // setCirclePos({x: Math.random() * 40, y: Math.random() * 40, r: 300})
-
-  //   // console.log("Rednder")
-  //   // setTranslate("skewY(20deg)")
-  // })
-
   return (
     <div className={className}>
       <div className="w-full h-full absolute overflow-hidden ">

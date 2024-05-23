@@ -1,11 +1,11 @@
 import { Bars3Icon, ChevronRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { router } from "..";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Transition, TransitionChild } from '@headlessui/react'
 import Icon from "./Icon";
 import { PageDescription } from "../core/Page";
 import classNames from "classnames";
+import { router } from "../App";
 
 interface NavigationProps {
   isOpen?: boolean,

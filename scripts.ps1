@@ -4,6 +4,8 @@
 yarn create react-app mtw-app --template typescript
 
 # install packages
+yarn add -D vite @vitejs/plugin-react
+
 yarn add -D @types/mime@3
 yarn add -D @heroicons/react
 yarn add -D react-zoom-pan-pinch

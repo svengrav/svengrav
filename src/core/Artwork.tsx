@@ -1,14 +1,3 @@
-
-interface Size {
-  height: number,
-  width: number,
-} 
-
-interface Position {
-  x: number,
-  y: number,
-}
-
 export interface Artwork {
   id: string;
   name: string;

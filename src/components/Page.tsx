@@ -33,7 +33,7 @@ export default function Page({ children }: PageProps) {
       </div>
 
       {/** Page Content  */}
-      <div className='relative min-h-[calc(100vh_-_48px)]' >
+      <div className='relative min-h-[calc(100vh_-_48px)] overflow-x-hidden' >
         {children}
       </div>
     </div>
