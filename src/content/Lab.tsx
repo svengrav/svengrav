@@ -20,17 +20,6 @@ interface RouteEvent {
 //#endregion
 
 //#region svg elements interfaces
-interface RouteElement {
-  id: string,
-  startPoint: Point,
-  style?: CSSProperties,
-  routePoints: RoutePoint[]
-}
-
-interface Path extends RouteElement {
-  basePath: SVGPathElement;
-}
-
 
 interface Point {
   x: number,
@@ -41,95 +30,12 @@ interface RoutePoint extends Point {
   i: number
 }
 
-interface RouteTip {
-  id: string
-  startPoint: Point
-  alignPoint?: Point
-  type: RouteTipOptions
-  style?: CSSProperties
-}
-//#endregion
 
-//#region create svg elements
-const createTip = ({ id, startPoint, alignPoint = { x: 0, y: 0 }, type, style = {} }: RouteTip) => {
-  var tip: SVGPolygonElement | SVGCircleElement;
-  if (type === "circle") {
-    tip = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    tip.setAttribute("r", "5");
-  }
-
-  if (type === "arrow") {
-    tip = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    tip.setAttribute("points", "0,0 20,-10 20,10");
-  }
-
-  const angle = calcRotation(startPoint, alignPoint, false);
-  const scale = (value: number) => value / Number(style.scale ? style.scale : 1);
-  const transform = `translate(${scale(startPoint.x)}, ${scale(startPoint.y)}) rotate(${angle} 0 0)`;
-
-  tip!.setAttribute("id", id);
-  tip!.setAttribute("style", toStyleString(style))
-  tip!.setAttribute("transform", transform);
-
-  return tip!;
-}
-
-const createPath = ({ id, startPoint, routePoints, style = {}, basePath }: Path) => {
-  const path = basePath.cloneNode() as SVGPathElement;
-  path.id = id;
-  path.setAttribute("d", `M ${startPoint.x} ${startPoint.y} `)
-  path.setAttribute("style", toStyleString(style))
-  const position = routePoints.findIndex(v => v.x === startPoint.x && v.y === startPoint.y)
-  movePathTo(position, path, routePoints)
-  return path;
-}
-
-const movePathTo = (position: number, path: SVGElement, routePoints: RoutePoint[]) => {
-  var d = "M" + routePoints.slice(0, position + 1).map((p: { i: number; x: any; y: any; }) => ` ${p.x} ${p.y}`).join('')
-  assert((/M\s?\d+(\.\d+)?\s\d+(\.\d+)?(\s\d+(\.\d+)?\s\d+(\.\d+)?)*/).test(d), `Value ${d} is not a valid dimension attribute.`)
-  path.setAttribute("d", d)
-}
-
-const moveTipTo = (tip: SVGElement, position: number, routePoints: RoutePoint[], reverse = false) => {
-  if (position >= routePoints.length - 1)
-    return;
-
-  const point = getPoint(position, routePoints);
-  const nextPoint = getPoint(position + 1, routePoints);
-  const rotation = calcRotation(point, nextPoint, reverse);
-  const calc = (value: number) => value / Number(tip.style.scale ? tip.style.scale : 1);
-  const transform = `translate(${calc(point.x)}, ${calc(point.y)}) rotate(${rotation} 0 0)`;
-  tip.setAttribute("transform", transform);
-}
-
-const getPoint = (position: number, routePoints: RoutePoint[]) => {
-  assert(position >= 0 && position < routePoints.length,
-    "Position has to be greater then 0 and in the range of the route.current.")
-  return routePoints[position]
-}
 
 const getSVG = (id: string) => {
   return (document).querySelector(`#${id}`) as SVGElement;
 }
 
-const camelToKebabCase = (str: string): string => {
-  return str.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
-};
-
-const toStyleString = (style: CSSProperties): string =>
-  Object.entries(style)
-    .map(([key, value]) => `${camelToKebabCase(key)}: ${value}`)
-    .join("; ");
-
-const isInRange = (start: number, end: number, position: number, reverse: boolean = false): boolean => {
-  return reverse ? (end < position && position < start) : (start < position && position < end);
-};
-
-const calcRotation = (startPoint: Point, directionPoint: Point, reverse: boolean = false) => {
-  const dy = reverse ? directionPoint.y - startPoint.y : startPoint.y - directionPoint.y;
-  const dx = reverse ? directionPoint.x - startPoint.x : startPoint.x - directionPoint.x;
-  return (Math.atan2(dy, dx) * 180) / Math.PI;
-}
 
 const getRoutePointsFromBase = (baseRoutePath: SVGPathElement) => {
   const totalLength = Math.ceil(baseRoutePath.getTotalLength());
@@ -172,14 +78,6 @@ interface RoutePathOptions {
   onRouteStateChange?: (state: PathState) => void
   events?: RouteEventTrigger[] | undefined
   gaps?: RouteGap[] | undefined
-}
-
-interface RouteState {
-  position: number,
-  point: Point,
-  length: number,
-  initialized?: boolean,
-  running?: boolean
 }
 
 const useRoutePath = (
@@ -271,6 +169,7 @@ const useRoutePath = (
         lastFrameTime = timeStamp;
 
         routeRef.current = calcNewPosition(routeRef.current, pointsPerSecond)
+        console.log(routeRef.current.offset)
         routeRef.current.parts.forEach(part => {
           setPathPartSVG({ svg: svg, pathProps: { ...part, style: routeStyle }, tipProps: part.tip ? { ...part.tip, style: tipStyle, type: tip } : undefined })
         })
@@ -302,11 +201,11 @@ const Lab = () => {
     speed: 10000,
     events: [
       {
-        onTrigger: (e) => { console.log(e) },
+        onTrigger: (e) => { startAnimation(true) },
         position: 500,
       },
       {
-        onTrigger: (e) => { console.log(e) },
+        onTrigger: (e) => { startAnimation(true) },
         stop: true,
         position: 1000,
       }

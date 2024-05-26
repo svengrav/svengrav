@@ -66,7 +66,7 @@ export const Canvas = ({
       })
     }
 
-  }, [])
+  }, [maxSize?.height, maxSize?.width, onSizeChange])
 
   const handleZoomChange = (canvas: any) => {
     if (!onScaleChange) return;

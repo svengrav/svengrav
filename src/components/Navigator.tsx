@@ -24,7 +24,7 @@ export function Navigator({ state, className }: NavigatorProps) {
   return (
     <div className={className}>
       <div className="z-20 absolute right-0 text-white py-2 px-1 ">
-        <div className="z-20 absolute right-3">
+        <div className="z-[21] absolute right-3">
           <Icon Primary={ChevronLeftIcon} Secondary={XMarkIcon} active={visible} onClick={() => setVisible(!visible)} hover />
         </div>
         <Sidepanel show={visible} full={window.screen.width < 500}>

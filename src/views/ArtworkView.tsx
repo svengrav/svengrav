@@ -16,7 +16,7 @@ export default function ArtworkView({ artwork, inner }: ArtworkViewProps) {
         {inner}
         <Navigator state={state} className={"md:w-96 md:absolute right-0 z-20 "} />
         <Canvas
-          maxSize={{ height: window.screen.height - 48, width: window.innerWidth }}
+          maxSize={{ height: window.innerHeight - 48, width: window.innerWidth }}
           className="m-auto"
           artworkState={state}
           onSizeChange={setCanvasSize}
