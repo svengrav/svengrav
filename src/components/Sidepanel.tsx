@@ -12,7 +12,7 @@ interface SidepanelProps {
  * @returns 
  */
 export default function Sidepanel({ children, show = false, width, full }: SidepanelProps) {
-  console.log(window.innerWidth)
+  
   var actualWidth = full ? window.screen.width : width ? width : 400;
 
   return (

@@ -169,7 +169,7 @@ const useRoutePath = (
         lastFrameTime = timeStamp;
 
         routeRef.current = calcNewPosition(routeRef.current, pointsPerSecond)
-        console.log(routeRef.current.offset)
+        
         routeRef.current.parts.forEach(part => {
           setPathPartSVG({ svg: svg, pathProps: { ...part, style: routeStyle }, tipProps: part.tip ? { ...part.tip, style: tipStyle, type: tip } : undefined })
         })

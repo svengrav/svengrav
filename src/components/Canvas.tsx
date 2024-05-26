@@ -49,7 +49,7 @@ export const Canvas = ({
 }: CanvasProps) => {
   const artwork = artworkState.artwork;
   const controlRef = useRef<HTMLDivElement>(null);
-  console.log(maxSize)
+  
 
   const calcSizeWithControl = (canvasSize: Size, controlHeight: number | undefined) => ({ width: canvasSize.width, height: canvasSize.height + (controlHeight ? controlHeight : 0) });
 

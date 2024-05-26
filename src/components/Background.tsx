@@ -16,7 +16,7 @@ export const Background = ({ children, className = defaultStyle }: BackgroundPro
   //   // })
   //   // setCirclePos({x: Math.random() * 40, y: Math.random() * 40, r: 300})
 
-  //   // console.log("Rednder")
+  //   // 
   //   // setTranslate("skewY(20deg)")
   // })
 
