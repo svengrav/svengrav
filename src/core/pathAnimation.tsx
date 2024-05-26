@@ -28,13 +28,13 @@ interface PathGap {
 }
 
 interface PathPartTip {
-  id: string, 
+  id: string,
   position: number,
   attributes: [string, string][]
 }
 
 interface PathPart {
-  id: string, 
+  id: string,
   start: number,
   end: number,
   position?: number,
@@ -60,6 +60,7 @@ export interface PathState {
   initialized: boolean,
   length: number,
   events?: PathEventTrigger[]
+  latestEvent?: number,
   gaps: PathGap[],
   points: RoutePoint[],
   parts: PathPart[]
@@ -78,10 +79,10 @@ export const slicePath = (id: string, routePoints: RoutePoint[], gaps: RouteGap[
       start: startPoint,
       end: gap.position,
     });
-    startPoint = gap.position + gap.size;    
+    startPoint = gap.position + gap.size;
     return part;
   })
-  
+
   startPoint = gaps.slice(-1)[0].position + gaps.slice(-1)[0].size
   var lastPart = {
     id: `${id}-p-${gaps.length + 1}`,
@@ -95,7 +96,7 @@ export const slicePathByPart = (id: string, routePoints: RoutePoint[], slice: { 
   const sliceLength = Math.ceil(routePoints.length / slice.parts)
   var startPoint = sliceLength;
 
-  const gaps = Array.from({ length: slice.parts - 1 }, (_, i) => i ).map(i => {
+  const gaps = Array.from({ length: slice.parts - 1 }, (_, i) => i).map(i => {
     const gap = {
       position: startPoint,
       size: slice.size
@@ -107,25 +108,25 @@ export const slicePathByPart = (id: string, routePoints: RoutePoint[], slice: { 
 }
 
 
-export const calcPathParts = ({ parts, points, offset,} : { parts: PathPart[], points: RoutePoint[], offset: 1.0 | -1.0,  }, position: number) : PathPart[] => {
+export const calcPathParts = ({ parts, points, offset, }: { parts: PathPart[], points: RoutePoint[], offset: 1.0 | -1.0, }, position: number): PathPart[] => {
   assert(1 <= position && position <= points.length, `Position has to be between 1 - ${points.length}, position is: ${position}`)
 
   const newParts = parts.map(part => {
 
     var endOfPart = part.end;
-    if(part.start <= position && position <= part.end)
+    if (part.start <= position && position <= part.end)
       endOfPart = position;
 
-    if(part.start >= position)
+    if (part.start >= position)
       endOfPart = part.start
 
     part.position = endOfPart;
     part.tip = undefined;
 
     // if part has an size, then an tip is added
-    if(part.start < endOfPart)  {
-      part.tip = calcTipState({id: `${part.id}-tip`, points: points, position: part.position, offset: offset })
-    } 
+    if (part.start < endOfPart) {
+      part.tip = calcTipState({ id: `${part.id}-tip`, points: points, position: part.position, offset: offset })
+    }
 
     var d = "M" + points.slice(part.start - 1, part.position).map((p: { i: number; x: any; y: any; }) => ` ${p.x} ${p.y}`).join('')
     part.attributes = []
@@ -137,18 +138,18 @@ export const calcPathParts = ({ parts, points, offset,} : { parts: PathPart[], p
   return newParts;
 }
 
-const calcTipState = ({ id, position, points, offset} : { id: string, position: number, points: RoutePoint[], offset: 1.0 | -1.0 }): PathPartTip => {
+const calcTipState = ({ id, position, points, offset }: { id: string, position: number, points: RoutePoint[], offset: 1.0 | -1.0 }): PathPartTip => {
   const scale = 1;
 
-  const point = points[position -1]
-  const prevPoint = points[position -2]
+  const point = points[position - 1]
+  const prevPoint = points[position - 2]
   const rotation = calcTipRotation(point, prevPoint, offset === 1);
   const calc = (value: number) => value / Number(scale);
   const transform = `translate(${calc(point.x)}, ${calc(point.y)}) rotate(${rotation} 0 0)`;
   return {
     id: id,
     position: position,
-    attributes: [["transform", transform ]]
+    attributes: [["transform", transform]]
   }
 }
 
@@ -168,7 +169,7 @@ const toStyleString = (style: CSSProperties): string =>
     .join("; ");
 
 
-export const createPath2 = ({ id, attributes, style = {} }: PathPart & { style?: CSSProperties}) => {
+export const createPath2 = ({ id, attributes, style = {} }: PathPart & { style?: CSSProperties }) => {
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
   path.setAttribute("id", id);
@@ -202,13 +203,13 @@ export const createTip2 = ({ id, attributes, style = {}, type = "circle" }: Path
 
 type TipProps = (PathPartTip & { style?: CSSProperties, type?: "circle" | "arrow" | "none" }) | undefined
 type PathProps = PathPart & { style?: CSSProperties }
-type SetPathPartSVGProps = {  pathProps: PathProps, tipProps?: TipProps, svg: SVGElement }
-export const setPathPartSVG = ({ svg, pathProps, tipProps } : SetPathPartSVGProps) => {
+type SetPathPartSVGProps = { pathProps: PathProps, tipProps?: TipProps, svg: SVGElement }
+export const setPathPartSVG = ({ svg, pathProps, tipProps }: SetPathPartSVGProps) => {
 
   var path = svg.querySelector(`#${pathProps.id}`);
   var tip = svg.querySelector(`#${pathProps.id}-tip`);
 
-  if(!path) {
+  if (!path) {
     path = createPath2(pathProps);
     svg.appendChild(path);
   } else {
@@ -217,38 +218,57 @@ export const setPathPartSVG = ({ svg, pathProps, tipProps } : SetPathPartSVGProp
     })
   }
 
-  if(!tip && tipProps) {
+  if (!tip && tipProps) {
     tip = createTip2(tipProps)
     svg.appendChild(tip);
-  } else if(tipProps) {
+  } else if (tipProps) {
     tipProps!.attributes?.forEach(a => {
       tip!.setAttribute(a[0], a[1])
     })
-  } else if(tip) {
+  } else if (tip) {
     svg.removeChild(tip!)
   }
 }
 
-export const calcNewPosition = (state: PathState, distance: number) : PathState => { 
-  var newPosition = Math.max(1, Math.min(state.position + (distance * state.offset), state.length));
+const eventTriggerInRange = (position: number, prevPosition: number, nextPosition: number, offset: number) => {
+  if (prevPosition < position && position <= nextPosition && offset === 1.0) {
+    return true;
+  }
+  if (prevPosition >= position && position > nextPosition && offset === -1.0) {
+    return true;
+  }
 
-  state.events?.filter(event => {
-    if (newPosition > state.position) {
-      return state.position < event.position && event.position <= newPosition;
-    } else if (newPosition < state.position) {
-      return newPosition <= event.position && event.position < state.position;
-    }
-    return false;
-  }).forEach(event => {
-      const point = getPathPoint(state);
-      event.onTrigger({ position: state.position, point: point});
+  // (position > prevPosition ? 
+  //   prevPosition < nextPosition && nextPosition <= position : position < prevPosition ? 
+  //   position <= nextPosition && nextPosition < prevPosition : false)
+
+}
+
+
+export const calcNewPosition = (state: PathState, distance: number, reverse?: boolean): PathState => {
+  var prevPosition = state.position;
+  var offset = reverse ? state.offset * -1 as -1 | 1 : state.offset;
+  var nextPosition = Math.max(1, Math.min(state.position + (distance * offset), state.length));
+  var isRunning = nextPosition < state.length && nextPosition > 1;
+  console.log(nextPosition, state.length)
+  console.log(reverse, offset, isRunning)
+
+  var latestEvent = state.latestEvent;
+  var events = state.events?.map((e, i) => ({ ...e, index: i }))
+  events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, offset) && latestEvent !== event.index).forEach((event, i) => { 
+    const point = getPathPoint(state);
+    latestEvent = event.index
+    event.onTrigger({ position: nextPosition, point: point });
   })
-  
+
   return {
-    ...state, 
-    position: newPosition,
-    parts: calcPathParts({ parts: state.gaps, points: state.points, offset: state.offset}, newPosition)
+    ...state,
+    position: nextPosition,
+    running: isRunning,
+    offset: offset,
+    latestEvent: latestEvent,
+    parts: calcPathParts({ parts: state.gaps, points: state.points, offset: state.offset }, nextPosition)
   }
 }
 
-const getPathPoint = ({ position, points } : { position: number, points: RoutePoint[]}) => points.find(p => p.i === position)!;
+const getPathPoint = ({ position, points }: { position: number, points: RoutePoint[] }) => points.find(p => p.i === position)!;

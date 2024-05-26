@@ -2,8 +2,7 @@ import Page from "../components/Page";
 import { CSSProperties, useEffect, useRef, useState, } from "react";
 import { PageDescription } from "../core/Page";
 import { date, assert } from "../utils/helper";
-import { start } from "repl";
-import { PathState, calcNewPosition, calcPathParts, createPath2, createTip2, setPathPartSVG, slicePathByPart } from "../core/pathAnimation";
+import { PathState, calcNewPosition as setPathPosition, calcPathParts, setPathPartSVG, slicePathByPart } from "../core/pathAnimation";
 
 //#region events interfaces
 interface RouteEventTrigger {
@@ -110,7 +109,7 @@ const useRoutePath = (
   });
 
   var animationRef = useRef({
-    animationFrameId: 0,
+    animationFrameId: [0]
   })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,42 +149,40 @@ const useRoutePath = (
     if (routeRef.current.running)
       stopAnimation()
 
-    routeRef.current.running = true
-    if (reverse) {
-      routeRef.current.offset = reverse ? routeRef.current.offset * -1 as -1 | 1 : 1.0;
-    }
-
+    const svg = getSVG(svgId) as SVGSVGElement;
     const pointsPerSecond = calcPointsPerSecond(speed, routeRef.current.length, routeRef.current.points.length)
     var lastFrameTime = performance.now();
-
-    const svg = getSVG(svgId) as SVGSVGElement;
+    
+    routeRef.current = setPathPosition(routeRef.current, pointsPerSecond, reverse)
 
     const animate = (timeStamp: number) => {
-
-      const deltaTime = timeStamp - lastFrameTime;
+      const deltaTime = timeStamp - lastFrameTime
       const fpsInterval = 1000 / 60;
 
       if (deltaTime >= fpsInterval) {
         lastFrameTime = timeStamp;
 
-        routeRef.current = calcNewPosition(routeRef.current, pointsPerSecond)
-        
+        routeRef.current = setPathPosition(routeRef.current, pointsPerSecond)
+
         routeRef.current.parts.forEach(part => {
           setPathPartSVG({ svg: svg, pathProps: { ...part, style: routeStyle }, tipProps: part.tip ? { ...part.tip, style: tipStyle, type: tip } : undefined })
         })
         if(onRouteStateChange)
           onRouteStateChange(routeRef.current)
-
       }
 
-      animationRef.current.animationFrameId = requestAnimationFrame(animate);
+      if(!routeRef.current.running) 
+        stopAnimation()
+      else 
+        animationRef.current.animationFrameId.push( requestAnimationFrame(animate));
+
     }
-    animationRef.current.animationFrameId = requestAnimationFrame(animate);
+    animationRef.current.animationFrameId.push( requestAnimationFrame(animate));
   }
 
   const stopAnimation = () => {
-    cancelAnimationFrame(animationRef.current.animationFrameId);
-    animationRef.current.animationFrameId = 0
+    animationRef.current.animationFrameId.forEach(frame => cancelAnimationFrame(frame))
+    animationRef.current.animationFrameId.splice(0)
     routeRef.current.running = false;
   }
 
@@ -198,7 +195,7 @@ const Lab = () => {
     tip: "arrow",
     position: 600,
     reverse: false,
-    speed: 10000,
+    speed: 50000,
     events: [
       {
         onTrigger: (e) => { startAnimation(true) },
@@ -229,7 +226,7 @@ const Lab = () => {
   const routePosition = state ? state.position : 100;
   return (
     <div className="flex min-h-[calc(100vh_-_48px)] w-full items-center justify-center flex-col">
-      <div className="w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] rounded-full border-2 border-gray-800  bg-emerald-600 relative" >
+      <div className="w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] rounded-full overflow-hidden border-2 border-gray-800  bg-emerald-600 relative" >
         <div className=" text-white w-full text-center mt-10 lg:mt-28"> {routePosition} {state?.length ? "/ " + state.length : ""} </div>
         <svg id="testId" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" className=" top-0 left-0 absolute w-[300px] h-[300px] lg:w-[600px] lg:h-[600px]">
           <path id="route1" d="M47.24,152.35l121.61,307.57,81.16-292.15,149.92,250.01c46.08-41.2,75.08-101.1,75.08-167.78,0-124.26-100.74-225-225-225" style={{
