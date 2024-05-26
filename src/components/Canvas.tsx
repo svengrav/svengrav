@@ -89,9 +89,9 @@ export const Canvas = ({
   return (
     <div className={className} style={calcSizeWithControl(artworkState.canvasSize, controlRef?.current?.offsetHeight)}>
       <TransformWrapper maxScale={artworkState.canvasMaxScale} >
-        <div className="w-full h-full flex flex-col ">
+        <div className="w-full h-full flex flex-col   ">
 
-          <div className="w-full  flex justify-center grow overflow-hidden ">
+          <div className="w-full flex justify-center grow overflow-hidden ">
             <TransformComponent contentStyle={artworkState.canvasSize}>
               {
                 artwork.layer.map((layer, i) => {
@@ -110,7 +110,7 @@ export const Canvas = ({
                 : <></>
             }
             {
-              layerControl ?
+              layerControl && artworkState.artwork.layer.length > 1 ?
                 <CanvasLayerControl
                   layerIndex={artworkState.layerIndex}
                   layerLength={artworkState.artwork.layer.length}
