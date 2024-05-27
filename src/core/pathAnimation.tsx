@@ -63,14 +63,14 @@ interface PathEvent {
  * @param gaps 
  * @returns 
  */
-export const slicePath = (id: string, routePoints: Point[], gaps: PathGap[] | PathGap) => {
-  if (!Array.isArray(gaps)) {
-    gaps = [gaps];
-  }
-
+export const slicePath = (id: string, routePoints: Point[], gaps: PathGap[] = []) => {
   if(gaps.length === 0)
-    return [];
-  
+    return [({
+      id: `${id}-p-${1}`,
+      start: 1,
+      end: routePoints.length,
+    })];
+
   var partStart = 1;
   var parts = gaps.map((gap, i) => {
     const part = ({

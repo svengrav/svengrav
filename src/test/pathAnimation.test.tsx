@@ -13,25 +13,33 @@ const getPathPart = (id: number, start: number, end: number) => ({
   end: end,
 })
 
-const routeGap = (position: number, end: number = 10) => ({
+const routeGap = (start: number, end: number) => ({
   id: 0,
-  start: position,
+  start: start,
   end: end
 })
 
+test('path is sliced in one part', () => {
+  const path = genRoutePoints(1, 100);
+  const parts = [
+    getPathPart(1, 1, 100),
+  ]
+  expect(slicePath('path', path, [])).toStrictEqual(parts);
+});
+
 test('path is sliced in two parts', () => {
   const path = genRoutePoints(1, 100);
-  const gap = routeGap(50, 10)
+  const gap = routeGap(50, 60)
   const parts = [
     getPathPart(1, 1, 50),
     getPathPart(2, 60, 100),
   ]
-  expect(slicePath('path', path, gap)).toStrictEqual(parts);
+  expect(slicePath('path', path, [gap])).toStrictEqual(parts);
 });
 
 test('path is sliced in three parts', () => {
   const path = genRoutePoints(1, 150);
-  const gap = [routeGap(50, 10), routeGap(100, 10)]
+  const gap = [routeGap(50, 60), routeGap(100, 110)]
   const parts = [
     getPathPart(1, 1, 50),
     getPathPart(2, 60, 100),
