@@ -1,67 +1,15 @@
-import { createElement, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import Scalable from "../components/Scalable"
-
-
-const createCircle = (x: number, y: number, r: number = 5, color: string = "red", id: string = "abc") => {
-    const newCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-
-    // Create a new rect element
-    newCircle.setAttribute("cx", x.toString());
-    newCircle.setAttribute("cy", y.toString());
-    newCircle.setAttribute("r", r.toString());
-    newCircle.setAttribute("fill", color);
-    newCircle.setAttribute("id", id);
-    return newCircle;
-}
-
+import { usePathAnimation } from "../hooks/usePathAnimation";
 
 const SouthPoleRoutes = () => {
   const ref = useRef<SVGSVGElement>(null);
+  const { startAnimation } = usePathAnimation("svg-routes", "route1");
 
   useEffect(() => {
+    startAnimation()
+  })
 
-    const svg = ref.current;
-    const path = svg?.querySelector("#route1") as SVGPathElement;
-    const circle = svg?.querySelector("#circle1") as SVGCircleElement;
-    var circleExists = svg?.querySelector("#abc") as SVGCircleElement;
-
-
-    if (svg && path && circle) {
-
-    
-    
-      const totalLength = path.getTotalLength();
-      var points = Array.from(Array(Math.round(path.getTotalLength())));
-      points.map((_, i) => ({ cx: path.getPointAtLength(i).x, cy: path.getPointAtLength(i).y }))
-      
-      if(!circleExists) {
-        circleExists = createCircle(path.getPointAtLength(0).x, path.getPointAtLength(0).y);
-      }
-
-      var circleKeyFrames = points.map((_, i) => ({ cx: path.getPointAtLength(i).x, cy: path.getPointAtLength(i).y }))
-
-      circleExists.animate(circleKeyFrames, {
-        easing: 'ease-out',
-        iterations: Infinity,
-        duration: 4000
-      })
-      svg.appendChild(circleExists);
-
-      path.animate([
-        {
-          strokeDashoffset: totalLength,
-          strokeDasharray: totalLength
-        },
-        {
-          strokeDasharray: totalLength,
-          strokeDashoffset: 0,
-        }], {
-        easing: 'ease-out',
-        iterations: Infinity,
-        duration: 4000
-      })
-    }
-  }, [])
 
   return <Scalable width={1500} height={1050} >
     <div className="h-full w-full " style={{
@@ -71,6 +19,7 @@ const SouthPoleRoutes = () => {
         Test
       </div>
       <svg
+        id="svg-routes"
         ref={ref}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1501.5 1051.5"

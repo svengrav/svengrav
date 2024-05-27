@@ -1,4 +1,4 @@
-import { PathState, calcPathParts, slicePath, slicePathByPart } from "../core/pathAnimation";
+import { calcPathPartSize, slicePath, slicePathByPart } from "../core/pathAnimation";
 
 
 const genRoutePoints = (start: number, length: number) => Array.from({ length: length }, (_, i) => i ).map(i => ({
@@ -13,9 +13,10 @@ const getPathPart = (id: number, start: number, end: number) => ({
   end: end,
 })
 
-const routeGap = (position: number, size: number = 10) => ({
-  position: position,
-  size: size
+const routeGap = (position: number, end: number = 10) => ({
+  id: 0,
+  start: position,
+  end: end
 })
 
 test('path is sliced in two parts', () => {
@@ -61,7 +62,7 @@ test('calc path 2 parts with pos 1', () => {
     { ...getPathPart(1, 1, 2), position: 1, tip: undefined},
     { ...getPathPart(1, 3, 4), position: 3, tip: undefined},
   ]
-  expect(calcPathParts({parts: parts, points, offset: 1.0 }, 1)).toMatchObject(newParts);
+  expect(calcPathPartSize({parts: parts, points, offset: 1.0 }, 1)).toMatchObject(newParts);
 })
 
 test('calc path 2 parts with pos 2', () => {
@@ -74,10 +75,10 @@ test('calc path 2 parts with pos 2', () => {
     { ...getPathPart(1, 1, 2), attributes: [["d", "M 1 1 2 2"]], position: 2, tip: { attributes: [["transform", "translate(2, 2) rotate(-135 0 0)"]] }},
     { ...getPathPart(1, 3, 4), attributes: [["d", "M 3 3"]], position: 3, tip: undefined},
   ]
-  expect(calcPathParts({parts: parts, points, offset: 1.0 }, 3)).toMatchObject(newParts);
+  expect(calcPathPartSize({parts: parts, points, offset: 1.0 }, 3)).toMatchObject(newParts);
 
   // throw if out of range
-  expect(() => calcPathParts({parts: parts, points, offset: 1.0 }, 5)).toThrow();
-  expect(() => calcPathParts({parts: parts, points, offset: 1.0 }, 0)).toThrow();
+  expect(() => calcPathPartSize({parts: parts, points, offset: 1.0 }, 5)).toThrow();
+  expect(() => calcPathPartSize({parts: parts, points, offset: 1.0 }, 0)).toThrow();
 
 })

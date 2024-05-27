@@ -1,53 +1,8 @@
-
-/**
- * Interfaces
- */
-
 import { CSSProperties } from "react"
 import { assert } from "../utils/helper"
 
 //#region 
-interface Point {
-  x: number,
-  y: number
-}
-
-interface RoutePoint extends Point {
-  i: number
-}
-
-interface RouteGap {
-  position: number
-  size: number
-}
-
-interface PathGap {
-  id: string;
-  start: number;
-  end: number;
-}
-
-interface PathPartTip {
-  id: string,
-  position: number,
-  attributes: [string, string][]
-}
-
-interface PathPart {
-  id: string,
-  start: number,
-  end: number,
-  position?: number,
-  attributes?: [string, string][]
-  tip?: PathPartTip
-}
-
-interface PathEvent {
-  position: number,
-  point: Point
-}
-
-interface PathEventTrigger {
+export interface PathEventTrigger {
   position: number;
   onTrigger: (e: PathEvent) => void;
 }
@@ -62,44 +17,96 @@ export interface PathState {
   events?: PathEventTrigger[]
   latestEvent?: number,
   gaps: PathGap[],
-  points: RoutePoint[],
+  points: Point[],
   parts: PathPart[]
 }
+
+export interface PathGap {
+  id: number;
+  start: number;
+  end: number;
+}
+
+interface Point {
+  x: number,
+  y: number,
+  i: number
+}
+
+interface PathTip {
+  id: string,
+  position: number,
+  attributes: [string, string][]
+}
+
+interface PathPart {
+  id: string,
+  start: number,
+  end: number,
+  position?: number,
+  attributes?: [string, string][]
+  tip?: PathTip
+}
+
+interface PathEvent {
+  position: number,
+  point: Point
+}
+
 //#endregion
 
-export const slicePath = (id: string, routePoints: RoutePoint[], gaps: RouteGap[] | RouteGap) => {
+/**
+ * Slices the path in parts by the given gaps 
+ * and returns the parts as array.
+ * @param id 
+ * @param routePoints 
+ * @param gaps 
+ * @returns 
+ */
+export const slicePath = (id: string, routePoints: Point[], gaps: PathGap[] | PathGap) => {
   if (!Array.isArray(gaps)) {
     gaps = [gaps];
   }
 
-  var startPoint = 1;
+  if(gaps.length === 0)
+    return [];
+  
+  var partStart = 1;
   var parts = gaps.map((gap, i) => {
     const part = ({
       id: `${id}-p-${i + 1}`,
-      start: startPoint,
-      end: gap.position,
+      start: partStart,
+      end: gap.start,
     });
-    startPoint = gap.position + gap.size;
+    partStart = gap.end;
     return part;
   })
 
-  startPoint = gaps.slice(-1)[0].position + gaps.slice(-1)[0].size
+  partStart = gaps.slice(-1)[0].end
   var lastPart = {
     id: `${id}-p-${gaps.length + 1}`,
-    start: startPoint,
+    start: partStart,
     end: routePoints.length
   }
   return [...parts, lastPart];
 }
 
-export const slicePathByPart = (id: string, routePoints: RoutePoint[], slice: { parts: number, size: number }) => {
+/**
+ * Slices the path equal sized by the given number of parts.
+ * @param id 
+ * @param routePoints 
+ * @param slice 
+ * @returns 
+ */
+export const slicePathByPart = (id: string, routePoints: Point[], slice: { parts: number, size: number }) => {
   const sliceLength = Math.ceil(routePoints.length / slice.parts)
   var startPoint = sliceLength;
 
   const gaps = Array.from({ length: slice.parts - 1 }, (_, i) => i).map(i => {
     const gap = {
-      position: startPoint,
-      size: slice.size
+      id: i + 1,
+      start: startPoint,
+      end: startPoint + slice.size
     }
     startPoint += sliceLength
     return gap;
@@ -107,8 +114,15 @@ export const slicePathByPart = (id: string, routePoints: RoutePoint[], slice: { 
   return slicePath(id, routePoints, gaps)
 }
 
-
-export const calcPathParts = ({ parts, points, offset, }: { parts: PathPart[], points: RoutePoint[], offset: 1.0 | -1.0, }, position: number): PathPart[] => {
+type PathPartsProps = { parts: PathPart[], points: Point[], offset: 1.0 | -1.0 };
+/**
+ * Calculate the size of a part based on position and returns 
+ * the parts with the dimension attributes.
+ * @param param0 
+ * @param position 
+ * @returns 
+ */
+export const calcPathPartSize = ({ parts, points, offset }: PathPartsProps, position: number): PathPart[] => {
   assert(1 <= position && position <= points.length, `Position has to be between 1 - ${points.length}, position is: ${position}`)
 
   const newParts = parts.map(part => {
@@ -125,10 +139,12 @@ export const calcPathParts = ({ parts, points, offset, }: { parts: PathPart[], p
 
     // if part has an size, then an tip is added
     if (part.start < endOfPart) {
-      part.tip = calcTipState({ id: `${part.id}-tip`, points: points, position: part.position, offset: offset })
+      part.tip = getTipState({ id: `${part.id}-tip`, points: points, position: part.position, offset: offset })
     }
 
-    var d = "M" + points.slice(part.start - 1, part.position).map((p: { i: number; x: any; y: any; }) => ` ${p.x} ${p.y}`).join('')
+    var d = "M" + points.slice(part.start - 1, part.position).map((p: { i: number; x: any; y: any; }) => 
+        ` ${p.x} ${p.y}`).join('')
+
     part.attributes = []
     part.attributes.push(["d", d])
 
@@ -138,13 +154,11 @@ export const calcPathParts = ({ parts, points, offset, }: { parts: PathPart[], p
   return newParts;
 }
 
-const calcTipState = ({ id, position, points, offset }: { id: string, position: number, points: RoutePoint[], offset: 1.0 | -1.0 }): PathPartTip => {
-  const scale = 1;
-
+const getTipState = ({ id, position, points, offset }: { id: string, position: number, points: Point[], offset: 1.0 | -1.0 }): PathTip => {
   const point = points[position - 1]
   const prevPoint = points[position - 2]
   const rotation = calcTipRotation(point, prevPoint, offset === 1);
-  const calc = (value: number) => value / Number(scale);
+  const calc = (value: number) => value * Number(1);
   const transform = `translate(${calc(point.x)}, ${calc(point.y)}) rotate(${rotation} 0 0)`;
   return {
     id: id,
@@ -159,21 +173,24 @@ const calcTipRotation = (startPoint: Point, directionPoint: Point, reverse: bool
   return (Math.atan2(dy, dx) * 180) / Math.PI;
 }
 
-const camelToKebabCase = (str: string): string => {
-  return str.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
-};
+const camelToKebabCase = (str: string): string =>
+  str.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
 
-const toStyleString = (style: CSSProperties): string =>
+const cssToString = (style: CSSProperties): string =>
   Object.entries(style)
     .map(([key, value]) => `${camelToKebabCase(key)}: ${value}`)
     .join("; ");
 
-
-export const createPath2 = ({ id, attributes, style = {} }: PathPart & { style?: CSSProperties }) => {
+/**
+ * Creates an SVG path element.
+ * @param param0 
+ * @returns 
+ */
+const newSVGPath = ({ id, attributes, style = {} }: PathPart & { style?: CSSProperties }) => {
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
   path.setAttribute("id", id);
-  path.setAttribute("style", toStyleString(style))
+  path.setAttribute("style", cssToString(style))
   attributes?.forEach(a => {
     path.setAttribute(a[0], a[1])
   })
@@ -181,19 +198,24 @@ export const createPath2 = ({ id, attributes, style = {} }: PathPart & { style?:
   return path;
 }
 
-
-export const createTip2 = ({ id, attributes, style = {}, type = "circle" }: PathPartTip & { style?: CSSProperties, type?: "circle" | "arrow" | "none" }) => {
+/**
+ * Creates an SVG tip element.
+ * @param param0 
+ * @returns 
+ */
+const newSVGTip = ({ id, attributes, style = {}, type = "circle" }: PathTip & { style?: CSSProperties, type?: "circle" | "arrow" | "none" }) => {
   var tip: SVGPolygonElement | SVGCircleElement;
-
+  const scale = style.scale ? Number(style.scale) : 1
   tip = document.createElementNS("http://www.w3.org/2000/svg", "circle");
   tip.setAttribute("r", "5");
   if (type === "arrow") {
     tip = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    tip.setAttribute("points", `0,0 ${20 * 0.5},${-10 * 0.5}, ${20 * 0.5}, ${10 * 0.5}`);
+    tip.setAttribute("points", `0,0 ${10 * scale},${-5 * scale}, ${10 * scale}, ${5 * scale}`);
   }
 
   tip.setAttribute("id", id);
-  tip.setAttribute("style", toStyleString(style))
+  tip.setAttribute("style", cssToString(style))
+  tip.style.scale = "1";
   attributes?.forEach(a => {
     tip.setAttribute(a[0], a[1])
   })
@@ -201,16 +223,16 @@ export const createTip2 = ({ id, attributes, style = {}, type = "circle" }: Path
   return tip;
 }
 
-type TipProps = (PathPartTip & { style?: CSSProperties, type?: "circle" | "arrow" | "none" }) | undefined
+type TipProps = (PathTip & { style?: CSSProperties, type?: "circle" | "arrow" | "none" }) | undefined
 type PathProps = PathPart & { style?: CSSProperties }
-type SetPathPartSVGProps = { pathProps: PathProps, tipProps?: TipProps, svg: SVGElement }
-export const setPathPartSVG = ({ svg, pathProps, tipProps }: SetPathPartSVGProps) => {
+type SetPathPartSVGProps = { partProps: PathProps, tipProps?: TipProps, svg: SVGElement }
+export const setPathPartSVG = ({ svg, partProps: pathProps, tipProps }: SetPathPartSVGProps) => {
 
   var path = svg.querySelector(`#${pathProps.id}`);
   var tip = svg.querySelector(`#${pathProps.id}-tip`);
 
   if (!path) {
-    path = createPath2(pathProps);
+    path = newSVGPath(pathProps);
     svg.appendChild(path);
   } else {
     pathProps.attributes?.forEach(a => {
@@ -219,7 +241,7 @@ export const setPathPartSVG = ({ svg, pathProps, tipProps }: SetPathPartSVGProps
   }
 
   if (!tip && tipProps) {
-    tip = createTip2(tipProps)
+    tip = newSVGTip(tipProps)
     svg.appendChild(tip);
   } else if (tipProps) {
     tipProps!.attributes?.forEach(a => {
@@ -229,7 +251,14 @@ export const setPathPartSVG = ({ svg, pathProps, tipProps }: SetPathPartSVGProps
     svg.removeChild(tip!)
   }
 }
-
+/**
+ * 
+ * @param position Event position.
+ * @param prevPosition Position before set action.
+ * @param nextPosition Position after set action.
+ * @param offset Offset to determine the direction.
+ * @returns True if event trigger is in range.
+ */
 const eventTriggerInRange = (position: number, prevPosition: number, nextPosition: number, offset: number) => {
   if (prevPosition < position && position <= nextPosition && offset === 1.0) {
     return true;
@@ -237,25 +266,17 @@ const eventTriggerInRange = (position: number, prevPosition: number, nextPositio
   if (prevPosition >= position && position > nextPosition && offset === -1.0) {
     return true;
   }
-
-  // (position > prevPosition ? 
-  //   prevPosition < nextPosition && nextPosition <= position : position < prevPosition ? 
-  //   position <= nextPosition && nextPosition < prevPosition : false)
-
 }
 
-
-export const calcNewPosition = (state: PathState, distance: number, reverse?: boolean): PathState => {
+export const setPathPosition = (state: PathState, distance: number, reverse?: boolean): PathState => {
   var prevPosition = state.position;
   var offset = reverse ? state.offset * -1 as -1 | 1 : state.offset;
   var nextPosition = Math.max(1, Math.min(state.position + (distance * offset), state.length));
   var isRunning = nextPosition < state.length && nextPosition > 1;
-  console.log(nextPosition, state.length)
-  console.log(reverse, offset, isRunning)
 
   var latestEvent = state.latestEvent;
   var events = state.events?.map((e, i) => ({ ...e, index: i }))
-  events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, offset) && latestEvent !== event.index).forEach((event, i) => { 
+  events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, offset) && latestEvent !== event.index).forEach((event, i) => {
     const point = getPathPoint(state);
     latestEvent = event.index
     event.onTrigger({ position: nextPosition, point: point });
@@ -267,8 +288,19 @@ export const calcNewPosition = (state: PathState, distance: number, reverse?: bo
     running: isRunning,
     offset: offset,
     latestEvent: latestEvent,
-    parts: calcPathParts({ parts: state.gaps, points: state.points, offset: state.offset }, nextPosition)
+    parts: calcPathPartSize({ parts: state.parts, points: state.points, offset: state.offset }, nextPosition)
   }
 }
 
-const getPathPoint = ({ position, points }: { position: number, points: RoutePoint[] }) => points.find(p => p.i === position)!;
+const newEventSVG = (id: string, point: Point) => {
+  const scale = 1;
+
+  const calc = (value: number) => value / Number(scale);
+  const transform = `translate(${calc(point.x)}, ${calc(point.y)}) `;
+  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  circle.setAttribute("transform", transform);
+  circle.setAttribute("id",id)
+  return circle;
+}
+
+const getPathPoint = ({ position, points }: { position: number, points: Point[] }) => points.find(p => p.i === position)!;
