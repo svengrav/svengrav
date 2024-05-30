@@ -2,11 +2,6 @@ import { CSSProperties } from "react"
 import { assert } from "../utils/helper"
 
 //#region 
-export interface PathEventTrigger {
-  position: number;
-  onTrigger: (e: PathEvent) => void;
-}
-
 export interface PathState {
   id: string
   offset: -1 | 1
@@ -48,7 +43,14 @@ interface PathPart {
   tip?: PathTip
 }
 
-interface PathEvent {
+export interface PathEventTrigger {
+  i: number,
+  state: 'initial' | 'ready' | 'fired'
+  position: number;
+  onTrigger: (e: PathEvent) => void;
+}
+
+export interface PathEvent {
   position: number,
   point: PathPoint
 }
@@ -272,19 +274,24 @@ export const setPathPosition = (state: PathState, distance: number, reverse?: bo
   var prevPosition = state.position;
   var offset = reverse ? state.offset * -1 as -1 | 1 : state.offset;
   var nextPosition = Math.max(1, Math.min(state.position + (distance * offset), state.length));
-  var isRunning = nextPosition < state.length && nextPosition > 1;
+
+  // if position equals or is greater than the path length, stop and reverse direction
+  var isRunning = true
+  if(nextPosition >= state.length || nextPosition <= 1) {
+    isRunning = false;
+    offset = state.offset * -1 as -1 | 1 
+  }
 
   var latestEvent = state.latestEvent;
-  var events = state.events?.map((e, i) => ({ ...e, index: i }))
+  var events = state.events?.map((e, i) => ({ ...e, i: i, state: 'initial' }) as PathEventTrigger)
 
-  events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, offset) && latestEvent !== event.index).forEach((event, i) => {
-    const point = getPathPoint(state);
-    latestEvent = event.index
-    event.onTrigger({ position: nextPosition, point: point });
+  events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, offset) && latestEvent !== event.i).forEach((event, i) => {
+    event.state = 'ready'
   })
 
   return {
     ...state,
+    events: events,
     position: nextPosition,
     running: isRunning,
     offset: offset,

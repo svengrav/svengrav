@@ -39,6 +39,10 @@ const Lab = () => {
         </svg>
 
       </div>
+      <div className="flex w-min whitespace-nowrap justify-between py-4 text-white">
+        state: { state?.id } | position: {state?.position} | running: {String(state?.running)}
+      </div>
+
       <div className="flex w-min justify-between py-4">
         <button onClick={() => startAnimation()} className={buttonStyle}>Start</button>
         <button onClick={() => stopAnimation()} className={buttonStyle}> Stop</button>
