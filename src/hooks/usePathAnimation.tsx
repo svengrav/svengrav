@@ -16,10 +16,6 @@ const getPathPointsFromBasePath = (baseRoutePath: SVGPathElement) => {
   }))
 }
 
-const calcPointsPerSecond = (speed: number, framesPerSecond: number) => {
-  return framesPerSecond
-}
-
 interface RoutePathActions {
   stopAnimation: () => void;
   startAnimation: (reverse?: boolean) => void;
@@ -61,7 +57,7 @@ export const usePathAnimation = (
       scale: 1,
     }, 
     onRouteStateChange, 
-    speed = 20, 
+    speed = 1, 
     events = [],
     gaps = []
   } = options;
@@ -126,7 +122,6 @@ export const usePathAnimation = (
     if (pathStateRef.current.running)
       stopAnimation()
 
-    
     let lastFrameTime = performance.now();
     let second = performance.now();
     const fpsInterval = 1000 / 60;
