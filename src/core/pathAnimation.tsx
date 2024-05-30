@@ -17,7 +17,7 @@ export interface PathState {
   events?: PathEventTrigger[]
   latestEvent?: number,
   gaps: PathGap[],
-  points: Point[],
+  points: PathPoint[],
   parts: PathPart[]
 }
 
@@ -27,7 +27,7 @@ export interface PathGap {
   end: number;
 }
 
-interface Point {
+interface PathPoint {
   x: number,
   y: number,
   i: number
@@ -50,7 +50,7 @@ interface PathPart {
 
 interface PathEvent {
   position: number,
-  point: Point
+  point: PathPoint
 }
 
 //#endregion
@@ -63,7 +63,7 @@ interface PathEvent {
  * @param gaps 
  * @returns 
  */
-export const slicePath = (id: string, routePoints: Point[], gaps: PathGap[] = []) => {
+export const slicePath = (id: string, routePoints: PathPoint[], gaps: PathGap[] = []) => {
   if(gaps.length === 0)
     return [({
       id: `${id}-p-${1}`,
@@ -98,7 +98,7 @@ export const slicePath = (id: string, routePoints: Point[], gaps: PathGap[] = []
  * @param slice 
  * @returns 
  */
-export const slicePathByPart = (id: string, routePoints: Point[], slice: { parts: number, size: number }) => {
+export const slicePathByPart = (id: string, routePoints: PathPoint[], slice: { parts: number, size: number }) => {
   const sliceLength = Math.ceil(routePoints.length / slice.parts)
   var startPoint = sliceLength;
 
@@ -114,7 +114,7 @@ export const slicePathByPart = (id: string, routePoints: Point[], slice: { parts
   return slicePath(id, routePoints, gaps)
 }
 
-type PathPartsProps = { parts: PathPart[], points: Point[], offset: 1.0 | -1.0 };
+type PathPartsProps = { parts: PathPart[], points: PathPoint[], offset: 1.0 | -1.0 };
 /**
  * Calculate the size of a part based on position and returns 
  * the parts with the dimension attributes.
@@ -154,7 +154,7 @@ export const calcPathPartSize = ({ parts, points, offset }: PathPartsProps, posi
   return newParts;
 }
 
-const getTipState = ({ id, position, points, offset }: { id: string, position: number, points: Point[], offset: 1.0 | -1.0 }): PathTip => {
+const getTipState = ({ id, position, points, offset }: { id: string, position: number, points: PathPoint[], offset: 1.0 | -1.0 }): PathTip => {
   const point = points[position - 1]
   const prevPoint = points[position - 2]
   const rotation = calcTipRotation(point, prevPoint, offset === 1);
@@ -167,7 +167,7 @@ const getTipState = ({ id, position, points, offset }: { id: string, position: n
   }
 }
 
-const calcTipRotation = (startPoint: Point, directionPoint: Point, reverse: boolean = false) => {
+const calcTipRotation = (startPoint: PathPoint, directionPoint: PathPoint, reverse: boolean = false) => {
   const dy = reverse ? directionPoint.y - startPoint.y : startPoint.y - directionPoint.y;
   const dx = reverse ? directionPoint.x - startPoint.x : startPoint.x - directionPoint.x;
   return (Math.atan2(dy, dx) * 180) / Math.PI;
@@ -276,6 +276,7 @@ export const setPathPosition = (state: PathState, distance: number, reverse?: bo
 
   var latestEvent = state.latestEvent;
   var events = state.events?.map((e, i) => ({ ...e, index: i }))
+
   events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, offset) && latestEvent !== event.index).forEach((event, i) => {
     const point = getPathPoint(state);
     latestEvent = event.index
@@ -292,7 +293,7 @@ export const setPathPosition = (state: PathState, distance: number, reverse?: bo
   }
 }
 
-const newEventSVG = (id: string, point: Point) => {
+const newEventSVG = (id: string, point: PathPoint) => {
   const scale = 1;
 
   const calc = (value: number) => value / Number(scale);
@@ -303,4 +304,4 @@ const newEventSVG = (id: string, point: Point) => {
   return circle;
 }
 
-const getPathPoint = ({ position, points }: { position: number, points: Point[] }) => points.find(p => p.i === position)!;
+const getPathPoint = ({ position, points }: { position: number, points: PathPoint[] }) => points.find(p => p.i === position)!;

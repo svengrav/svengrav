@@ -48,7 +48,6 @@ const Lab = () => {
   )
 }
 
-
 export const routeLabPage: PageDescription = {
   title: "Sven's Lab",
   id: "lab",

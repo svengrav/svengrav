@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useRef } from "react";
 import { assert } from "../utils/helper";
-import { PathEventTrigger, PathGap, PathState, calcPathPartSize, setPathPartSVG, setPathPosition, slicePath, slicePathByPart } from "../core/pathAnimation";
+import { PathEventTrigger, PathGap, PathState, calcPathPartSize, setPathPartSVG, setPathPosition, slicePath } from "../core/pathAnimation";
 
 const getSVG = (id: string) => {
   return (document).querySelector(`#${id}`) as SVGElement;
@@ -16,10 +16,8 @@ const getPathPointsFromBasePath = (baseRoutePath: SVGPathElement) => {
   }))
 }
 
-const calcPointsPerSecond = (speed: number, pointsLength: number, absolutePointsLength: number) => {
-  const relativeSpeed = (pointsLength / absolutePointsLength) * speed;
-  const pointsPerSecond = Math.ceil((pointsLength / relativeSpeed) * 50)
-  return pointsPerSecond
+const calcPointsPerSecond = (speed: number, framesPerSecond: number) => {
+  return framesPerSecond
 }
 
 interface RoutePathActions {
@@ -63,7 +61,7 @@ export const usePathAnimation = (
       scale: 1,
     }, 
     onRouteStateChange, 
-    speed = 1000, 
+    speed = 20, 
     events = [],
     gaps = []
   } = options;
@@ -86,7 +84,7 @@ export const usePathAnimation = (
   });
 
   var animationRef = useRef({
-    animationFrameId: [0]
+    frames: [0]
   })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,39 +126,52 @@ export const usePathAnimation = (
     if (pathStateRef.current.running)
       stopAnimation()
 
+    
+    let lastFrameTime = performance.now();
+    let second = performance.now();
+    const fpsInterval = 1000 / 60;
+    var iterationen = 1;
+
     const svg = getSVG(svgId) as SVGSVGElement;
-    const pointsPerSecond = calcPointsPerSecond(speed, pathStateRef.current.length, pathStateRef.current.points.length)
-    var lastFrameTime = performance.now(); 
 
-    pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerSecond, reverse)
+    const pointsPerFrame = speed >= 1 ? 1 * speed : 1
+    var slowDown = 1 * speed;
+    pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerFrame, reverse)
 
-    const animate = (timeStamp: number) => {
-      const deltaTime = timeStamp - lastFrameTime
-      const fpsInterval = 1000 / 100;
+    const animate = () => {
+      const now = performance.now();
+      const deltaTime = now - lastFrameTime;
+      const deltaSecond = now - second;
+      
+      if(!pathStateRef.current.running) {
+        stopAnimation()
+        return;
+      }
 
-      if (deltaTime >= fpsInterval) {
-        lastFrameTime = timeStamp;
-
-        pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerSecond)
-
+      slowDown += (1 * speed)
+      if (deltaTime >= fpsInterval && slowDown >= 1) {
+        slowDown = 0;
+        if (deltaSecond >= 1000) {
+          second = now;
+          console.log((iterationen ++), String(pathStateRef.current.position));
+        }
+        pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerFrame)
         pathStateRef.current.parts.forEach(part => {
           setPathPartSVG({ svg: svg, partProps: { ...part, style: pathStyle }, tipProps: part.tip ? { ...part.tip, style: tipStyle, type: tip } : undefined })
         })
         if(onRouteStateChange)
           onRouteStateChange(pathStateRef.current)
+
+        lastFrameTime = now - (deltaTime % fpsInterval);
       }
 
-      if(!pathStateRef.current.running) 
-        stopAnimation()
-      else 
-        animationRef.current.animationFrameId.push(requestAnimationFrame(animate));
-
+      animationRef.current.frames.push(requestAnimationFrame(animate));
     }
-    animationRef.current.animationFrameId.push( requestAnimationFrame(animate));
+    animationRef.current.frames.push(requestAnimationFrame(animate));
   }
 
   const stopAnimation = () => {
-    animationRef.current.animationFrameId.forEach(id => cancelAnimationFrame(id))
+    animationRef.current.frames.forEach(id => cancelAnimationFrame(id))
     pathStateRef.current.running = false;
   }
 

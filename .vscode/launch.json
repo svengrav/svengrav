@@ -1,10 +1,13 @@
 {
   "configurations": [
     {
-      "type": "chrome",
-      "name": "http://localhost:3000/",
+      "name": "Launch: Frontend Server",
+      "program": "${workspaceFolder}/node_modules/react-scripts/bin/react-scripts.js",
+      "args": ["start"],
       "request": "launch",
-      "url": "http://localhost:3000/"
-    }
+      "type": "node",
+      "console": "integratedTerminal",
+      "localRoot": "${workspaceFolder}",
+}
   ]
 }
