@@ -14,11 +14,11 @@ const Lab = () => {
     gaps: {size: 30, number: 5},
     events: [
       {
-        onTrigger: (e) => { startAnimation(true) },
+        onTrigger: (e) => { startAnimation(true); console.log(e) },
         position: 400,
       },
       {
-        onTrigger: (e) => { startAnimation(true) },
+        onTrigger: (e) => { startAnimation(true); console.log(e) },
         position: 800,
       }
     ],

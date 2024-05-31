@@ -95,7 +95,7 @@ export const usePathAnimation = (
     length: 0,
     events: [],
     points: [],
-    parts: []
+    parts: [],
   });
 
   var animationStateRef = useRef<PathAnimation[]>([])
@@ -111,64 +111,57 @@ export const usePathAnimation = (
     var basePath = getSVG(pathId) as SVGPathElement;
 
     pathStateRef.current = newPathState(pathStateRef.current.id, basePath, gaps, events, startReverse, position)
-
-    pathStateRef.current.parts.forEach(part => {
-      setPathPartSVG({
-        svg: svg,
-        partProps: { ...part, style: pathStyle },
-        tipProps: (part.tip ? { ...part.tip, style: tipStyle, type: tip } : undefined)
-      })
-    })
+    applyPathState(pathStateRef.current, svg, pathStyle, tipStyle,tip)
   }
 
-  const getAnimationState = (id: number) => 
-    animationStateRef.current.find(a => a.id === id)!
+  const isEndOfPath = ({  position, length } : { position: number, length: number }) =>
+    position === 1 || position === length;
 
-  const startAnimation = (reverse: boolean | undefined = startReverse) => {
-    var animationId = newPathAnimation(animationStateRef.current)
-    stopAnimation()
-    setAnimationState(animationStateRef.current, 'running', animationId)
-
+  const animate = (animationState: PathAnimation, onAnimate: () => void) => {
+    animationState.state = "running";
     let lastFrameTime = performance.now();
     const fpsInterval = 1000 / 60;
-
-    const svg = getSVG(svgId) as SVGSVGElement;
-
-    const pointsPerFrame = speed >= 1 ? 1 * speed : 1
     let slowDown = 1 * speed;
-    pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerFrame, reverse)
 
-    const animate = () => {
-
+    const processFrame = () => {
       const now = performance.now();
       const deltaTime = now - lastFrameTime;
 
       slowDown += (1 * speed)
       if (deltaTime >= fpsInterval && slowDown >= 1) {
-
         slowDown = 0;
-        pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerFrame)
-        pathStateRef.current.parts.forEach(part => {
-          setPathPartSVG({ svg: svg, partProps: { ...part, style: pathStyle }, tipProps: part.tip ? { ...part.tip, style: tipStyle, type: tip } : undefined })
-        })
-
-        pathStateRef.current.events?.filter((e) => e.state === 'ready').forEach(e => {
-          e.state = "fired";
-          e.onTrigger({ point: { i: 1, x: 0, y: 0 }, position: e.position })
-        })
-
+        onAnimate();
         lastFrameTime = now - (deltaTime % fpsInterval);
-
-        if (onRouteStateChange)
-          onRouteStateChange(pathStateRef.current)
       }
-      if (animationIsRunning(animationStateRef.current, animationId)) {
-        getAnimationState(animationId).frames.push(requestAnimationFrame(animate));
+      if (animationState.state === "running") {
+        animationState.frames.push(requestAnimationFrame(processFrame));
       }
     }
-    if (animationIsRunning(animationStateRef.current, animationId))
-      getAnimationState(animationId).frames.push(requestAnimationFrame(animate));
+    animationState.frames.push(requestAnimationFrame(processFrame));
   }
+
+  const startAnimation = (reverse: boolean | undefined = startReverse) => {
+    setAnimationState(animationStateRef.current, 'finished')
+    const offset : -1.0 | 1.0 = reverse ? pathStateRef.current.offset * -1.0 as -1.0 | 1.0  : 1.0
+    pathStateRef.current.offset =  offset
+    var animationState = newPathAnimation(animationStateRef.current)
+
+    animate(animationState, () => {
+      const pointsPerFrame = speed >= 1 ? offset * speed : offset
+      pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerFrame)
+
+      if(isEndOfPath(pathStateRef.current)) 
+        stopAnimation()
+
+
+      applyPathState(pathStateRef.current, getSVG(svgId), pathStyle, tipStyle,tip)
+
+      if (onRouteStateChange)
+        onRouteStateChange(pathStateRef.current)
+
+    })
+  }
+
 
   const stopAnimation = () => {
     setAnimationState(animationStateRef.current, 'finished')
@@ -178,10 +171,20 @@ export const usePathAnimation = (
 }
 
 
-const applyPathState = () => {
+const applyPathState = (state: PathState, svg: SVGElement, pathStyle?: CSSProperties, tipStyle?: CSSProperties, tip?: any) => {
+  state.parts.forEach(part => {
+    setPathPartSVG({ svg: svg, partProps: { ...part, style: pathStyle }, tipProps: part.tip ? { ...part.tip, style: tipStyle, type: tip } : undefined })
+  })
 
+  state.events?.filter((e) => e.state === 'ready').forEach(e => {
+    e.state = "fired";
+    e.onTrigger({ point: { i: e.position, x: state.points[e.position].x, y: state.points[e.position].y }, position: e.position })
+  })
 
+  // if (onRouteStateChange)
+  //   onRouteStateChange(pathStateRef.current)
 }
+
 
 const newPathState = (id: string, basePath: SVGPathElement, gaps: any, events: any[] = [], reverse: boolean = false, position: number = 0) : PathState => {
   const pathPoints = getPathPointsFromBasePath(basePath);
@@ -222,11 +225,10 @@ const animationIsRunning = (animationState: PathAnimation[], id?: number) =>
   id? animationState.find(a => a.id === id)?.state === "running" : animationState.find(a => a.state === "running")
 
 const newPathAnimation = (animationState: PathAnimation[]) => {
-  const animationId = animationState.length + 1;
   animationState.push({
-    id: animationId,
-    state: 'ready',
+    id: animationState.length + 1,
+    state: "ready",
     frames: []
   })
-  return animationId;
+  return animationState[animationState.length -1];
 }

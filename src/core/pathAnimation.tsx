@@ -10,7 +10,7 @@ export interface PathState {
   events?: PathEventTrigger[]
   latestEvent?: number,
   points: PathPoint[],
-  parts: PathPart[]
+  parts: PathPart[],
 }
 
 export interface PathGap {
@@ -285,29 +285,29 @@ const eventTriggerInRange = (position: number, prevPosition: number, nextPositio
   }
 }
 
-export const setPathPosition = (state: PathState, distance: number, reverse?: boolean): PathState => {
+export const setPathPosition = (state: PathState, distance: number): PathState => {
   var prevPosition = state.position;
-  var offset = reverse ? state.offset * -1 as -1 | 1 : state.offset;
-  var nextPosition = Math.max(1, Math.min(state.position + (distance * offset), state.length));
+  var nextPosition = Math.max(1, Math.min(state.position + distance, state.length));
 
   // if position equals or is greater than the path length, stop and reverse direction
   if(nextPosition >= state.length || nextPosition <= 1) {
-    offset = state.offset * -1 as -1 | 1 
+    state.offset = state.offset * -1 as -1 | 1 
   }
 
-  var latestEvent = state.latestEvent;
-  var events = state.events?.map((e, i) => ({ ...e, i: i, state: 'initial' }) as PathEventTrigger)
+  var events = state.events;
 
-  events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, offset) && latestEvent !== event.i).forEach((event, i) => {
-    event.state = 'ready'
+  events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, state.offset)).forEach((event, i) => {
+    if(event.state === "fired")  {
+      event.state = "initial"
+    } else {
+      event.state = 'ready'
+    }
   })
 
   return {
     ...state,
     events: events,
     position: nextPosition,
-    offset: offset,
-    latestEvent: latestEvent,
     parts: calcPathPartSize({ parts: state.parts, points: state.points, offset: state.offset }, nextPosition)
   }
 }
