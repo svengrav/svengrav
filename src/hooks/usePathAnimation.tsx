@@ -6,20 +6,21 @@ const getSVG = (id: string) => {
   return (document).querySelector(`#${id}`) as SVGElement;
 }
 
-const getPathPointsFromBasePath = (baseRoutePath: SVGPathElement) => {
-  const totalLength = Math.ceil(baseRoutePath.getTotalLength());
-  var range = Array.from({ length: totalLength }, (_, i) => i);
-  return range.map((i) => ({
+/**
+ * Returns an array with all points (index, x, y) along a path.
+ * @param baseRoutePath 
+ * @returns 
+ */
+const getPathPointsFromBasePath = (baseRoutePath: SVGPathElement) =>
+  Array.from({ length: Math.ceil(baseRoutePath.getTotalLength()) }, (_, i) => i).map((i) =>
+  ({
     i: i,
     x: baseRoutePath.getPointAtLength(i).x,
     y: baseRoutePath.getPointAtLength(i).y
   }))
-}
 
-interface RoutePathActions {
-  stopAnimation: () => void;
-  startAnimation: (reverse?: boolean) => void;
-}
+
+
 
 type RouteTipOptions = "arrow" | "circle" | "none";
 
@@ -27,6 +28,7 @@ export interface PathEventProps {
   position: number;
   onTrigger: (e: PathEvent) => void;
 }
+
 
 interface RoutePathOptions {
   position?: number
@@ -36,15 +38,25 @@ interface RoutePathOptions {
   pathStyle?: CSSProperties
   tipStyle?: CSSProperties
   events?: PathEventProps[] | undefined
-  gaps?: PathGap[] | undefined
+  gaps?: [{
+    start: number,
+    end: number
+  }] | {
+    number: number,
+    size: number
+  }
   onRouteStateChange?: (state: PathState) => void
 }
 
-interface Animation {
+interface RoutePathActions {
+  stopAnimation: () => void;
+  startAnimation: (reverse?: boolean) => void;
+}
+
+interface PathAnimation {
   id: number,
   frames: number[]
   state: 'ready' | 'running' | 'finished'
-
 }
 
 export const usePathAnimation = (
@@ -76,10 +88,10 @@ export const usePathAnimation = (
 
   assert(!pathId.startsWith("#"), "Remove the # from pathId")
 
-  const stateId = `${pathId}-route`;
+  const pathStateId = `${pathId}-route`;
 
   var pathStateRef = useRef<PathState>({
-    id: stateId,
+    id: pathStateId,
     offset: 1.0,
     position: 0,
     running: false,
@@ -95,7 +107,7 @@ export const usePathAnimation = (
     frames: [0]
   })
 
-  var animationStateRef = useRef<Animation[]>([])
+  var animationStateRef = useRef<PathAnimation[]>([])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { init() }, [])
@@ -108,7 +120,7 @@ export const usePathAnimation = (
     var basePath = getSVG(pathId) as SVGPathElement;
 
     const pathPoints = getPathPointsFromBasePath(basePath);
-    const pathGaps = slicePath(stateId, pathPoints, gaps)
+    const pathGaps = slicePath(pathStateId, pathPoints, gaps)
     const pathParts = calcPathPartSize({ parts: pathGaps, points: pathPoints, offset: startReverse ? -1 : 1 }, position ? position : 0)
 
     pathStateRef.current = {
@@ -130,11 +142,7 @@ export const usePathAnimation = (
     })
   }
 
-  const start = () => {
-    
-  }
-
-  const getAnimationState  = (id: number) => {
+  const getAnimationState = (id: number) => {
     return animationStateRef.current.find(a => a.id === id)!
   }
 
@@ -155,7 +163,7 @@ export const usePathAnimation = (
     const fpsInterval = 1000 / 60;
 
     const svg = getSVG(svgId) as SVGSVGElement;
-    
+
     const pointsPerFrame = speed >= 1 ? 1 * speed : 1
     let slowDown = 1 * speed;
     pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerFrame, reverse)
@@ -172,7 +180,7 @@ export const usePathAnimation = (
 
       slowDown += (1 * speed)
       if (deltaTime >= fpsInterval && slowDown >= 1) {
-      
+
         slowDown = 0;
         pathStateRef.current = setPathPosition(pathStateRef.current, pointsPerFrame)
         pathStateRef.current.parts.forEach(part => {
@@ -181,7 +189,7 @@ export const usePathAnimation = (
 
         pathStateRef.current.events?.filter((e) => e.state === 'ready').forEach(e => {
           e.state = "fired";
-          e.onTrigger({ point: {i: 1, x: 0, y: 0}, position: e.position})
+          e.onTrigger({ point: { i: 1, x: 0, y: 0 }, position: e.position })
         })
 
         lastFrameTime = now - (deltaTime % fpsInterval);
@@ -189,11 +197,11 @@ export const usePathAnimation = (
         if (onRouteStateChange)
           onRouteStateChange(pathStateRef.current)
       }
-      if(getAnimationState(animationId).state === "running") {
+      if (getAnimationState(animationId).state === "running") {
         getAnimationState(animationId).frames.push(requestAnimationFrame(animate));
       }
     }
-    if(getAnimationState(animationId).state === "running")
+    if (getAnimationState(animationId).state === "running")
       getAnimationState(animationId).frames.push(requestAnimationFrame(animate));
   }
 

@@ -56,6 +56,12 @@ export interface PathEvent {
 }
 
 //#endregion
+function isGapBySize(value: any): value is {
+  number: number,
+  size: number
+} { 
+  return 'size' in value && 'number' in value; 
+} 
 
 /**
  * Slices the path in parts by the given gaps 
@@ -65,8 +71,21 @@ export interface PathEvent {
  * @param gaps 
  * @returns 
  */
-export const slicePath = (id: string, routePoints: PathPoint[], gaps: PathGap[] = []) => {
-  if(gaps.length === 0)
+export const slicePath = (id: string, routePoints: PathPoint[], gaps: {
+  start: number,
+  end: number
+}[] | {
+  number: number,
+  size: number
+}) => {
+  var tmpGaps : PathGap[] = []
+  if(isGapBySize(gaps)) {
+    tmpGaps = slicePathByPart(id, routePoints, { number: gaps.number, size: gaps.size})
+  } else {
+    tmpGaps = gaps.map((g, i) => ({ start: g.start, end: g.end,id: i+1 }))
+  }
+
+  if(tmpGaps.length === 0)
     return [({
       id: `${id}-p-${1}`,
       start: 1,
@@ -74,7 +93,7 @@ export const slicePath = (id: string, routePoints: PathPoint[], gaps: PathGap[] 
     })];
 
   var partStart = 1;
-  var parts = gaps.map((gap, i) => {
+  var parts = tmpGaps.map((gap, i) => {
     const part = ({
       id: `${id}-p-${i + 1}`,
       start: partStart,
@@ -84,9 +103,9 @@ export const slicePath = (id: string, routePoints: PathPoint[], gaps: PathGap[] 
     return part;
   })
 
-  partStart = gaps.slice(-1)[0].end
+  partStart = tmpGaps.slice(-1)[0].end
   var lastPart = {
-    id: `${id}-p-${gaps.length + 1}`,
+    id: `${id}-p-${tmpGaps.length + 1}`,
     start: partStart,
     end: routePoints.length
   }
@@ -97,23 +116,22 @@ export const slicePath = (id: string, routePoints: PathPoint[], gaps: PathGap[] 
  * Slices the path equal sized by the given number of parts.
  * @param id 
  * @param routePoints 
- * @param slice 
+ * @param gaps 
  * @returns 
  */
-export const slicePathByPart = (id: string, routePoints: PathPoint[], slice: { parts: number, size: number }) => {
-  const sliceLength = Math.ceil(routePoints.length / slice.parts)
+const slicePathByPart = (id: string, routePoints: PathPoint[], gaps: { number: number, size: number }) => {
+  const sliceLength = Math.ceil(routePoints.length / gaps.number)
   var startPoint = sliceLength;
 
-  const gaps = Array.from({ length: slice.parts - 1 }, (_, i) => i).map(i => {
+  return Array.from({ length: gaps.number - 1 }, (_, i) => i).map(i => {
     const gap = {
       id: i + 1,
       start: startPoint,
-      end: startPoint + slice.size
+      end: startPoint + gaps.size
     }
     startPoint += sliceLength
     return gap;
   })
-  return slicePath(id, routePoints, gaps)
 }
 
 type PathPartsProps = { parts: PathPart[], points: PathPoint[], offset: 1.0 | -1.0 };

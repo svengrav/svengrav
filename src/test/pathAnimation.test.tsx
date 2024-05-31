@@ -1,4 +1,4 @@
-import { calcPathPartSize, slicePath, slicePathByPart } from "../core/pathAnimation";
+import { calcPathPartSize, slicePath } from "../core/pathAnimation";
 
 
 const genRoutePoints = (start: number, length: number) => Array.from({ length: length }, (_, i) => i ).map(i => ({
@@ -56,7 +56,7 @@ test('path is sliced in three parts by slice', () => {
     getPathPart(2, 60, 100),
     getPathPart(3, 110, 150),
   ]
-  expect(slicePathByPart('path', path, { parts: 3, size: 10})).toStrictEqual(parts);
+  expect(slicePath('path', path, { number: 3, size: 10})).toStrictEqual(parts);
 });
 
 
