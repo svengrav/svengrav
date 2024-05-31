@@ -6,12 +6,9 @@ export interface PathState {
   id: string
   offset: -1 | 1
   position: number,
-  running: boolean,
-  initialized: boolean,
   length: number,
   events?: PathEventTrigger[]
   latestEvent?: number,
-  gaps: PathGap[],
   points: PathPoint[],
   parts: PathPart[]
 }
@@ -294,9 +291,7 @@ export const setPathPosition = (state: PathState, distance: number, reverse?: bo
   var nextPosition = Math.max(1, Math.min(state.position + (distance * offset), state.length));
 
   // if position equals or is greater than the path length, stop and reverse direction
-  var isRunning = true
   if(nextPosition >= state.length || nextPosition <= 1) {
-    isRunning = false;
     offset = state.offset * -1 as -1 | 1 
   }
 
@@ -311,7 +306,6 @@ export const setPathPosition = (state: PathState, distance: number, reverse?: bo
     ...state,
     events: events,
     position: nextPosition,
-    running: isRunning,
     offset: offset,
     latestEvent: latestEvent,
     parts: calcPathPartSize({ parts: state.parts, points: state.points, offset: state.offset }, nextPosition)

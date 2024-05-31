@@ -45,7 +45,7 @@ const Lab = () => {
 
       </div>
       <div className="flex w-min whitespace-nowrap justify-between py-4 text-white">
-        state: { state?.id } | position: {state?.position} | running: {String(state?.running)}
+        state: { state?.id } | position: {state?.position} | running: {}
       </div>
 
       <div className="flex w-min justify-between py-4">

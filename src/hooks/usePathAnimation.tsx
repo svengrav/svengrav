@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useRef } from "react";
 import { assert } from "../utils/helper";
-import { PathEvent, PathEventTrigger, PathGap, PathState, calcPathPartSize, setPathPartSVG, setPathPosition, slicePath } from "../core/pathAnimation";
+import { PathEvent, PathEventTrigger, PathState, calcPathPartSize, setPathPartSVG, setPathPosition, slicePath } from "../core/pathAnimation";
 
 const getSVG = (id: string) => {
   return (document).querySelector(`#${id}`) as SVGElement;
@@ -8,43 +8,41 @@ const getSVG = (id: string) => {
 
 /**
  * Returns an array with all points (index, x, y) along a path.
- * @param baseRoutePath 
+ * @param path 
  * @returns 
  */
-const getPathPointsFromBasePath = (baseRoutePath: SVGPathElement) =>
-  Array.from({ length: Math.ceil(baseRoutePath.getTotalLength()) }, (_, i) => i).map((i) =>
+const getPathPointsFromBasePath = (path: SVGPathElement) =>
+  Array.from({ length: Math.ceil(path.getTotalLength()) }, (_, i) => i).map((i) =>
   ({
     i: i,
-    x: baseRoutePath.getPointAtLength(i).x,
-    y: baseRoutePath.getPointAtLength(i).y
+    x: path.getPointAtLength(i).x,
+    y: path.getPointAtLength(i).y
   }))
 
+type PathTipOptions = "arrow" | "circle" | "none";
 
-
-
-type RouteTipOptions = "arrow" | "circle" | "none";
-
-export interface PathEventProps {
+interface PathEventProps {
   position: number;
   onTrigger: (e: PathEvent) => void;
 }
 
+type PathGapProps =  [{
+  start: number,
+  end: number
+}] | {
+  number: number,
+  size: number
+} | []
 
 interface RoutePathOptions {
   position?: number
-  reverse?: boolean | undefined
+  reverse?: boolean
   speed?: number
-  tip?: RouteTipOptions
+  tip?: PathTipOptions
   pathStyle?: CSSProperties
   tipStyle?: CSSProperties
-  events?: PathEventProps[] | undefined
-  gaps?: [{
-    start: number,
-    end: number
-  }] | {
-    number: number,
-    size: number
-  }
+  events?: PathEventProps[] 
+  gaps?: PathGapProps
   onRouteStateChange?: (state: PathState) => void
 }
 
@@ -64,7 +62,8 @@ export const usePathAnimation = (
   pathId: string,
   options: RoutePathOptions = {
     tip: "arrow",
-    events: []
+    events: [],
+    gaps: []
   }): RoutePathActions => {
   const {
     tip,
@@ -88,24 +87,16 @@ export const usePathAnimation = (
 
   assert(!pathId.startsWith("#"), "Remove the # from pathId")
 
-  const pathStateId = `${pathId}-route`;
 
   var pathStateRef = useRef<PathState>({
-    id: pathStateId,
+    id: `${pathId}-path`,
     offset: 1.0,
     position: 0,
-    running: false,
-    initialized: false,
     length: 0,
-    gaps: [],
     events: [],
     points: [],
     parts: []
   });
-
-  var animationRef = useRef({
-    frames: [0]
-  })
 
   var animationStateRef = useRef<PathAnimation[]>([])
 
@@ -119,19 +110,7 @@ export const usePathAnimation = (
 
     var basePath = getSVG(pathId) as SVGPathElement;
 
-    const pathPoints = getPathPointsFromBasePath(basePath);
-    const pathGaps = slicePath(pathStateId, pathPoints, gaps)
-    const pathParts = calcPathPartSize({ parts: pathGaps, points: pathPoints, offset: startReverse ? -1 : 1 }, position ? position : 0)
-
-    pathStateRef.current = {
-      ...pathStateRef.current,
-      length: pathPoints.length,
-      initialized: true,
-      position: position ? position : 0,
-      events: events?.map((e, i) => ({ ...e, i: i, state: 'initial' }) as PathEventTrigger),
-      points: pathPoints,
-      parts: pathParts,
-    }
+    pathStateRef.current = newPathState(pathStateRef.current.id, basePath, gaps, events, startReverse, position)
 
     pathStateRef.current.parts.forEach(part => {
       setPathPartSVG({
@@ -142,22 +121,13 @@ export const usePathAnimation = (
     })
   }
 
-  const getAnimationState = (id: number) => {
-    return animationStateRef.current.find(a => a.id === id)!
-  }
+  const getAnimationState = (id: number) => 
+    animationStateRef.current.find(a => a.id === id)!
 
   const startAnimation = (reverse: boolean | undefined = startReverse) => {
-    var animationId = animationStateRef.current.length + 1;
-    animationStateRef.current.push({
-      id: animationId,
-      state: 'ready',
-      frames: []
-    })
-
+    var animationId = newPathAnimation(animationStateRef.current)
     stopAnimation()
-    getAnimationState(animationId).state = "running";
-
-    pathStateRef.current.running = true;
+    setAnimationState(animationStateRef.current, 'running', animationId)
 
     let lastFrameTime = performance.now();
     const fpsInterval = 1000 / 60;
@@ -172,11 +142,6 @@ export const usePathAnimation = (
 
       const now = performance.now();
       const deltaTime = now - lastFrameTime;
-
-      if (!pathStateRef.current.running) {
-        stopAnimation()
-        return;
-      }
 
       slowDown += (1 * speed)
       if (deltaTime >= fpsInterval && slowDown >= 1) {
@@ -197,25 +162,71 @@ export const usePathAnimation = (
         if (onRouteStateChange)
           onRouteStateChange(pathStateRef.current)
       }
-      if (getAnimationState(animationId).state === "running") {
+      if (animationIsRunning(animationStateRef.current, animationId)) {
         getAnimationState(animationId).frames.push(requestAnimationFrame(animate));
       }
     }
-    if (getAnimationState(animationId).state === "running")
+    if (animationIsRunning(animationStateRef.current, animationId))
       getAnimationState(animationId).frames.push(requestAnimationFrame(animate));
   }
 
   const stopAnimation = () => {
-    animationStateRef.current.forEach(a => {
-      a.state = "finished"
-      a.frames.forEach(f => cancelAnimationFrame(f))
-    })
-    pathStateRef.current.running = false
-    if (animationRef.current.frames) {
-      animationRef.current.frames.forEach(frame => cancelAnimationFrame(frame));
-      animationRef.current.frames = [];
-    }
+    setAnimationState(animationStateRef.current, 'finished')
   }
 
   return { stopAnimation, startAnimation }
+}
+
+
+const applyPathState = () => {
+
+
+}
+
+const newPathState = (id: string, basePath: SVGPathElement, gaps: any, events: any[] = [], reverse: boolean = false, position: number = 0) : PathState => {
+  const pathPoints = getPathPointsFromBasePath(basePath);
+  const pathGaps = slicePath(id, pathPoints, gaps)
+  const pathParts = calcPathPartSize({ parts: pathGaps, points: pathPoints, offset: reverse ? -1 : 1 }, position ? position : 0)
+
+  return {
+    id: id,
+    offset: reverse ? -1 : 1 as -1 | 1,
+    length: pathPoints.length,
+    position: position ? position : 0,
+    events: events?.map((e, i) => ({ ...e, i: i, state: 'initial' }) as PathEventTrigger),
+    points: pathPoints,
+    parts: pathParts,
+  }
+
+}
+
+const getAnimationState = (animationState: PathAnimation[], id: number) => 
+  animationState.find(a => a.id === id)!
+
+const setAnimationState = (animationState: PathAnimation[], state: "running" | "ready" | "finished", id?: number) => {
+  var animations = []
+  if(id) {
+    animations = [getAnimationState(animationState, id)]
+  } else {
+    animations = animationState;
+  }
+  animations.forEach(a => {
+    a.state = state;
+    if(state === "finished") {
+      animationState.flatMap(a => a.frames).forEach(f => cancelAnimationFrame(f))
+    }
+  })
+} 
+
+const animationIsRunning = (animationState: PathAnimation[], id?: number) => 
+  id? animationState.find(a => a.id === id)?.state === "running" : animationState.find(a => a.state === "running")
+
+const newPathAnimation = (animationState: PathAnimation[]) => {
+  const animationId = animationState.length + 1;
+  animationState.push({
+    id: animationId,
+    state: 'ready',
+    frames: []
+  })
+  return animationId;
 }
