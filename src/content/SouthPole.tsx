@@ -1,5 +1,3 @@
-import  NorthSouth from "./NorthSouthRoutes";
-import { ImageLoader } from "../components/Image";
 import { Artwork } from "../core/Artwork";
 import { date } from "../utils/helper";
 import ArtworkView from "../views/ArtworkView";
@@ -12,7 +10,7 @@ export const southPole: Artwork = {
   name: 'South Pole',
   description: 'The seven most important voyages of discovery to the South Pole.',
   year: 2000,
-  size: { width: 1500.5, height: 1050.5},
+  size: { width: 1100, height: 950},
   defaultIndex: 1,
   layer: [
     {
