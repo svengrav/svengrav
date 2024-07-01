@@ -1,3 +1,5 @@
+import { Position, Size } from "./BaseType";
+
 export interface Artwork {
   id: string;
   name: string;

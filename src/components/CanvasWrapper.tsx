@@ -2,6 +2,7 @@ import { TransformWrapper } from "react-zoom-pan-pinch";
 import { ArtworkContext, useArtworkContext } from "../hooks/useArtworkContext";
 import { createContext, useContext } from "react";
 import { Artwork } from "../core/Artwork";
+import { Position, Size } from "../core/BaseType";
 
 const CanvasContext = createContext<ArtworkContext | undefined>(undefined);
 
