@@ -56,9 +56,9 @@ export interface PathEvent {
 function isGapBySize(value: any): value is {
   number: number,
   size: number
-} { 
-  return 'size' in value && 'number' in value; 
-} 
+} {
+  return 'size' in value && 'number' in value;
+}
 
 /**
  * Slices the path in parts by the given gaps 
@@ -75,14 +75,14 @@ export const slicePath = (id: string, routePoints: PathPoint[], gaps: {
   number: number,
   size: number
 }) => {
-  var tmpGaps : PathGap[] = []
-  if(isGapBySize(gaps)) {
-    tmpGaps = slicePathByPart(id, routePoints, { number: gaps.number, size: gaps.size})
+  var tmpGaps: PathGap[] = []
+  if (isGapBySize(gaps)) {
+    tmpGaps = slicePathByPart(id, routePoints, { number: gaps.number, size: gaps.size })
   } else {
-    tmpGaps = gaps.map((g, i) => ({ start: g.start, end: g.end,id: i+1 }))
+    tmpGaps = gaps.map((g, i) => ({ start: g.start, end: g.end, id: i + 1 }))
   }
 
-  if(tmpGaps.length === 0)
+  if (tmpGaps.length === 0)
     return [({
       id: `${id}-p-${1}`,
       start: 1,
@@ -159,8 +159,8 @@ export const calcPathPartSize = ({ parts, points, offset }: PathPartsProps, posi
       part.tip = getTipState({ id: `${part.id}-tip`, points: points, position: part.position, offset: offset })
     }
 
-    var d = "M" + points.slice(part.start - 1, part.position).map((p: { i: number; x: any; y: any; }) => 
-        ` ${p.x} ${p.y}`).join('')
+    var d = "M" + points.slice(part.start - 1, part.position).map((p: { i: number; x: any; y: any; }) =>
+      ` ${p.x} ${p.y}`).join('')
 
     part.attributes = []
     part.attributes.push(["d", d])
@@ -290,14 +290,14 @@ export const setPathPosition = (state: PathState, distance: number): PathState =
   var nextPosition = Math.max(1, Math.min(state.position + distance, state.length));
 
   // if position equals or is greater than the path length, stop and reverse direction
-  if(nextPosition >= state.length || nextPosition <= 1) {
-    state.offset = state.offset * -1 as -1 | 1 
+  if (nextPosition >= state.length || nextPosition <= 1) {
+    state.offset = state.offset * -1 as -1 | 1
   }
 
   var events = state.events;
 
   events?.filter((event) => eventTriggerInRange(event.position, prevPosition, nextPosition, state.offset)).forEach((event, i) => {
-    if(event.state === "fired")  {
+    if (event.state === "fired") {
       event.state = "initial"
     } else {
       event.state = 'ready'
@@ -319,7 +319,7 @@ const newEventSVG = (id: string, point: PathPoint) => {
   const transform = `translate(${calc(point.x)}, ${calc(point.y)}) `;
   const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
   circle.setAttribute("transform", transform);
-  circle.setAttribute("id",id)
+  circle.setAttribute("id", id)
   return circle;
 }
 

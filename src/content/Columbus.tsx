@@ -1,4 +1,4 @@
-import { ImageLoader } from "../components/Image";
+import { ImageLoader } from "../components/ImageLoader";
 import PageThumbnail from "../components/PageThumbnail";
 import { Artwork } from "../core/Artwork";
 import { PageDescription } from "../core/Page";
@@ -37,11 +37,11 @@ export const columbusPage : PageDescription =  {
   date: date(5,5,2024),
   thumbnail: <PageThumbnail src="https://stsvengrav.blob.core.windows.net/stsvengrav/columbus/columbus-panel.png" color="rose"/> ,
   element: <ArtworkView artwork={columbus}  inner={
-    <div className="absolute text-white font-light left-10 top-10 font-serif w-40 ">
+    <div className="absolute hidden lg:flex flex-col text-white font-light left-10 top-10 font-serif w-40 ">
       <h1 className="text-2xl border-b pb-4 mb-4 leading-loose">
         {columbus.name}
       </h1>
-      <p className="text-gray-400">
+      <p className="text-gray-300">
         {columbus.description}
       </p>
     </div>

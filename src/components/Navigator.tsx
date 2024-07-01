@@ -1,14 +1,13 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
-import { ArrowRightIcon, ArrowUpIcon, ArrowsPointingInIcon, Bars3Icon, ChevronDownIcon, ChevronLeftIcon, ChevronUpIcon, MagnifyingGlassPlusIcon, Square3Stack3DIcon, XMarkIcon } from "@heroicons/react/24/solid"
+import { ArrowRightIcon, ArrowUpIcon, ArrowsPointingInIcon, Bars3Icon, ChevronDownIcon, ChevronLeftIcon, ChevronUpIcon, FlagIcon, MagnifyingGlassPlusIcon, Square3Stack3DIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import { EyeIcon, } from "@heroicons/react/24/outline"
 import { useState } from "react";
 import Icon from "./Icon";
 import classNames from "classnames";
 import Sidepanel from "./Sidepanel";
-import { ArtworkContext } from "../hooks/useArtworkContext";
+import { useCanvasContext } from "./CanvasWrapper";
 
 interface NavigatorProps {
-  state: ArtworkContext,
   className?: string
 }
 
@@ -17,9 +16,9 @@ interface NavigatorProps {
  * @param Context
  * @returns 
  */
-export function Navigator({ state, className }: NavigatorProps) {
-  const layers = state.artwork.layer;
-  const [visible, setVisible] = useState(window.screen.width > 580);
+export function Navigator({ className }: NavigatorProps) {
+  const [visible, setVisible] = useState(window.innerWidth > 1000);
+  const { layer, canvas, transformed, artwork } = useCanvasContext().state;
   const propertyStyles = "text-sm font-medium flex text-gray-200"
   return (
     <div className={className}>
@@ -45,30 +44,30 @@ export function Navigator({ state, className }: NavigatorProps) {
               <NavigatorSection title='Properties' open>
                 <div className="grid grid-cols-3 gap-2 py-2 text-gray-300/80">
                   <dt className={propertyStyles}><ArrowRightIcon className='h-5 w-5 mr-2' />Width</dt>
-                  <dd className="col-span-2"> {state.canvasSize.width.toFixed(0)} / {state.artwork.size.width}</dd>
+                  <dd className="col-span-2"> {transformed.size.width.toFixed(0)} / {artwork.size.width}</dd>
 
                   <dt className={propertyStyles}><ArrowUpIcon className='h-5 w-5 mr-2' />Height</dt>
-                  <dd className="col-span-2">{state.canvasSize.height.toFixed(0)} / {state.artwork.size.height}</dd>
+                  <dd className="col-span-2">{transformed.size.height.toFixed(0)} / {artwork.size.height}</dd>
 
-                  <dt className={propertyStyles}><ArrowUpIcon className='h-5 w-5 mr-2' />Position</dt>
-                  <dd className="col-span-2">{state.canvasPosition.x.toFixed(0)}x / {state.canvasPosition.y.toFixed(0)}y</dd>
+                  <dt className={propertyStyles}><ArrowsPointingInIcon className='h-5 w-5 mr-2' />Position</dt>
+                  <dd className="col-span-2">{transformed.position.x.toFixed(0)}x / {transformed.position.y.toFixed(0)}y</dd>
 
                   <dt className={propertyStyles}><MagnifyingGlassPlusIcon className='h-5 w-5 mr-2' />Scale</dt>
-                  <dd className="col-span-2">{state.canvasScale.toFixed(2)} / { state.canvasMaxScale.toFixed(2)}</dd>
+                  <dd className="col-span-2">{transformed.scale.current?.toFixed(2)} / { transformed.scale.maxScale.toFixed(2)}</dd>
 
                   <dt className={propertyStyles}><ArrowsPointingInIcon className='h-5 w-5 mr-2' />Shrink</dt>
-                  <dd className="col-span-2">{(state.canvasShrink * 100).toFixed(0)} %</dd>
+                  <dd className="col-span-2">{(transformed.scale.minScale * 100).toFixed(0)} %</dd>
 
                   <dt className={propertyStyles}><EyeIcon className='h-5 w-5 mr-2' />Visiblity</dt>
-                  <dd className="col-span-2">{(state.layerPercentage).toFixed(0)} %</dd>
+                  <dd className="col-span-2">{(layer.percentage).toFixed(0)} %</dd>
 
                   <dt className={propertyStyles}><Bars3Icon className='h-5 w-5 mr-2' />Layer</dt>
-                  <dd className="col-span-2">{state.layerIndex} / {state.artwork.layer.length}</dd>
+                  <dd className="col-span-2">{layer.index} / {layer.length}</dd>
                 </div>
               </NavigatorSection>
               {
-                layers.map((layer, i) => {
-                  return <NavigatorSection key={i} title={layer.name} open={state.layerIndex === i + 1}>{layer.description}</NavigatorSection>;
+                layer.values.map((v, i) => {
+                  return <NavigatorSection key={i} title={v.name} open={layer.index === i + 1}>{v.description}</NavigatorSection>;
                 })
               }
             </div>
