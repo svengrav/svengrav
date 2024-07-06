@@ -1,8 +1,8 @@
-import { MutableRefObject, useEffect, useState } from "react"
-import { useWindowResize } from "./useWindowResize";
+import { MutableRefObject, useEffect, useState } from 'react'
+import { useWindowResize } from './useWindowResize'
 
 interface Size {
-  height: number,
+  height: number
   width: number
 }
 
@@ -10,26 +10,23 @@ interface Size {
  * Hook to get the container size state after resize.
  * @returns the container size
  */
-export const useContainerSize = (ref: MutableRefObject<any>) : [window: Size, container: Size | undefined] => {
-  const [window] = useWindowResize();
+export const useContainerSize = (ref: MutableRefObject<any>): [window: Size, container: Size | undefined] => {
+  const [window] = useWindowResize()
   const [size, setSize] = useState<Size | undefined>()
 
   useEffect(() => {
-    if (!ref.current) 
-      return;
+    if (!ref.current) { return }
 
     const resizeObserver = new ResizeObserver(() => {
-
-    setSize({
-      width: ref.current?.offsetWidth, 
-      height: ref.current?.offsetHeight
+      setSize({
+        width: ref.current?.offsetWidth,
+        height: ref.current?.offsetHeight
+      })
     })
+    resizeObserver.observe(ref.current)
 
-    });
-    resizeObserver.observe(ref.current);
+    return () => resizeObserver.disconnect() // clean up
+  }, [window.width, window.height, ref])
 
-    return () => resizeObserver.disconnect(); // clean up 
-  }, [window.width, window.height, ref]);
-  
   return [window, size]
 }

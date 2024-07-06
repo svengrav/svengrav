@@ -1,28 +1,29 @@
-import { Position, Size } from "./BaseType";
+import { ReactNode } from 'react'
+import { Position, Size } from './BaseType'
 
 export interface Artwork {
-  id: string;
-  name: string;
-  description: string;
-  year: number;
-  size: Size;
-  defaultIndex: number;
-  layer: ArtworkLayer[];
-  points?: ArtworkPoint[];
+  id: string
+  name: string
+  description: string
+  year: number
+  size: Size
+  defaultIndex: number
+  layer: ArtworkLayer[]
+  points?: ArtworkPoint[]
 }
 
 export interface ArtworkLayer {
-  id: string;
-  name: string;
-  description?: string | undefined;
+  id: string
+  name: string
+  description?: string | undefined
   size?: Size
-  inner: any;
+  inner: ReactNode
 }
 
 export interface ArtworkPoint {
-  name: string;
-  position: Position,
-  description?: string | undefined;
-  inner: any;
-  layers?: number[];
+  name: string
+  position: Position
+  description?: string | undefined
+  inner: ReactNode
+  layers?: number[]
 }

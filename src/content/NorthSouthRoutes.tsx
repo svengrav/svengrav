@@ -1,676 +1,673 @@
-import * as React from "react"
-
-export default function NorthSouth(props: any) {
+export default function NorthSouth () {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      data-name="Ebene 6"
-      viewBox=" 0 0 2835.65 1985.25"
-      {...props}
+      xmlns='http://www.w3.org/2000/svg'
+      data-name='Ebene 6'
+      viewBox=' 0 0 2835.65 1985.25'
     >
-      <g data-name="Routen">
-        <g data-name="1903- 1907 Roald Amundsen Goja" className="hover:stroke-rose-500 fill-none !stroke-blue-500  cursor-pointer">
+      <g data-name='Routen'>
+        <g data-name='1903- 1907 Roald Amundsen Goja' className='hover:stroke-rose-500 fill-none !stroke-blue-500  cursor-pointer'>
           <path
-            className=""
-            d="m540.27 754.67 3.48-.35"
-            style={{
-              
-              strokeMiterlimit: 10,
-              strokeWidth: "px",
-            }}
-          />
-          <path
-            d="m545.82 754.11 3.1-.31"
-            style={{
-              strokeDasharray: "0 0 2.08 2.08",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m549.96 753.7 6.78-.69 5.96-4.32 3.69-10.37 7.37-4.19 7.83-11.06 6.18-5.04 6.38-24"
-            style={{
-              strokeDasharray: "0 0 0 0 7.27 2.08 2.08 2.08",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m594.42 693.03.9-3.38 3.23-1.36"
-            style={{
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m600.94 687.29 3.58-1.5"
-            style={{
-
-              strokeDasharray: "0 0 2.59 2.59",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m605.72 685.28 3.23-1.35.6-3.45"
+            className=''
+            d='m540.27 754.67 3.48-.35'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: 'px'
             }}
           />
           <path
-            d="m609.88 678.61.49-2.8"
+            d='m545.82 754.11 3.1-.31'
+            style={{
+              strokeDasharray: '0 0 2.08 2.08',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m549.96 753.7 6.78-.69 5.96-4.32 3.69-10.37 7.37-4.19 7.83-11.06 6.18-5.04 6.38-24'
+            style={{
+              strokeDasharray: '0 0 0 0 7.27 2.08 2.08 2.08',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m594.42 693.03.9-3.38 3.23-1.36'
+            style={{
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m600.94 687.29 3.58-1.5'
             style={{
 
-              strokeDasharray: "0 0 1.9 1.9",
+              strokeDasharray: '0 0 2.59 2.59',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m610.54 674.87.83-4.72 1.08-16.67-1.79-23.21.2-18.04-10.47-11.84-17.08-8.68"
-            style={{
-
-              strokeDasharray: "0 0 0 0 6.65 1.9 1.9 1.9",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m582.47 591.28-3.12-1.59.01-3.5"
-            style={{
-
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m579.37 584.31.01-2.82"
-            style={{
-
-              strokeDasharray: "0 0 1.88 1.88",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m579.38 580.55.1-23.54"
-            style={{
-
-              strokeDasharray: "0 0 0 0 6.59 1.88 1.88 1.88",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m579.48 556.07.02-3.5"
+            d='m605.72 685.28 3.23-1.35.6-3.45'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m583.72 557.57-4.23-4.26-4.25 4.22.01-3.6 4.26-4.22 4.22 4.26-.01 3.6z"
+            d='m609.88 678.61.49-2.8'
             style={{
-              
-              strokeWidth: 0,
+
+              strokeDasharray: '0 0 1.9 1.9',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m404.55 854.08 1.25-3.27"
+            d='m610.54 674.87.83-4.72 1.08-16.67-1.79-23.21.2-18.04-10.47-11.84-17.08-8.68'
+            style={{
+
+              strokeDasharray: '0 0 0 0 6.65 1.9 1.9 1.9',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m582.47 591.28-3.12-1.59.01-3.5'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m406.54 848.88 1.1-2.89"
+            d='m579.37 584.31.01-2.82'
             style={{
 
-              strokeDasharray: "0 0 2.06 2.06",
+              strokeDasharray: '0 0 1.88 1.88',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m408.01 845.03 9.19-23.99 8.63-17.26 20.69-22.94 22.25-5.88 22.07-7.71 15.08-6.69 13.81-6.63 5.87.26"
+            d='m579.38 580.55.1-23.54'
             style={{
 
-              strokeDasharray: "0 0 0 0 7.22 2.06 2.06 2.06",
+              strokeDasharray: '0 0 0 0 6.59 1.88 1.88 1.88',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m526.63 754.24 3.49.16"
-            style={{
-
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m524.96 758.41 4.43-4.05-4.05-4.42 3.59.16 4.05 4.42-4.43 4.05-3.59-.16z"
-            style={{
-              
-              strokeWidth: 0,
-            }}
-          />
-          <path
-            d="m339.85 899.16 2.78-2.14"
+            d='m579.48 556.07.02-3.5'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m344.32 895.72 2.54-1.95"
+            d='m583.72 557.57-4.23-4.26-4.25 4.22.01-3.6 4.26-4.22 4.22 4.26-.01 3.6z'
             style={{
 
-              strokeDasharray: "0 0 2.13 2.13",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: 0
             }}
           />
           <path
-            d="m347.7 893.12 14.92-11.47 15.94-3.41 4.88 2.35"
-            style={{
-
-              strokeDasharray: "0 0 0 0 7.47 2.13 2.13 2.13",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m384.4 881.05 3.15 1.52 1.07-3.33"
+            d='m404.55 854.08 1.25-3.27'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m388.45 877.68-.69-2.34"
+            d='m406.54 848.88 1.1-2.89'
             style={{
 
-              strokeDasharray: "0 0 1.63 1.63",
+              strokeDasharray: '0 0 2.06 2.06',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m387.53 874.56-2.75-9.35"
+            d='m408.01 845.03 9.19-23.99 8.63-17.26 20.69-22.94 22.25-5.88 22.07-7.71 15.08-6.69 13.81-6.63 5.87.26'
             style={{
 
-              strokeDasharray: "0 0 0 0 5.69 1.63 1.63 1.63",
+              strokeDasharray: '0 0 0 0 7.22 2.06 2.06 2.06',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m384.55 864.43-.99-3.36 2.21-2.72"
-            style={{
-
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m388.36 857.68 4.17-.48"
-            style={{
-
-              strokeDasharray: "0 0 2.8 2.8",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m393.92 857.04 3.47-.4"
+            d='m526.63 754.24 3.49.16'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m392.93 861.42 3.73-4.7-4.7-3.72 3.57-.41 4.7 3.72-3.72 4.7-3.58.41z"
+            d='m524.96 758.41 4.43-4.05-4.05-4.42 3.59.16 4.05 4.42-4.43 4.05-3.59-.16z'
             style={{
-              
-              strokeWidth: 0,
+
+              strokeWidth: 0
             }}
           />
           <path
-            d="m328.5 1043.26-3.5.08"
+            d='m339.85 899.16 2.78-2.14'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m323.25 1043.37-2.62.06"
+            d='m344.32 895.72 2.54-1.95'
             style={{
 
-              strokeDasharray: "0 0 1.75 1.75",
+              strokeDasharray: '0 0 2.13 2.13',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m319.76 1043.44-1.93.04-17.97 2.68-9.95 8.49"
+            d='m347.7 893.12 14.92-11.47 15.94-3.41 4.88 2.35'
             style={{
 
-              strokeDasharray: "0 0 0 0 6.11 1.75 1.75 1.75",
+              strokeDasharray: '0 0 0 0 7.47 2.13 2.13 2.13',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m289.25 1055.22-2.67 2.27-3.38-.89"
-            style={{
-
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m283 1056.54-.31-.08"
-            style={{
-
-              strokeDasharray: "0 0 .21 .21",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m282.59 1056.43-3.38-.89-1.09-3.33"
+            d='m384.4 881.05 3.15 1.52 1.07-3.33'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m277.52 1050.37-.91-2.77"
+            d='m388.45 877.68-.69-2.34'
             style={{
 
-              strokeDasharray: "0 0 1.94 1.94",
+              strokeDasharray: '0 0 1.63 1.63',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m276.31 1046.68-.17-.52 5.68-11.26 1.99-13.64-1.07-17.02 12.89-22.33 4.24-2.33"
+            d='m387.53 874.56-2.75-9.35'
             style={{
 
-              strokeDasharray: "0 0 0 0 6.78 1.94 1.94 1.94",
+              strokeDasharray: '0 0 0 0 5.69 1.63 1.63 1.63',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m300.72 979.12 3.08-1.68-.3-3.49"
-            style={{
-
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m303.32 971.76-.28-3.29"
-            style={{
-
-              strokeDasharray: "0 0 2.2 2.2",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m302.95 967.37-.8-9.39-.4-10.16 4.63-21.78"
-            style={{
-
-              strokeDasharray: "0 0 0 0 7.71 2.2 2.2 2.2",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m306.61 924.96.73-3.42 3.49-.17"
+            d='m384.55 864.43-.99-3.36 2.21-2.72'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m312.43 921.29 2.41-.11"
+            d='m388.36 857.68 4.17-.48'
             style={{
 
-              strokeDasharray: "0 0 1.6 1.6",
+              strokeDasharray: '0 0 2.8 2.8',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m315.64 921.14 5.5-.26 5.91-6.36 3.75-4.5"
-            style={{
-
-              strokeDasharray: "0 0 0 0 5.61 1.6 1.6 1.6",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m331.31 909.4 2.24-2.68"
+            d='m393.92 857.04 3.47-.4'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m333.62 913.25-.54-5.97-5.97.55 2.3-2.77 5.97-.54.54 5.97-2.3 2.76z"
+            d='m392.93 861.42 3.73-4.7-4.7-3.72 3.57-.41 4.7 3.72-3.72 4.7-3.58.41z'
             style={{
-              
-              strokeWidth: 0,
+
+              strokeWidth: 0
             }}
           />
           <path
-            d="m444.58 1187.41-.42-3.47"
+            d='m328.5 1043.26-3.5.08'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m443.94 1182.04-.34-2.85"
+            d='m323.25 1043.37-2.62.06'
             style={{
 
-              strokeDasharray: "0 0 1.91 1.91",
+              strokeDasharray: '0 0 1.75 1.75',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m443.48 1178.25-.41-3.48-3.17-1.49"
+            d='m319.76 1043.44-1.93.04-17.97 2.68-9.95 8.49'
             style={{
 
+              strokeDasharray: '0 0 0 0 6.11 1.75 1.75 1.75',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m438.21 1172.48-2.53-1.19"
-            style={{
-
-              strokeDasharray: "0 0 1.87 1.87",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m434.83 1170.89-14.72-6.93-17.36-8.27"
-            style={{
-
-              strokeDasharray: "0 0 0 0 6.54 1.87 1.87 1.87",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m401.9 1155.28-3.16-1.5-.52-3.46"
+            d='m289.25 1055.22-2.67 2.27-3.38-.89'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m397.91 1148.31-.45-3.02"
+            d='m283 1056.54-.31-.08'
             style={{
 
-              strokeDasharray: "0 0 2.04 2.04",
+              strokeDasharray: '0 0 .21 .21',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m397.3 1144.28-4.93-32.59 2.04-29.95.59-15.41"
-            style={{
-
-              strokeDasharray: "0 0 0 0 7.13 2.04 2.04 2.04",
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m395.04 1065.31.13-3.49-3.27-1.25"
+            d='m282.59 1056.43-3.38-.89-1.09-3.33'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m390.19 1059.93-2.55-.97"
+            d='m277.52 1050.37-.91-2.77'
             style={{
 
-              strokeDasharray: "0 0 1.82 1.82",
+              strokeDasharray: '0 0 1.94 1.94',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m386.79 1058.64-5.48-2.08h-33.02l-5.92-4.74"
+            d='m276.31 1046.68-.17-.52 5.68-11.26 1.99-13.64-1.07-17.02 12.89-22.33 4.24-2.33'
             style={{
 
-              strokeDasharray: "0 0 0 0 6.38 1.82 1.82 1.82",
+              strokeDasharray: '0 0 0 0 6.78 1.94 1.94 1.94',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m341.66 1051.25-2.74-2.18"
-            style={{
-
-              strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
-            }}
-          />
-          <path
-            d="m345.46 1048.87-5.96.66.67 5.96-2.81-2.25-.67-5.96 5.96-.66 2.81 2.25z"
-            style={{
-              
-              strokeWidth: 0,
-            }}
-          />
-          <path
-            d="m336.68 1349.32 3.05-1.74"
+            d='m300.72 979.12 3.08-1.68-.3-3.49'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m341.33 1346.67 2.41-1.37"
+            d='m303.32 971.76-.28-3.29'
             style={{
 
-              strokeDasharray: "0 0 1.85 1.85",
+              strokeDasharray: '0 0 2.2 2.2',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m344.54 1344.84 22.45-12.79 25.8-14.42 3.64.78"
+            d='m302.95 967.37-.8-9.39-.4-10.16 4.63-21.78'
             style={{
 
-              strokeDasharray: "0 0 0 0 6.47 1.85 1.85 1.85",
+              strokeDasharray: '0 0 0 0 7.71 2.2 2.2 2.2',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m397.34 1318.6 3.42.74-1.44-3.19"
+            d='m306.61 924.96.73-3.42 3.49-.17'
             style={{
 
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m398.88 1315.18-.65-1.45"
+            d='m312.43 921.29 2.41-.11'
             style={{
-              
-              strokeDasharray: "0 0 1.06 1.06",
+
+              strokeDasharray: '0 0 1.6 1.6',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m398.01 1313.25-2.61-5.8"
+            d='m315.64 921.14 5.5-.26 5.91-6.36 3.75-4.5'
             style={{
-              
-              strokeDasharray: "0 0 0 0 3.71 1.06 1.06 1.06",
+
+              strokeDasharray: '0 0 0 0 5.61 1.6 1.6 1.6',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m395.18 1306.97-1.44-3.19 2.45-2.49"
+            d='m331.31 909.4 2.24-2.68'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m333.62 913.25-.54-5.97-5.97.55 2.3-2.77 5.97-.54.54 5.97-2.3 2.76z'
+            style={{
+
+              strokeWidth: 0
+            }}
+          />
+          <path
+            d='m444.58 1187.41-.42-3.47'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m443.94 1182.04-.34-2.85'
+            style={{
+
+              strokeDasharray: '0 0 1.91 1.91',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m443.48 1178.25-.41-3.48-3.17-1.49'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m438.21 1172.48-2.53-1.19'
+            style={{
+
+              strokeDasharray: '0 0 1.87 1.87',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m434.83 1170.89-14.72-6.93-17.36-8.27'
+            style={{
+
+              strokeDasharray: '0 0 0 0 6.54 1.87 1.87 1.87',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m401.9 1155.28-3.16-1.5-.52-3.46'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m397.91 1148.31-.45-3.02'
+            style={{
+
+              strokeDasharray: '0 0 2.04 2.04',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m397.3 1144.28-4.93-32.59 2.04-29.95.59-15.41'
+            style={{
+
+              strokeDasharray: '0 0 0 0 7.13 2.04 2.04 2.04',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m395.04 1065.31.13-3.49-3.27-1.25'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m390.19 1059.93-2.55-.97'
+            style={{
+
+              strokeDasharray: '0 0 1.82 1.82',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m386.79 1058.64-5.48-2.08h-33.02l-5.92-4.74'
+            style={{
+
+              strokeDasharray: '0 0 0 0 6.38 1.82 1.82 1.82',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m341.66 1051.25-2.74-2.18'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m345.46 1048.87-5.96.66.67 5.96-2.81-2.25-.67-5.96 5.96-.66 2.81 2.25z'
+            style={{
+
+              strokeWidth: 0
+            }}
+          />
+          <path
+            d='m336.68 1349.32 3.05-1.74'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m341.33 1346.67 2.41-1.37'
+            style={{
+
+              strokeDasharray: '0 0 1.85 1.85',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m344.54 1344.84 22.45-12.79 25.8-14.42 3.64.78'
+            style={{
+
+              strokeDasharray: '0 0 0 0 6.47 1.85 1.85 1.85',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m397.34 1318.6 3.42.74-1.44-3.19'
+            style={{
+
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m398.88 1315.18-.65-1.45'
+            style={{
+
+              strokeDasharray: '0 0 1.06 1.06',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m398.01 1313.25-2.61-5.8'
+            style={{
+
+              strokeDasharray: '0 0 0 0 3.71 1.06 1.06 1.06',
+              strokeMiterlimit: 10,
+              strokeWidth: '2.5px'
+            }}
+          />
+          <path
+            d='m395.18 1306.97-1.44-3.19 2.45-2.49'
             style={{
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m397.49 1299.97 1.94-1.97"
+            d='m397.49 1299.97 1.94-1.97'
             style={{
-              strokeDasharray: "0 0 1.85 1.85",
+              strokeDasharray: '0 0 1.85 1.85',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m400.08 1297.34 6.18-6.27 26.7-27.38"
+            d='m400.08 1297.34 6.18-6.27 26.7-27.38'
             style={{
-              
-              strokeDasharray: "0 0 0 0 6.46 1.85 1.85 1.85",
+
+              strokeDasharray: '0 0 0 0 6.46 1.85 1.85 1.85',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m433.61 1263.03 2.44-2.51-3.21-1.39"
+            d='m433.61 1263.03 2.44-2.51-3.21-1.39'
             style={{
-              
+
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m431.68 1258.62-1.75-.75"
+            d='m431.68 1258.62-1.75-.75'
             style={{
-              
-              strokeDasharray: "0 0 1.27 1.27",
+
+              strokeDasharray: '0 0 1.27 1.27',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m429.35 1257.61-6.97-3.03"
+            d='m429.35 1257.61-6.97-3.03'
             style={{
-              
-              strokeDasharray: "0 0 0 0 4.43 1.27 1.27 1.27",
+
+              strokeDasharray: '0 0 0 0 4.43 1.27 1.27 1.27',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m421.8 1254.33-3.21-1.39 1.58-3.13"
+            d='m421.8 1254.33-3.21-1.39 1.58-3.13'
             style={{
-              
+
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m421.01 1248.15 1.26-2.5"
+            d='m421.01 1248.15 1.26-2.5'
             style={{
-              
-              strokeDasharray: "0 0 1.86 1.86",
+
+              strokeDasharray: '0 0 1.86 1.86',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m422.69 1244.82 8.2-16.24 9.53-27.73"
+            d='m422.69 1244.82 8.2-16.24 9.53-27.73'
             style={{
-              
-              strokeDasharray: "0 0 0 0 6.52 1.86 1.86 1.86",
+
+              strokeDasharray: '0 0 0 0 6.52 1.86 1.86 1.86',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m440.73 1199.97 1.13-3.31"
+            d='m440.73 1199.97 1.13-3.31'
             style={{
-              
+
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m444.25 1202.75-2.63-5.39-5.38 2.63 1.17-3.4 5.38-2.63 2.63 5.38-1.17 3.41z"
+            d='m444.25 1202.75-2.63-5.39-5.38 2.63 1.17-3.4 5.38-2.63 2.63 5.38-1.17 3.41z'
             style={{
-              
-              strokeWidth: 0,
+
+              strokeWidth: 0
             }}
           />
           <path
-            d="m244.56 1507.05.09-3.5"
+            d='m244.56 1507.05.09-3.5'
             style={{
-              
+
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m244.7 1501.58.07-2.97"
+            d='m244.7 1501.58.07-2.97'
             style={{
-              
-              strokeDasharray: "0 0 1.98 1.98",
+
+              strokeDasharray: '0 0 1.98 1.98',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m244.79 1497.62.65-27.4 14.89-37.9 30.27-23.68 20.74-28.87 14.82-19.07"
+            d='m244.79 1497.62.65-27.4 14.89-37.9 30.27-23.68 20.74-28.87 14.82-19.07'
             style={{
-              
-              strokeDasharray: "0 0 0 0 6.93 1.98 1.98 1.98",
+
+              strokeDasharray: '0 0 0 0 6.93 1.98 1.98 1.98',
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m326.76 1359.92 2.15-2.76"
+            d='m326.76 1359.92 2.15-2.76'
             style={{
-              
+
               strokeMiterlimit: 10,
-              strokeWidth: "2.5px",
+              strokeWidth: '2.5px'
             }}
           />
           <path
-            d="m329.2 1363.69-.74-5.95-5.95.75 2.21-2.84 5.94-.75.75 5.95-2.21 2.84z"
+            d='m329.2 1363.69-.74-5.95-5.95.75 2.21-2.84 5.94-.75.75 5.95-2.21 2.84z'
             style={{
-              
-              strokeWidth: 0,
+
+              strokeWidth: 0
             }}
           />
         </g>
@@ -2615,4 +2612,3 @@ export default function NorthSouth(props: any) {
     </svg>
   )
 }
-
