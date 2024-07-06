@@ -16,6 +16,7 @@ import newZealandPage from './content/NewZealand';
 import columbusPage from './content/Columbus';
 import southPolePage from './content/SouthPole';
 import { routeLabPage } from './content/Lab';
+import { spitalPage }from './content/Spital';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -30,6 +31,7 @@ const pages = [
   columbusPage,
   routeLabPage,
   southPolePage,
+  spitalPage
 ];
 
 const homePage = <><Navigate replace to="/" /><Home panels={pages} /></>;
