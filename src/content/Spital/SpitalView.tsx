@@ -30,6 +30,7 @@ document.title = "Haus Spital - Münster";
 const BASE_BUTTON_STYLE =
   "text-spital-primary hover:bg-spital-surface border-spital-primary tracking-widest rounded-md px-1 uppercase";
 const ACTIVE_BUTTON_STYLE = "border ";
+const SIDEPANEL_WIDTH = 500
 
 // Define interfaces for SpitalView and SpitalState
 interface SpitalViewProps {
@@ -68,6 +69,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
   const textIntroExtended = getChapterById(artwork, "intro-extended");
   const textSources = getChapterById(artwork, "quellen");
   const textThanks = getChapterById(artwork, "thanks");
+
 
   // Get window size and initialize state
   const [windowSize] = useWindowResize();
@@ -179,7 +181,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
         <Sidepanel2
           position="left"
           visible
-          width={440}
+          width={SIDEPANEL_WIDTH}
           closable
           ref={leftSidepanel}
           full={windowSize.width < 600}
@@ -216,7 +218,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
           ref={rightSidepanel}
           position="right"
           closable
-          width={440}
+          width={SIDEPANEL_WIDTH}
           full={windowSize.width < 600}
           className="bg-spital-surface text-spital-onPrimary pl-8"
           scrollbar={{
@@ -269,7 +271,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
                 artwork={artwork}
                 size={{
                   height: windowSize.height - 140,
-                  width: viewState.canvasWidth - 400,
+                  width: viewState.canvasWidth - SIDEPANEL_WIDTH,
                 }}
               >
                 <Canvas />
