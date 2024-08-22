@@ -7,30 +7,18 @@ import { ReactNode, useRef, useState } from "react";
 import Scalable from "../../components/Scalable";
 import { Sidepanel2, Sidepanel2Controller } from "../../components/Sidepanel2";
 import SpitalLogo from "./SpitalLogo";
-import {
-  SpitalArtwork,
-  SpitalCategory,
-  SpitalChapter,
-  getCampChapters,
-  getChapterById,
-  getSpitalChapters,
-} from "./Spital";
+import { SpitalArtwork, SpitalCategory, SpitalChapter, getCampChapters, getChapterById, getSpitalChapters } from "./Spital";
 import { OverlayProvider, useOverlay } from "../../components/Overlay";
 import classNames from "classnames";
-import {
-  ArrowDownRightIcon,
-  ArrowsPointingOutIcon,
-  ArrowUpLeftIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowDownRightIcon, ArrowsPointingOutIcon, ArrowUpLeftIcon } from "@heroicons/react/24/solid";
 import Icon from "../../components/Icon";
 
 // Set the document title
 document.title = "Haus Spital - Münster";
 
-const BASE_BUTTON_STYLE =
-  "text-spital-primary hover:bg-spital-surface border-spital-primary tracking-widest rounded-md px-1 uppercase";
+const BASE_BUTTON_STYLE = "text-spital-primary hover:bg-spital-surface border-spital-primary tracking-widest rounded-md px-1 uppercase";
 const ACTIVE_BUTTON_STYLE = "border ";
-const SIDEPANEL_WIDTH = 500
+const SIDEPANEL_WIDTH = 500;
 
 // Define interfaces for SpitalView and SpitalState
 interface SpitalViewProps {
@@ -69,7 +57,6 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
   const textIntroExtended = getChapterById(artwork, "intro-extended");
   const textSources = getChapterById(artwork, "quellen");
   const textThanks = getChapterById(artwork, "thanks");
-
 
   // Get window size and initialize state
   const [windowSize] = useWindowResize();
@@ -185,17 +172,12 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
           closable
           ref={leftSidepanel}
           full={windowSize.width < 600}
-          className="bg-spital-surface text-spital-onSurface"
+          className="bg-spital-surface/95 text-spital-onSurface"
           scrollbar={{
-            className:
-              "scrollbar-thin scrollbar-thumb-spital-onSurface scrollbar-track-spital-surface",
+            className: "scrollbar-thin scrollbar-thumb-spital-onSurface scrollbar-track-spital-surface",
           }}
-          onOpen={() =>
-            requestViewAction({ type: SpitalViewAction.LeftPanelChanged, leftPanel: "open" })
-          }
-          onClose={() =>
-            requestViewAction({ type: SpitalViewAction.LeftPanelChanged, leftPanel: "closed" })
-          }
+          onOpen={() => requestViewAction({ type: SpitalViewAction.LeftPanelChanged, leftPanel: "open" })}
+          onClose={() => requestViewAction({ type: SpitalViewAction.LeftPanelChanged, leftPanel: "closed" })}
         >
           <SpitalStory
             summary={textIntro?.inner}
@@ -222,15 +204,10 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
           full={windowSize.width < 600}
           className="bg-spital-surface text-spital-onPrimary pl-8"
           scrollbar={{
-            className:
-              "scrollbar-thin scrollbar-thumb-spital-onSurface scrollbar-track-spital-surface",
+            className: "scrollbar-thin scrollbar-thumb-spital-onSurface scrollbar-track-spital-surface",
           }}
-          onOpen={() =>
-            requestViewAction({ type: SpitalViewAction.RightPanelChanged, rightPanel: "open" })
-          }
-          onClose={() =>
-            requestViewAction({ type: SpitalViewAction.RightPanelChanged, rightPanel: "closed" })
-          }
+          onOpen={() => requestViewAction({ type: SpitalViewAction.RightPanelChanged, rightPanel: "open" })}
+          onClose={() => requestViewAction({ type: SpitalViewAction.RightPanelChanged, rightPanel: "closed" })}
         >
           <div className="h-full w-full z-40">
             {viewState.chapters.map((chapter) => (
@@ -241,9 +218,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
                 label={chapter.label}
                 imageUri={chapter.image}
                 key={chapter.id}
-                onClick={(id) =>
-                  requestViewAction({ type: SpitalViewAction.ActiveChanged, activeId: id })
-                }
+                onClick={(id) => requestViewAction({ type: SpitalViewAction.ActiveChanged, activeId: id })}
               >
                 {chapter.inner}
               </SpitalPanel>
@@ -252,10 +227,10 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
         </Sidepanel2>
 
         {/* Main content area */}
-        <div className="flex w-full h-full bg-spital-background" style={{ height: windowSize.height - 50 }}>
+        <div className="flex w-full h-full bg-spital-background " style={{ height: windowSize.height - 50 }}>
           <div className="flex grow flex-col ">
             <div
-              className={`bg-spital-map-background flex justify-center transition-transform duration-1000`}
+              className={`bg-spital-map-background flex justify-center transition-transform duration-1000 grow`}
               ref={containerRef}
               style={{
                 transformOrigin: "left",
@@ -271,7 +246,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
                 artwork={artwork}
                 size={{
                   height: windowSize.height - 140,
-                  width: viewState.canvasWidth - SIDEPANEL_WIDTH,
+                  width: viewState.canvasWidth,
                 }}
               >
                 <Canvas />
@@ -295,10 +270,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
               />
             </div>
           </div>
-          <div
-            className="w-0 lg:w-[440px] flex-none"
-            style={{ transition: "width 2s", width: 0 }}
-          />
+          <div className="w-0 lg:w-[440px] flex-none" style={{ transition: "width 2s", width: 0 }} />
         </div>
       </OverlayProvider>
     </Page>
@@ -321,20 +293,13 @@ const SpitalMapControl = ({
         primary={ArrowUpLeftIcon}
         label="Haus Spital"
         onClick={goToEvent}
-        className={classNames(
-          BASE_BUTTON_STYLE,
-          view === SpitalCategory.Event && ACTIVE_BUTTON_STYLE
-        )}
+        className={classNames(BASE_BUTTON_STYLE, view === SpitalCategory.Event && ACTIVE_BUTTON_STYLE)}
       />
       <Icon
         primary={ArrowDownRightIcon}
         label="Lager"
         onClick={goToCamp}
-        className={classNames(
-          BASE_BUTTON_STYLE,
-          view === SpitalCategory.Camp && ACTIVE_BUTTON_STYLE,
-          "ml-2"
-        )}
+        className={classNames(BASE_BUTTON_STYLE, view === SpitalCategory.Camp && ACTIVE_BUTTON_STYLE, "ml-2")}
       />
     </div>
   );
@@ -363,7 +328,7 @@ const SpitalPanel = ({
   const showOverlay = () => {
     overlay?.showOverlay({
       backdropClassName: "bg-spital-surface",
-      contentClassName: "bg-spital-surface",
+      contentClassName: "bg-spital-surface !text-spital-onSurface",
       full: true,
       children: (
         <div className="max-w-3xl m-auto">
@@ -376,22 +341,12 @@ const SpitalPanel = ({
   return (
     <div key={id} className="bg-spital-surface text-spital-onSurface" id={id}>
       <div
-        className={classNames(
-          "cursor-pointer text-2xl font-semibold flex mb-2 items-center",
-          {
-            "text-spital-primary": active === id,
-          }
-        )}
+        className={classNames("cursor-pointer text-2xl font-semibold flex mb-2 items-center", {
+          "text-spital-primary": active === id,
+        })}
       >
-        {index && (
-          <div className="mr-2 leading-5 text-2xl rounded-full items-center justify-center text-center">
-            {index}
-          </div>
-        )}
-        <div
-          onClick={() => onClick != null && onClick(id)}
-          className="uppercase tracking-[4px] hover:text-spital-primary"
-        >
+        {index && <div className="mr-2 leading-5 text-2xl rounded-full items-center justify-center text-center">{index}</div>}
+        <div onClick={() => onClick != null && onClick(id)} className="uppercase tracking-[4px] hover:text-spital-primary">
           {label}
         </div>
       </div>
@@ -418,12 +373,10 @@ const SpitalStory = ({ summary, details }: { summary: ReactNode; details: ReactN
       backdropClassName: "bg-spital-surface",
       contentClassName: "bg-spital-surface !text-spital-onSurface",
       full: true,
-      children: <div className="max-w-3xl m-auto">
-        {details}
-      </div>,
+      children: <div className="max-w-3xl m-auto">{details}</div>,
       label: "Das Projekt",
-    })
-  }
+    });
+  };
 
   return (
     <div className="m-4 flex flex-col">
@@ -432,11 +385,7 @@ const SpitalStory = ({ summary, details }: { summary: ReactNode; details: ReactN
         <p className="mt-4 font-semibold">Eine Münsteraner Geschichte</p>
       </div>
       {summary}
-      <Icon
-        onClick={showMore}
-        className={classNames(BASE_BUTTON_STYLE, ACTIVE_BUTTON_STYLE, "mt-6")}
-        label="Mehr erfahren"
-      />
+      <Icon onClick={showMore} className={classNames(BASE_BUTTON_STYLE, ACTIVE_BUTTON_STYLE, "mt-6")} label="Mehr erfahren" />
     </div>
   );
 };

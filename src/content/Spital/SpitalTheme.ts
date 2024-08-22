@@ -1,7 +1,50 @@
 
+// export const spitalTheme = {
+//   colors: {
+//     spital: {
+//       logo: '#3d5266',
+//       primary: '#cc3333', 
+//       // primary: '#d9d9d3', 
+//       onPrimary: '#ffffff',
+//       secondary: '#888888',
+//       secondaryVariant: '',
+//       onSecondary: '#52514e',
+//       background: '#ffffff',
+//       onBackground: '',
+//       label: '#ffffff',
+//       content: '#cc3333',
+//       surface: '#0A2239',
+    
+//       // surface: '#513034',
+//       onSurface: '#eb6d6d',
+
+//       map: {
+//         background: '#ffffff',
+//         label: '#e75252',
+//         building: "#ececec",
+//         forest: "#f8f8f8",
+//         forestBorder: "#c9cecc",
+//         cross: "#cc3333",
+//         cemetery: "#cc3333",
+//         streets: "#666",
+//         camp: {
+//           base: "#505050",
+//           wire: "#444444",
+//           spots: "#f04b4b",
+//         },
+//         eventPath: "#cc3333",
+//       },
+    
+//     },
+//   },
+// };
+
+
+// 22.08.2024
 export const spitalTheme = {
   colors: {
     spital: {
+        logo: '#395774',
       primary: '#c7bc99', 
       // primary: '#d9d9d3', 
       onPrimary: '#576d71',
@@ -37,41 +80,5 @@ export const spitalTheme = {
     },
   },
 };
-
-// export const spitalTheme = {
-//   colors: {
-//     spital: {
-//       primary: '#E64833', 
-//       onPrimary: '#ffffff',
-//       secondary: '#c52828',
-//       secondaryVariant: '',
-//       onSecondary: '',
-//       background: '#244855',
-//       onBackground: '',
-//       label: '#ffffff',
-//       content: '#ffffff',
-//       surface: '#244855',
-//       onSurface: '#90AEAD',
-
-//       map: {
-//         background: '#244855',
-//         label: '#e9e9e9',
-//         building: "#193742",
-//         forest: "#90AEAD",
-//         forestBorder: "#6a9383",
-//         cross: "#E64833",
-//         cemetery: "#E64833",
-//         streets: "#666",
-//         camp: {
-//           base: "#E64833",
-//           wire: "#E64833",
-//           spots: "#365865",
-//         },
-//         eventPath: "#E64833",
-//       },
-    
-//     },
-//   },
-// };
 
 export default spitalTheme;

@@ -165,7 +165,7 @@ export const spital: SpitalArtwork = {
       inner: (
         <p>
           Auf dem ehemaligen Innenhof des Lagers Haus Spital befindet sich heute der Turm des Bildungs- und Wissenschaftszentrum der
-          Bundesfinanzverwaltung (BWZ).
+          Bundesfinanzverwaltung (BWZ).
         </p>
       ),
     },

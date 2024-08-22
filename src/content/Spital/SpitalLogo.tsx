@@ -2,8 +2,8 @@ import { CSSProperties } from "react";
 
 const SpitalLogo = ({ style }: { style?: CSSProperties }) => (
   <svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" x={0} y={0} viewBox="0 0 200 300" style={style}>
-    <g id="g7">
-      <g id="g3" className="fill-spital-onPrimary ">
+    <g id="g7" className="fill-spital-logo">
+      <g id="g3" className=" ">
         <path
           id="path1"
           d="M75.2 25.9c-3.6 0-5.8 1.6-6.8 4.6-.5 1.6-.7 3.8-.7 26.9 0 23.1.2 25.3.7 26.9 1 3 3.2 4.6 6.8 4.6 3.5 0 5.8-1.6 6.7-4.6.6-1.6.8-3.8.8-26.9 0-23.1-.2-25.3-.8-26.9-.9-3-3.2-4.6-6.7-4.6z"
