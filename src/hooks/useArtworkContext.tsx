@@ -1,11 +1,11 @@
-import { Artwork, ArtworkLayer } from "../core/Artwork";
-import { calcArtworkSize as calcArtworkState, calcCanvasPosition, calcLayerStateByIndex, sizeIsEqual } from "../core/artworkCalculation";
-import { useEffect, useState } from "react";
-import { useWindowResize } from "./useWindowResize";
+import { Artwork, ArtworkLayer } from '../core/Artwork'
+import { calcArtworkSize as calcArtworkState, calcCanvasPosition, calcLayerStateByIndex, sizeIsEqual } from '../core/artworkCalculation'
+import { useEffect, useState } from 'react'
+import { useWindowResize } from './useWindowResize'
 
-type OverflowOptions = "fit" | "contain"
-type Position = { x: number, y: number }
-type Size = { width: number, height: number }
+type OverflowOptions = 'fit' | 'contain'
+interface Position { x: number, y: number }
+interface Size { width: number, height: number }
 
 export interface ArtworkState {
   artwork: {
@@ -16,31 +16,31 @@ export interface ArtworkState {
   }
   transformed: ArtworkTransformation
   layer: {
-    length: number,
-    index: number,
-    percentage: number,
+    length: number
+    index: number
+    percentage: number
     values: ArtworkLayer[]
   }
 }
 
 export interface ArtworkContext {
   state: ArtworkState
-  set: (transformation: ArtworkTransformation) => void;
+  set: (transformation: ArtworkTransformation) => void
   setSize: ({ width, height }: { width: number, height: number }) => void
-  setPosition: ({ position, scale }: { position: { x: number, y: number }, scale: number }) => void;
+  setPosition: ({ position, scale }: { position: { x: number, y: number }, scale: number }) => void
   setScale: ({ scale }: { scale: number }) => void
   setLayer: ({ index, percentage }: { index: number, percentage: number }) => void
 }
 
 interface ArtworkTransformation {
-  overflow: OverflowOptions;
-  size: Size;
+  overflow: OverflowOptions
+  size: Size
   scale: {
-    current: number;
-    minScale: number;
-    maxScale: number;
-  };
-  position: Position;
+    current: number
+    minScale: number
+    maxScale: number
+  }
+  position: Position
 }
 
 interface ArtworkContextOptions {
@@ -49,14 +49,13 @@ interface ArtworkContextOptions {
 }
 
 const calcInitialState = (artwork: Artwork, canvasSize: Size): ArtworkState => {
-  var transformation = calcArtworkState(artwork.size, canvasSize, "fit");
-  var canvasPosition = calcCanvasPosition(transformation.size, canvasSize, "center")
-
+  const transformation = calcArtworkState(artwork.size, canvasSize, 'fit')
+  const canvasPosition = calcCanvasPosition(transformation.size, canvasSize, 'center')
   return {
-    artwork: artwork,
+    artwork,
     transformed: {
       ...transformation,
-      overflow: "fit",
+      overflow: 'fit',
       position: canvasPosition
     },
     layer: {
@@ -69,31 +68,30 @@ const calcInitialState = (artwork: Artwork, canvasSize: Size): ArtworkState => {
       size: canvasSize
     }
   }
-
 }
 
 /**
  * Hook to get the artwork context based on artwork and canvas size.
  */
 export const useArtworkContext = (artwork: Artwork, options?: ArtworkContextOptions): ArtworkContext => {
-  const artworkConst = artwork;
-  const canvasSize = options?.canvasSize ? options?.canvasSize : { width: 0, height: 0 }
-  const [context, setContext] = useState<ArtworkState>(calcInitialState(artwork, {width: 0, height: 0}))
+  const artworkConst = artwork
+  const canvasSize = ((options?.canvasSize) != null) ? options?.canvasSize : { width: 0, height: 0 }
+  const [window] = useWindowResize()
+  const [context, setContext] = useState<ArtworkState>(calcInitialState(artwork, canvasSize))
 
   useEffect(() => {
     setSize(canvasSize)
-  }, [canvasSize])
-  
+  }, [canvasSize, window])
+
   const setSize = (size: Size) => {
-    console.log("Set Position")
-    var transformation = calcArtworkState(artworkConst.size, size, context.transformed.overflow);
-    var canvasPosition = calcCanvasPosition(transformation.size, size, "center")
+    const transformation = calcArtworkState(artworkConst.size, size, context.transformed.overflow)
+    const canvasPosition = calcCanvasPosition(transformation.size, size, 'center')
     if (!sizeIsEqual(size, context.canvas.size)) {
       setContext({
         ...context,
         canvas: {
           ...context.canvas,
-          size: size
+          size
         },
         transformed: {
           ...context.transformed,
@@ -107,7 +105,8 @@ export const useArtworkContext = (artwork: Artwork, options?: ArtworkContextOpti
 
   const setScale = ({ scale }: { scale: number }) => {
     setContext({
-      ...context, transformed: {
+      ...context,
+      transformed: {
         ...context.transformed,
         scale: {
           ...context.transformed.scale,
@@ -122,7 +121,7 @@ export const useArtworkContext = (artwork: Artwork, options?: ArtworkContextOpti
       ...context,
       transformed: {
         ...context.transformed,
-        position: position,
+        position,
         scale: {
           ...context.transformed.scale,
           current: scale
@@ -133,10 +132,11 @@ export const useArtworkContext = (artwork: Artwork, options?: ArtworkContextOpti
 
   const setLayer = ({ index, percentage }: { index: number, percentage: number }) => {
     setContext({
-      ...context, layer: {
+      ...context,
+      layer: {
         ...context.layer,
-        index: index,
-        percentage: percentage
+        index,
+        percentage
       }
     })
   }
