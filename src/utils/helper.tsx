@@ -6,7 +6,7 @@
  * @returns
  */
 export const date = (day: number, month: number, year: number) =>
-  new Date(year, month - 1, day);
+  new Date(year, month - 1, day)
 
 /**
  * Checks whether a certain condition is fulfilled.
@@ -14,8 +14,8 @@ export const date = (day: number, month: number, year: number) =>
  * @param condition
  * @param msg
  */
-export function assert(condition: any, msg?: string): asserts condition {
+export function assert (condition: unknown, msg?: string): asserts condition {
   if (!condition) {
-    throw new Error(msg);
+    throw new Error(msg)
   }
 }

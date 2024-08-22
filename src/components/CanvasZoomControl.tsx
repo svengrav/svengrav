@@ -1,38 +1,38 @@
 import {
   ArrowsPointingInIcon,
   MagnifyingGlassMinusIcon,
-  MagnifyingGlassPlusIcon,
-} from "@heroicons/react/24/solid";
-import { useControls, useTransformContext } from "react-zoom-pan-pinch";
-import { useCanvasContext } from "./CanvasWrapper";
+  MagnifyingGlassPlusIcon
+} from '@heroicons/react/24/solid'
+import { useControls, useTransformContext } from 'react-zoom-pan-pinch'
+import { useCanvasContext } from './CanvasWrapper'
 
 export const CanvasZoomControl = () => {
-  const { zoomIn, zoomOut, setTransform } = useControls();
-  const transformationContext = useTransformContext();
-  const canvasContext = useCanvasContext();
+  const { zoomIn, zoomOut, setTransform } = useControls()
+  const transformationContext = useTransformContext()
+  const canvasContext = useCanvasContext()
 
   transformationContext.onChange(() => {
-    const transformation = transformationContext.getContext().state;
+    const transformation = transformationContext.getContext().state
     canvasContext.setPosition({
       position: {
         x: transformation.positionX,
-        y: transformation.positionY,
+        y: transformation.positionY
       },
-      scale: transformation.scale,
-    });
-  });
+      scale: transformation.scale
+    })
+  })
 
   return (
-    <div className="mt-2 m-auto w-full flex justify-center text-white">
+    <div className='mt-2 m-auto w-full flex justify-center text-white'>
       <button onClick={() => zoomOut()}>
-        <MagnifyingGlassMinusIcon className="h-6 w-6 m-1 hover:fill-gray-300" />
+        <MagnifyingGlassMinusIcon className='h-6 w-6 m-1 hover:fill-gray-300' />
       </button>
       <button onClick={() => setTransform(0, 0, 1)}>
-        <ArrowsPointingInIcon className="h-6 w-6 m-1 hover:fill-gray-300" />
+        <ArrowsPointingInIcon className='h-6 w-6 m-1 hover:fill-gray-300' />
       </button>
       <button onClick={() => zoomIn()}>
-        <MagnifyingGlassPlusIcon className="h-6 w-6 m-1 hover:fill-gray-300" />
+        <MagnifyingGlassPlusIcon className='h-6 w-6 m-1 hover:fill-gray-300' />
       </button>
     </div>
-  );
-};
+  )
+}
