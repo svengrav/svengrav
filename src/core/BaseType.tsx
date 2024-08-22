@@ -1,5 +1,5 @@
-type Size = { width: number; height: number };
+interface Size { width: number, height: number }
 
-type Position = { x: number; y: number };
+interface Position { x: number, y: number }
 
 export type { Size, Position }

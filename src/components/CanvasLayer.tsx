@@ -1,17 +1,17 @@
 interface CanvasLayerProps {
-  opacity: number;
-  children: any;
+  opacity: number
+  children: any
 }
 
-export function CanvasLayer({ children, opacity }: CanvasLayerProps) {
-  const isVisible = (opacity: number) => (opacity < 0.05 ? "none" : "block");
+export function CanvasLayer ({ children, opacity }: CanvasLayerProps) {
+  const isVisible = (opacity: number) => (opacity < 0.05 ? 'none' : 'block')
 
   return (
     <div
-      className="absolute h-full w-full"
-      style={{ opacity: opacity, display: isVisible(opacity) }}
+      className='absolute h-full w-full'
+      style={{ opacity, display: isVisible(opacity) }}
     >
       {children}
     </div>
-  );
+  )
 }
