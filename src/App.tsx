@@ -17,6 +17,7 @@ import columbusPage from './content/Columbus'
 import southPolePage from './content/SouthPole'
 import { routeLabPage } from './content/Lab'
 import spitalPage from './content/Spital/SpitalPage'
+import walspergerPage from './content/walsperger/WalspergMap'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,7 +32,8 @@ const pages = [
   columbusPage,
   routeLabPage,
   southPolePage,
-  spitalPage
+  spitalPage,
+  walspergerPage
 ]
 
 const homePage = <><Navigate replace to='/' /><Home panels={pages} /></>
