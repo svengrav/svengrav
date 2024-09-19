@@ -295,7 +295,6 @@ interface SpitalChapters {
   chapters: SpitalChapter[];
 }
 
-
 export interface SpitalChapter {
   id: string;
   index?: number;

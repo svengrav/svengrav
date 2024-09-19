@@ -15,9 +15,9 @@ export const southPole: Artwork = {
   defaultIndex: 1,
   layer: [
     {
-      id: 'layer1',
-      name: 'Base Map',
-      description: '...',
+      id: 'map',
+      name: 'South Pole',
+      description: 'The seven most important voyages of discovery to the South Pole.',
       inner: <SouthPoleRoutes />
     }
   ],
@@ -27,7 +27,7 @@ export const southPole: Artwork = {
 export const southPolePage: PageDescription = {
   title: 'South Pole',
   id: 'southpole',
-  description: 'South Pole artwork to test my homepage.',
+  description: 'The seven most important voyages of discovery to the South Pole.',
   tags: ['map'],
   date: date(5, 5, 2024),
   thumbnail: <PageThumbnail label='South Pole' color='sky' />,
