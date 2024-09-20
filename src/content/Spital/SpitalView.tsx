@@ -24,9 +24,6 @@ import {
 } from "@heroicons/react/24/solid";
 import Icon from "../../components/Icon";
 
-// Set the document title
-document.title = "Haus Spital - Münster";
-
 const BASE_BUTTON_STYLE =
   "text-spital-primary hover:bg-spital-surface border-spital-primary tracking-widest rounded-md px-1 uppercase";
 const ACTIVE_BUTTON_STYLE = "border ";

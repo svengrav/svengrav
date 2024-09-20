@@ -32,9 +32,14 @@ const OverlayContext = createContext<ShowOverlay | undefined>(undefined);
  */
 export const useOverlay = () => useContext(OverlayContext);
 
-export const OverlayProvider = ({ children }: { children: ReactNode }) => {
+interface OverlayProviderProps {
+  children: ReactNode;
+  initialVisible?: boolean; // Add a prop to control initial visibility
+}
+
+export const OverlayProvider = ({ children, initialVisible = false }: OverlayProviderProps) => {
   const [overlayState, setOverlayState] = useState<OverlayState>({
-    visible: false,
+    visible: initialVisible, // Use the initialVisible prop here
     children: null,
     label: "Information",
     full: false,

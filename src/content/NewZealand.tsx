@@ -37,7 +37,7 @@ export const newZealandPage: PageDescription = {
   description: 'Artwork of the map of New Zealand based on the first map made by James Cook in 1769.',
   date: date(5, 5, 2024),
   tags: ['art', 'map'],
-  thumbnail: <PageThumbnail color='indigo' label='New Zealand' />,
+  thumbnail: <PageThumbnail color='indigo' src='https://stsvengrav.blob.core.windows.net/stsvengrav/newzealand/newzealand-thumbnail.png' />,
   element: <ArtworkView artwork={newZealand} />
 }
 
