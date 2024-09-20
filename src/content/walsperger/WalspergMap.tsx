@@ -1,47 +1,72 @@
-import { ReactNode } from "react"
 import PageThumbnail from "../../components/PageThumbnail"
 import { Artwork } from "../../core/Artwork"
 import { PageDescription } from "../../core/Page"
 import { date } from "../../utils/helper"
-import { TextLink } from "../../components/Link"
-import ArtworkView from "../../views/ArtworkView"
 import { ImageLoader } from "../../components/ImageLoader"
-import { MapElements, TextToMap } from "./WalspergerData"
+import { MapElementController, MapElements, MapElementsController } from "./WalspergerData"
+import WalspergerView from "./WalspergerView"
+import { useRef } from "react"
 
-export type WalspergerMap = Artwork
+interface WalspergerMapController {
+  setVisibility(id: number, show: boolean): void;
+}
 
+export type WalspergerMap = Artwork & {
+  controller() : WalspergerMapController
+}
+ 
 export const walspergerMap: WalspergerMap = {
   id: "walsperger",
   name: "Walsperger Weltkarte",
   description: "Reinterpretation der Weltkarte des Andreas Walsperger",
   year: 2024,
-  size: { width: 7500, height: 7500 },
-  defaultIndex: 2,
+  size: { width: 3375, height: 3375 },
+  defaultIndex: 5,
   layer: [
     {
-      id: "layer1",
-      name: "Base Map",
-      description: "...",
-      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/walsperger/walsperger-1.jpg' />,
+      id: "1",
+      name: "Weltkarte",
+      description: "Die Karte zeigt Europa, Asien und Afrika in stark stilisierter Form. Flüsse, Meere und Gebirge sind eingezeichnet, aber ihre Proportionen und Lagen entsprechen oft nicht der tatsächlichen Geografie.",
+      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/walsperger/walsperger-base.jpg' />,
     },
     {
-      id: "layer1",
-      name: "Base Map",
-      description: "...",
+      id: "2",
+      name: "Gebirge und Hügel",
+      description: "Die Gebirge sind stark stilisiert und symbolisch dargestellt, oft als einfache, zackige Linien oder Hügel. Diese Darstellungsweise folgt nicht dem genauen geografischen Verlauf, sondern ist mehr eine schematische Abbildung, die die Gebirge als wichtige geografische und natürliche Barrieren hervorhebt.",
+      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/walsperger/walsperger-mountains.jpg' />,
+    },
+    {
+      id: "3",
+      name: "Städte und Figuren",
+      description: "Auf der Weltkarte des Andreas Walsperger sind Städte wichtige Orientierungspunkte, die sowohl geografische als auch kulturelle und religiöse Bedeutung haben. Die Darstellung der Städte ist stilisiert und symbolisch, und sie dienen weniger der genauen Abbildung als vielmehr der Hervorhebung ihrer Bedeutung im mittelalterlichen Weltbild.",
+      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/walsperger/walsperger-city.jpg' />,
+    },
+    {
+      id: "4",
+      name: "Einfassung",
+      description: "Die Einfassung dieser Interpretation ist stark verkürzt. Die Einfassung des Originals besteht aus dekorativen Rändern und lateinischen Inschriften, die die Karte umrahmen.",
+      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/walsperger/walsperger-ring.jpg
+' />,
+    },
+    {
+      id: "5",
+      name: "Beschriftung",
+      description: "Die Inschriften sind in Latein, der damaligen Wissenschafts- und Kirchensprache, verfasst und in einer mittelalterlichen Minuskel geschrieben. ",
       inner: <MapElements />,
     },
   ],
-  points: []
+  points: [],
+  controller: () => MapElementController
 }
 
 export const walspergerPage: PageDescription = {
   title: 'Walsperger Weltkarte',
   id: 'walsperger',
   description: 'Reinterpretation der Weltkarte des Andreas Walsperger',
-  date: date(5, 5, 2024),
+  date: date(21, 9, 2024),
   tags: ['art', 'map'],
-  thumbnail: <PageThumbnail color='indigo' label='Walsperger Weltkarte' />,
-  element: <ArtworkView artwork={walspergerMap} />
+  thumbnail: <PageThumbnail color='indigo' src="https://stsvengrav.blob.core.windows.net/stsvengrav/walsperger/walsperger-thumbnail.png" />,
+  element: <WalspergerView map={walspergerMap} />
 }
 
 export default walspergerPage

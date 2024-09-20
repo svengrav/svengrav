@@ -30,7 +30,7 @@ export const southPolePage: PageDescription = {
   description: 'The seven most important voyages of discovery to the South Pole.',
   tags: ['map'],
   date: date(5, 5, 2024),
-  thumbnail: <PageThumbnail label='South Pole' color='sky' />,
+  thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.png' />,
   element: (
     <ArtworkView
       artwork={southPole}
