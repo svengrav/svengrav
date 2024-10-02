@@ -1,24 +1,25 @@
-import { Artwork } from '../core/Artwork'
-import { date } from '../utils/helper'
-import ArtworkView from '../views/ArtworkView'
-import PageThumbnail from '../components/PageThumbnail'
-import { PageDescription } from '../core/Page'
+import { Artwork } from '../../core/Artwork'
+import { date } from '../../utils/helper'
+import ArtworkView from '../../views/ArtworkView'
+import PageThumbnail from '../../components/PageThumbnail'
+import { PageDescription } from '../../core/Page'
 import SouthPoleRoutes from './SouthPoleRoutes'
+import { ImageLoader } from '../../components/ImageLoader'
 
 export const southPole: Artwork = {
   id: 'southpole',
   name: 'South Pole',
   description:
     'The seven most important voyages of discovery to the South Pole.',
-  year: 2000,
-  size: { width: 1100, height: 950 },
+  year: 2024,
+  size: { width: 3400, height: 2600 },
   defaultIndex: 1,
   layer: [
     {
       id: 'map',
       name: 'South Pole',
       description: 'The seven most important voyages of discovery to the South Pole.',
-      inner: <SouthPoleRoutes />
+      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.jpg' />
     }
   ],
   points: []
