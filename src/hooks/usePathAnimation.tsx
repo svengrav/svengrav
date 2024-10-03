@@ -49,6 +49,7 @@ type PathGapProps =
   | []
 
 interface RoutePathOptions {
+  initialize?: boolean
   position?: number
   reverse?: boolean
   speed?: number
@@ -75,6 +76,7 @@ export const usePathAnimation = (
   svgId: string,
   pathId: string,
   options: RoutePathOptions = {
+    initialize: false,
     tip: 'arrow',
     events: [],
     gaps: []
@@ -114,17 +116,13 @@ export const usePathAnimation = (
 
   const animationStateRef = useRef<PathAnimation[]>([])
 
-  useEffect(() => {
-    init()
-  }, [])
-
   const init = () => {
     const svg = getSVG(svgId) as SVGSVGElement
 
     if (!svg) return
-
     const basePath = getSVG(pathId) as SVGPathElement
 
+    console.log(basePath)
     pathStateRef.current = newPathState(
       pathStateRef.current.id,
       basePath,
@@ -168,6 +166,7 @@ export const usePathAnimation = (
   }
 
   const startAnimation = (reverse: boolean | undefined = startReverse) => {
+    init()
     setAnimationState(animationStateRef.current, 'finished')
     const offset: -1.0 | 1.0 = reverse
       ? ((pathStateRef.current.offset * -1.0) as -1.0 | 1.0)
