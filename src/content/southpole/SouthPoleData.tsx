@@ -1,4 +1,5 @@
-interface Expedition {
+export interface Expedition {
+    id: string;
     name: string;
     year: string;
     position: {
@@ -13,10 +14,11 @@ interface Expedition {
     description: string;
   }
   
-  const expeditions: Expedition[] = [
+  export const expeditions: Expedition[] = [
     {
+      id: 'scott',
       name: "Scott's Terra-Nova-Expedition",
-      year: "1910–1913",
+      year: "1910 – 1913",
       position: {
         latitude: "-90.0000",
         longitude: "0.0000"
@@ -29,8 +31,9 @@ interface Expedition {
       description: "Led by Robert Falcon Scott, the Terra Nova Expedition aimed to be the first to reach the South Pole. Unfortunately, Scott and his team arrived second after Amundsen and perished on their return journey."
     },
     {
+      id: 'amundsen',
       name: "Amundsen's Fram-Expedition",
-      year: "1910–1912",
+      year: "1910 – 1912",
       position: {
         latitude: "-90.0000",
         longitude: "0.0000"
@@ -43,8 +46,9 @@ interface Expedition {
       description: "Norwegian explorer Roald Amundsen led this expedition, becoming the first person to reach the South Pole on December 14, 1911. His meticulous planning and use of sled dogs contributed to the success."
     },
     {
+      id: 'nimrod',
       name: "Nimrod-Expedition",
-      year: "1907–1909",
+      year: "1907 – 1909",
       position: {
         latitude: "-88.2300",
         longitude: "162.0000"
@@ -57,36 +61,39 @@ interface Expedition {
       description: "Led by Ernest Shackleton, the Nimrod Expedition came within 180 km of the South Pole, the closest any expedition had come at the time. Shackleton's decision to turn back likely saved his team from disaster."
     },
     {
+      id: 'discovery',
       name: "Discovery-Expedition",
-      year: "1901–1904",
+      year: "1901 – 1904",
       position: {
         latitude: "-82.1700",
         longitude: "164.0000"
       },
       route: {
-        start: [2810,2300],
+        start: [2810,1300],
         end: [2090,1295]
       },
       distance: 874.51,
       description: "The British National Antarctic Expedition, led by Robert Falcon Scott, was primarily a scientific and exploration venture. It marked Scott's first major journey to Antarctica and laid the groundwork for future expeditions."
     },
     {
+      id: 'cross',
       name: "Southern-Cross-Expedition",
-      year: "1898–1900",
+      year: "1898 – 1900",
       position: {
         latitude: "-78.5000",
         longitude: "163.0000"
       },
       route: {
         start: [2810,1490],
-        end: [2050,1390]
+        end: [2246,1390]
       },
       distance: 1284.31,
       description: "Carsten Borchgrevink's Southern Cross Expedition was the first to winter on the Antarctic continent. It also achieved the first confirmed landing on the Ross Ice Shelf and important scientific observations."
     },
     {
+      id: 'belgica',
       name: "Die Belgica-Expedition",
-      year: "1897–1899",
+      year: "1897 – 1899",
       position: {
         latitude: "-70.5000",
         longitude: "85.0000"
@@ -99,8 +106,9 @@ interface Expedition {
       description: "Led by Adrien de Gerlache, the Belgica Expedition became the first to overwinter in Antarctica, though the crew did so unintentionally. It provided vital experience for future expeditions to the polar regions."
     },
     {
+      id: 'cook',
       name: "James Cook",
-      year: "1772–1775",
+      year: "1772 – 1775",
       position: {
         latitude: "-71.0000",
         longitude: "106.9000"
