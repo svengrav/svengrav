@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import Scalable from '../../components/Scalable'
 import { usePathAnimation } from '../../hooks/usePathAnimation'
 import { Expedition } from './SouthPoleData'
+import { fetchSVG } from '../Spital/svgUtils'
 
 function createPath(id: string, route: {start: [number, number], end: [number, number] }) {
   // Create a new 'path' element
@@ -20,6 +21,41 @@ function createPath(id: string, route: {start: [number, number], end: [number, n
   path.setAttribute('fill', 'none');
   return path;
 }
+
+
+export const getSouthPoleSVG = async (id: string) => {
+  return await fetchSVG('https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-text.svg')
+    .then((svgMap) => {
+      getSVGElement(svgMap, 'text').style.fill = '#000000'
+
+      getSVGElement(svgMap, 'grid').style.fill = 'none'
+      getSVGElement(svgMap, 'grid').style.stroke = '#000000'
+      getSVGElement(svgMap, 'grid').style.strokeWidth = '3'
+
+      return svgMap
+    })
+}
+
+const getSVGElement = (svg: SVGSVGElement, id: string): SVGElement => {
+  return svg.querySelectorAll(`#${id}`)[0] as SVGElement
+}
+
+
+export const MapSVG = () => {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+
+    getSouthPoleSVG('southpole-text').then((svg) => {
+        ref.current?.appendChild(svg)
+    })
+  })
+
+  return (<div ref={ref}>
+  
+    </div>)
+}
+
 
 export const SouthPoleRoutes = ({ expedition }: {expedition: Expedition[]}) => {
   const pathOptions = {
@@ -42,12 +78,21 @@ export const SouthPoleRoutes = ({ expedition }: {expedition: Expedition[]}) => {
     exp.forEach((expedition) => { 
       expedition.startAnimation()
     })
+
+
   })
 
   return (
     <Scalable width={3400} height={2600}>
-      <div className='h-full w-full justify-center items-center flex bg-sky-900/50'>
-        <svg id='svg-routes' viewBox='0 0 3400 2600' ref={svg}></svg>
+              <svg id='svg-routes' className='absolute' viewBox='0 0 3400 2600' ref={svg}></svg>
+
+      <MapSVG />
+      <div className='h-full w-full justify-center items-center flex ' id='test'>
+        <div className='absolute text-black text-center  font-semibold' style={{left: 152, top: 236, fontSize: 100}}>
+
+          
+        </div>
+
       </div>
     </Scalable>
   )
