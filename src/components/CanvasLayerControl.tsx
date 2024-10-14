@@ -4,34 +4,18 @@ import {
   calcLayerStateByValue,
   calcLayerStateByBoundary
 } from '../core/artworkCalculation'
-import { useTransformContext } from 'react-zoom-pan-pinch'
+import { useTransformComponent, useTransformContext } from 'react-zoom-pan-pinch'
 import classNames from 'classnames'
 import { useCanvasContext } from './CanvasWrapper'
 
 export function CanvasLayerControl () {
   const transformationContext = useTransformContext()
+  const { isPanning, getContext } = transformationContext;
+  const { state: transformState, instance } = getContext();
+  const { positionX } = transformState;
+  const { maxPositionX, minPositionX } = instance.bounds || {};
   const { state, setLayer } = useCanvasContext()
 
-  if (transformationContext.isPanning) {
-    const curPosX = transformationContext.getContext().state.positionX
-    const maxPosX = transformationContext.getContext().instance.bounds?.maxPositionX
-    const minPosX = transformationContext.getContext().instance.bounds?.minPositionX
-
-    const layerState = calcLayerStateByBoundary(
-      state.layer.percentage,
-      state.layer.length,
-      curPosX,
-      minPosX!,
-      maxPosX!
-    )
-
-    setTimeout(() => {
-      setLayer({
-        index: layerState.layerIndex,
-        percentage: layerState.layerPercentage
-      })
-    }, 1)
-  }
 
   const onInputChangeByValue = (value: number) => {
     const newState = calcLayerStateByValue(value, state.layer.length)
@@ -75,13 +59,13 @@ const ControlTicks = ({
   onChange: any
 }) => {
   return (
-    <div className='w-min flex justify-around m-auto p-2 mt-3'>
+    <div className='w-min flex justify-around m-auto p-2 mt-3 '>
       {Array.from(Array(length)).map((_, current) => {
         const layerIndex = current + 1
         return (
           <div
             key={current}
-            className='relative mx-4'
+            className='relative mx-4 '
             onClick={() => onChange(layerIndex)}
           >
             <div className='absolute left-7 -top-1 text-xs text-gray-400'>
@@ -89,10 +73,10 @@ const ControlTicks = ({
             </div>
             {index <= current
               ? (
-                <PlusIcon className='h-5 w-5 hover:border cursor-pointer text-white' />
+                <PlusIcon className='h-5 w-5 hover:border cursor-pointer text-white rounded-sm' />
                 )
               : (
-                <XMarkIcon className='h-5 w-5 hover:bg-gray-400 bg-white text-black cursor-pointer' />
+                <XMarkIcon className='h-5 w-5 hover:bg-gray-400 bg-white text-black cursor-pointer rounded-sm' />
                 )}
           </div>
         )

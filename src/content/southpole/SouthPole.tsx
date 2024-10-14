@@ -18,7 +18,7 @@ export const southPole: SouthpoleMap = {
     'The seven most important voyages of discovery to the South Pole.',
   year: 2024,
   size: { width: 3400, height: 2600 },
-  defaultIndex: 3,
+  defaultIndex: 2,
   expeditions: expeditions,
   layer: [
     {
@@ -30,13 +30,7 @@ export const southPole: SouthpoleMap = {
     {
       id: 'map',
       name: 'South Pole',
-      description: 'The seven most important voyages of discovery to the South Pole.',
-      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg' />
-    },
-    {
-      id: 'map',
-      name: 'South Pole',
-      description: 'The seven most important voyages of discovery to the South Pole.',
+      description: '',
       inner: <SouthPoleRoutes expedition={expeditions} />
     },
   ],
