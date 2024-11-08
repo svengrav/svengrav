@@ -22,15 +22,14 @@ function createPath(id: string, route: { start: [number, number], end: [number, 
   return path
 }
 
-
 export const getSouthPoleSVG = async (id: string) => {
   return await fetchSVG('https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-text.svg')
     .then((svgMap) => {
-      getSVGElement(svgMap, 'text').style.fill = '#000000'
-
+      getSVGElement(svgMap, 'text').style.fill = '#444'
+      getSVGElement(svgMap, 'title').style.fill = '#444'
       getSVGElement(svgMap, 'grid').style.fill = 'none'
-      getSVGElement(svgMap, 'grid').style.stroke = '#000000'
-      getSVGElement(svgMap, 'grid').style.strokeWidth = '3'
+      getSVGElement(svgMap, 'grid').style.stroke = '#4b97d1'
+      getSVGElement(svgMap, 'grid').style.strokeWidth = '4'
 
       return svgMap
     })
@@ -52,9 +51,9 @@ export const MapSVG = () => {
 
 export const SouthPoleRoutes = ({ expedition }: { expedition: Expedition[] }) => {
   const pathOptions = {
-    pathStyle: { stroke: '#F54E51', strokeWidth: 3 },
+    pathStyle: { stroke: '#FF3653', strokeWidth: 4 },
     tipStyle: {
-      fill: '#F54E51'
+      fill: '#FF3653'
     }
   }
   const exp: any[] = []
