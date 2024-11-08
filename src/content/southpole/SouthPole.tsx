@@ -28,9 +28,9 @@ export const southPole: SouthpoleMap = {
       inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg' />
     },
     {
-      id: 'map',
-      name: 'South Pole',
-      description: '',
+      id: 'base',
+      name: 'Watercolor Basemap',
+      description: 'The watercolor-style basemap of Antarctica.',
       inner: <SouthPoleRoutes expedition={expeditions} />
     },
   ],

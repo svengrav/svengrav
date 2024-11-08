@@ -33,10 +33,10 @@ export const title = {
     <p>
       South Pole
     </p>
-
   </>
-
 }
+
+export const description = "The South Pole was first reached by Norwegian explorer Roald Amundsen and his team on December 14, 1911, during the Fram Expedition. Amundsen’s team arrived ahead of British explorer Robert Falcon Scott, who reached the pole on January 17, 1912. Tragically, Scott and his entire team perished on the return journey due to harsh conditions and a lack of supplies."
 
 export const expeditions: Expedition[] = [
   {
@@ -49,7 +49,7 @@ export const expeditions: Expedition[] = [
     },
     route: {
       start: [2660, 738],
-      end: [1700, 1290]
+      end: [1705, 1295]
     },
     display: {
       x: 2705,
@@ -74,7 +74,7 @@ export const expeditions: Expedition[] = [
     },
     route: {
       start: [2750, 910],
-      end: [1700, 1290]
+      end: [1705, 1295]
     },
     distance: 0.00,
     description: "Norwegian explorer Roald Amundsen led this expedition, becoming the first person to reach the South Pole on December 14, 1911. His meticulous planning and use of sled dogs contributed to the success."
