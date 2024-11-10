@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { SpitalCategory } from "./Spital";
 
-console.log(SpitalCategory.Camp)
 export const spitalMapData = {
   id: "spital-map",
   initView: SpitalCategory.Camp,
