@@ -3,12 +3,22 @@ import { date } from '../../utils/helper'
 import PageThumbnail from '../../components/PageThumbnail'
 import { PageDescription } from '../../core/Page'
 import { ImageLoader } from '../../components/ImageLoader'
-import SouthPoleRoutes from './SouthPoleRoutes'
+import SouthPoleMap from './SouthPoleRoutes'
 import { Expedition, expeditions } from './SouthPoleData'
 import SouthPoleView from './SouthPoleView'
 
 export type SouthpoleMap = Artwork & {
   expeditions: Expedition[];
+  controller?: SouthPoleMapController;
+}
+
+export interface SouthPoleMapController {
+  setVisibility?: (id: string, visible: boolean) => void 
+  onClick?: (id: string) => void 
+}
+
+const controller : SouthPoleMapController = { 
+
 }
 
 export const southPole: SouthpoleMap = {
@@ -20,6 +30,7 @@ export const southPole: SouthpoleMap = {
   size: { width: 3400, height: 2600 },
   defaultIndex: 2,
   expeditions: expeditions,
+  controller: controller,
   layer: [
     {
       id: 'map',
@@ -31,7 +42,7 @@ export const southPole: SouthpoleMap = {
       id: 'base',
       name: 'Watercolor Basemap',
       description: 'The watercolor-style basemap of Antarctica.',
-      inner: <SouthPoleRoutes expedition={expeditions} />
+      inner: <SouthPoleMap expedition={expeditions} controller={controller} />
     },
   ],
   points: []
@@ -45,9 +56,7 @@ export const southPolePage: PageDescription = {
   date: date(12, 10, 2024),
   thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.png' />,
   element: (
-    <SouthPoleView
-      map={southPole}
-    />
+    <SouthPoleView map={southPole} />
   )
 }
 

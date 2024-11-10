@@ -122,7 +122,6 @@ export const usePathAnimation = (
     if (!svg) return
     const basePath = getSVG(pathId) as SVGPathElement
 
-    console.log(basePath)
     pathStateRef.current = newPathState(
       pathStateRef.current.id,
       basePath,

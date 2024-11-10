@@ -22,6 +22,7 @@ interface SouthPoleViewProps {
 export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   const [window] = useWindowResize()
   const leftSidepanel = useRef<Sidepanel2Controller>(null)
+  const controller = map.controller
   const [section, setSection] = useState<{ [key: string]: boolean }>({
     "1": false,
     "2": false,
@@ -30,10 +31,17 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
     "5": false,
   })
 
-  const setActiveSection = () => {
-    // map.controller().setVisibility(1, !section[1]);
-    setSection((section) => ({ ...section, [1]: !section[1] }))
+  if (controller) {
+    controller.onClick = (id: string) => { console.log("click", id) }
   }
+
+  const setActiveSection = (id: string) => {
+    if (controller && controller.setVisibility) {
+      controller.setVisibility(id, !section[id]);
+      setSection((section) => ({ ...section, [id]: !section[id] }))
+    }
+  }
+
 
   return (
     <Page>
@@ -52,23 +60,20 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
             className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900",
           }}
         >
-          <div className="text-white text-center border-b border-gray-600 leading-relaxed mb-4 cursor-pointer flex flex-col items-center justify-center pb-4">
-            <p className="uppercase text-2xl p-2">
-              The Race
-            </p>
-            <p>
-              to the
-            </p>
-            <p className="uppercase text-2xl p-2">
-              South Pole
-            </p>
-          </div>
+          {Title()}
           <p className="py-4">
             {description}
           </p>
           {
             map.expeditions.map((expedition) => (
-              <InformationSection key={expedition.id} title={<InformationTitle title={expedition.name} year={expedition.year} />} open={section[expedition.id]} onClick={() => setSection((section) => ({ ...section, [expedition.id]: !section[expedition.id] }))}>
+              <InformationSection
+                key={expedition.id}
+                title={
+                  <InformationTitle title={expedition.name} year={expedition.year} />
+                }
+                open={section[expedition.id]}
+                onClick={() => setActiveSection(expedition.id)}
+              >
                 {expedition.description}
               </InformationSection>
             ))
@@ -86,7 +91,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   )
 }
 
-const InformationTitle = ({ title, year }: { title: string, year: string }) => { 
+const InformationTitle = ({ title, year }: { title: string, year: string }) => {
   return <div className="flex w-full justify-between">
     <h1>{title}</h1>
     <p className=" text-gray-500 mr-2">{year}</p>
@@ -145,3 +150,11 @@ const Information = () => {
     </div>
   )
 }
+function Title() {
+  return <div className="text-white text-center border-b border-gray-600 leading-relaxed mb-4 cursor-pointer flex flex-col items-center justify-center pb-4">
+    <p className="uppercase text-2xl p-2">The Race</p>
+    <p>to the</p>
+    <p className="uppercase text-2xl p-2">South Pole</p>
+  </div>
+}
+

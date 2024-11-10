@@ -49,8 +49,6 @@ export const CanvasWrapper = ({
       maxPositionX
     );
 
-    console.log("Layer State:", layerState);
-
     if (
       layerState.layerIndex !== state.layer.index ||
       layerState.layerPercentage !== state.layer.percentage

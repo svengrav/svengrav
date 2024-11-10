@@ -15,7 +15,6 @@ export interface Expedition {
   display: MapPosition
 }
 
-
 export interface MapPosition {
   x: number
   y: number
