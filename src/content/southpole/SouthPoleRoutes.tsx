@@ -11,8 +11,8 @@ type SouthPoleRouteId = 'cook' | 'belgica' | 'cross' | 'amundsen' | 'scott' | 'n
 const routeIds: SouthPoleRouteId[] = ['cook', 'belgica', 'cross', 'amundsen', 'scott', 'nimrod', 'discovery']
 
 export interface SouthPoleMapController {
-  setVisibility?: (id: string, visible: boolean) => void 
-  onClick?: (id: string) => void 
+  setVisibility?: (id: string, visible: boolean) => void
+  onClick?: (id: string) => void
 }
 
 
@@ -36,6 +36,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   const pathAnimations: any[] = []
 
   const pathOptions = {
+
     pathStyle: { stroke: '#000285', strokeWidth: 4 },
     tipStyle: {
       fill: '#000285'
@@ -46,28 +47,36 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   const routeLabel = (id: string) => `${id}_label`
   const routeCircle = (id: string) => `${id}_circle`
   const routeBox = (id: string) => `${id}_box`
-  const getBaseSVG = () => baseRef.current?.querySelector(`#${SVG_ID}`) as SVGSVGElement;
+  const getBaseSVG = () => baseRef.current?.querySelector(`#${SVG_ID}`) as SVGSVGElement
 
   expedition.forEach((expedition) => {
     pathAnimations.push(usePathAnimation(SVG_ID, `${expedition.id}_route`, pathOptions))
   })
-  
+
   //controllers
   controller.setVisibility = (id: string, visible: boolean) => {
-    var element = getSVGElement(getBaseSVG(), routeCircle(id))
-    if(visible) {
-      element.style.fill = 'red'
+    var circle = getSVGElement(getBaseSVG(), routeCircle(id))
+    var label = getSVGElement(getBaseSVG(), routeLabel(id))
+    var route = getSVGElement(getBaseSVG(), `${id}_route-path-p-1`)
+    if (visible) {
+      circle.style.stroke = '#FF1A56'
+      label.style.fill = '#FF1A56'
+      circle.style.strokeWidth = '6'
+      route.style.stroke = '#FF1A56'
     } else {
-      element.style.fill = 'none'
+      circle.style.stroke = '#4b97d1'
+      label.style.fill = '#333'
+      circle.style.strokeWidth = '3'
+      route.style.stroke = '#000285'
+
     }
   }
 
   useEffect(() => {
     getSouthPoleSVG().then((svg) => {
-      if(!getBaseSVG()) {
+      if (!getBaseSVG()) {
         baseRef.current?.appendChild(svg)
       }
-
       expedition.forEach((expedition) => {
         getSVGElement(svg, routeId(expedition.id)).style.stroke = 'none'
         getSVGElement(svg, routeBox(expedition.id)).onclick = () => controller.onClick && controller.onClick(expedition.id)
@@ -121,7 +130,6 @@ const getSouthPoleSVG = async () => {
       } catch {
 
       }
-
       return svgMap
     }).catch((error) => {
       throw (`Error loading SVG: ${error}`)

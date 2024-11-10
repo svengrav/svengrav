@@ -23,12 +23,8 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   const [window] = useWindowResize()
   const leftSidepanel = useRef<Sidepanel2Controller>(null)
   const controller = map.controller
-  const [section, setSection] = useState<{ [key: string]: boolean }>({
-    "1": false,
-    "2": false,
-    "3": false,
-    "4": false,
-    "5": false,
+  const [section, setSection] = useState({
+    active: ''
   })
 
   if (controller) {
@@ -38,13 +34,18 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   const setActiveSection = (id: string) => {
     if (controller && controller.setVisibility) {
       map.expeditions.forEach((expedition) => {
-        controller.setVisibility!(expedition.id, false);
+        controller.setVisibility!(expedition.id, false)
       })
-      controller.setVisibility(id, true);
-      setSection((section) => ({ ...section, [id]: !section[id] }))
+
+      if (section.active === id) {
+        controller.setVisibility(id, false)
+        setSection({ active: '' })
+      } else {
+        controller.setVisibility(id, true)
+        setSection({ active: id })
+      }
     }
   }
-
 
   return (
     <Page>
@@ -74,7 +75,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
                 title={
                   <InformationTitle title={expedition.name} year={expedition.year} />
                 }
-                open={section[expedition.id]}
+                open={section.active === expedition.id}
                 onClick={() => setActiveSection(expedition.id)}
               >
                 {expedition.description}
