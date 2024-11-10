@@ -75,12 +75,12 @@ export const southPole: SouthpoleMap = {
 }
 
 export const southPolePage: PageDescription = {
-  title: 'South Pole',
+  title: 'The Race to the South Pole',
   id: 'southpole',
   description: 'The seven most important voyages of discovery to the South Pole.',
   tags: ['map'],
   date: date(12, 10, 2024),
-  thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.png' />,
+  thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg' />,
   element: (
     <SouthPoleView map={southPole} />
   )
