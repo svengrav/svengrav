@@ -37,7 +37,10 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 
   const pathOptions = {
 
-    pathStyle: { stroke: '#000285', strokeWidth: 4 },
+    pathStyle: { 
+      stroke: '#000285', 
+      strokeWidth: 4,  
+    },
     tipStyle: {
       fill: '#000285'
     }
@@ -58,16 +61,19 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
     var circle = getSVGElement(getBaseSVG(), routeCircle(id))
     var label = getSVGElement(getBaseSVG(), routeLabel(id))
     var route = getSVGElement(getBaseSVG(), `${id}_route-path-p-1`)
+    var routeTip = getSVGElement(getBaseSVG(), `${id}_route-path-p-1-tip`)
     if (visible) {
-      circle.style.stroke = '#FF1A56'
-      label.style.fill = '#FF1A56'
+      circle.style.stroke = '#c45355'
+      label.style.fill = '#c45355'
       circle.style.strokeWidth = '6'
-      route.style.stroke = '#FF1A56'
+      route.style.stroke = '#c45355'
+      routeTip.style.fill = '#c45355'
     } else {
       circle.style.stroke = '#4b97d1'
       label.style.fill = '#333'
       circle.style.strokeWidth = '3'
       route.style.stroke = '#000285'
+      routeTip.style.fill = '#000285'
 
     }
   }
@@ -114,6 +120,7 @@ const getSouthPoleSVG = async () => {
           getSVGElement(svgMap, `${id}_circle`).style.strokeWidth = '3'
           getSVGElement(svgMap, `${id}_circle`).style.fill = 'none'
           getSVGElement(svgMap, `${id}_box`).style.fill = 'rgba(255, 0, 0, 0.001)'
+          getSVGElement(svgMap, `${id}_box`).style.cursor = 'pointer'
         } catch {
           console.log(`Could not find element ${id}`)
         }
