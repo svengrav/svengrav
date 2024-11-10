@@ -5,7 +5,7 @@ import { Expedition } from './SouthPoleData'
 import { fetchSVG } from '../Spital/svgUtils'
 
 const SOUTPOLE_SVG = "https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg"
-
+const SVG_ID = 'svg-base'
 
 type SouthPoleRouteId = 'cook' | 'belgica' | 'cross' | 'amundsen' | 'scott' | 'nimrod' | 'discovery'
 const routeIds: SouthPoleRouteId[] = ['cook', 'belgica', 'cross', 'amundsen', 'scott', 'nimrod', 'discovery']
@@ -32,6 +32,7 @@ export interface SouthPoleMapController {
 export const SouthPoleMap = ({ expedition, controller }: { expedition: Expedition[], controller: SouthPoleMapController }) => {
 
   //setup
+  const baseRef = useRef<HTMLDivElement>(null)
   const pathAnimations: any[] = []
 
   const pathOptions = {
@@ -43,46 +44,46 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 
   const routeId = (id: string) => `${id}_route`
   const routeLabel = (id: string) => `${id}_label`
+  const routeCircle = (id: string) => `${id}_circle`
+  const routeBox = (id: string) => `${id}_box`
+  const getBaseSVG = () => baseRef.current?.querySelector(`#${SVG_ID}`) as SVGSVGElement;
 
   expedition.forEach((expedition) => {
-    pathAnimations.push(usePathAnimation('svg-routes', `${expedition.id}_route`, pathOptions))
+    pathAnimations.push(usePathAnimation(SVG_ID, `${expedition.id}_route`, pathOptions))
   })
   
   //controllers
+  controller.setVisibility = (id: string, visible: boolean) => {
+    var element = getSVGElement(getBaseSVG(), routeCircle(id))
+    if(visible) {
+      element.style.fill = 'red'
+    } else {
+      element.style.fill = 'none'
+    }
+  }
 
-
-  const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-
-
     getSouthPoleSVG().then((svg) => {
-      if(!ref.current?.querySelector('#svg-routes')) {
-        ref.current?.appendChild(svg)
+      if(!getBaseSVG()) {
+        baseRef.current?.appendChild(svg)
       }
 
       expedition.forEach((expedition) => {
         getSVGElement(svg, routeId(expedition.id)).style.stroke = 'none'
-        getSVGElement(svg, routeLabel(expedition.id)).onclick = () => controller.onClick && controller.onClick(expedition.id)
-
+        getSVGElement(svg, routeBox(expedition.id)).onclick = () => controller.onClick && controller.onClick(expedition.id)
       })
-
 
     }).then(() => {
       pathAnimations.forEach((expedition) => {
         expedition.startAnimation()
       })
     })
-    
-    controller.setVisibility = (id: string, visible: boolean) => {
-      var svg = ref.current?.querySelector('#svg-routes') as SVGSVGElement
-      var elemtn = getSVGElement(svg, "cook_circle")
-      elemtn.style.fill = 'red'
-    }
-
   }, [])
+
+
   return (
     <Scalable width={3400} height={2600}>
-      <div ref={ref}></div>
+      <div ref={baseRef}></div>
     </Scalable>
   )
 }
@@ -93,7 +94,9 @@ export default SouthPoleMap
 const getSouthPoleSVG = async () => {
   return await fetchSVG(SOUTPOLE_SVG)
     .then((svgMap) => {
-      svgMap.id = 'svg-routes'
+      // this is impotant to avoid conflicts with other SVGs in the page
+      svgMap.id = SVG_ID
+
       getSVGElement(svgMap, 'text').style.fill = '#333'
       routeIds.forEach((id) => {
         try {
@@ -101,14 +104,27 @@ const getSouthPoleSVG = async () => {
           getSVGElement(svgMap, `${id}_circle`).style.stroke = '#4b97d1'
           getSVGElement(svgMap, `${id}_circle`).style.strokeWidth = '3'
           getSVGElement(svgMap, `${id}_circle`).style.fill = 'none'
+          getSVGElement(svgMap, `${id}_box`).style.fill = 'rgba(255, 0, 0, 0.001)'
         } catch {
           console.log(`Could not find element ${id}`)
         }
+      })
+      try {
         getSVGElement(svgMap, `polar_circle`).style.fill = 'none'
         getSVGElement(svgMap, `polar_circle`).style.stroke = '#4b97d1'
         getSVGElement(svgMap, `polar_circle`).style.strokeWidth = '5'
-      })
+        getSVGElement(svgMap, `frame`).style.fill = 'none'
+        getSVGElement(svgMap, `outer_circle`).style.fill = 'none'
+        getSVGElement(svgMap, `outer_circle`).style.stroke = 'none'
+        getSVGElement(svgMap, `outer_circle`).style.strokeWidth = '5'
+        getSVGElement(svgMap, `frame`).style.fill = 'none'
+      } catch {
+
+      }
+
       return svgMap
+    }).catch((error) => {
+      throw (`Error loading SVG: ${error}`)
     })
 }
 

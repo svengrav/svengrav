@@ -32,12 +32,15 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   })
 
   if (controller) {
-    controller.onClick = (id: string) => { console.log("click", id) }
+    controller.onClick = (id: string) => { setActiveSection(id) }
   }
 
   const setActiveSection = (id: string) => {
     if (controller && controller.setVisibility) {
-      controller.setVisibility(id, !section[id]);
+      map.expeditions.forEach((expedition) => {
+        controller.setVisibility!(expedition.id, false);
+      })
+      controller.setVisibility(id, true);
       setSection((section) => ({ ...section, [id]: !section[id] }))
     }
   }
