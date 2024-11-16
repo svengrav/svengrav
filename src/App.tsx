@@ -18,12 +18,14 @@ import southPolePage from './content/southpole/SouthPole'
 import { routeLabPage } from './content/Lab'
 import spitalPage from './content/Spital/SpitalPage'
 import walspergerPage from './content/walsperger/WalspergMap'
+import { cafePage } from './content/Cafe'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 )
 
 const pages = [
+  cafePage,
   northSouthPage,
   threePage,
   castlePage,
