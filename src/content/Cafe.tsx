@@ -26,14 +26,14 @@ export const cafe: Artwork = {
                 <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_2.jpg' />
             )
         },
-        {
-            id: 'cafe-print',
-            name: 'The Cafe Balthazar',
-            description: 'Painting of the Cafe Balthazar.',
-            inner: (
-                <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_1.jpg' />
-            )
-        },
+        // {
+        //     id: 'cafe-print',
+        //     name: 'The Cafe Balthazar',
+        //     description: 'Painting of the Cafe Balthazar.',
+        //     inner: (
+        //         <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_1.jpg' />
+        //     )
+        // },
         {
             id: 'cafe',
             name: 'The Cafe Balthazar',
