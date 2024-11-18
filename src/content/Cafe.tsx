@@ -26,14 +26,14 @@ export const cafe: Artwork = {
                 <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_2.jpg' />
             )
         },
-        {
-            id: 'cafe-print',
-            name: 'The Cafe Balthazar',
-            description: 'Painting of the Cafe Balthazar.',
-            inner: (
-                <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_1.jpg' />
-            )
-        },
+        // {
+        //     id: 'cafe-print',
+        //     name: 'The Cafe Balthazar',
+        //     description: 'Painting of the Cafe Balthazar.',
+        //     inner: (
+        //         <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_1.jpg' />
+        //     )
+        // },
         {
             id: 'cafe',
             name: 'The Cafe Balthazar',
@@ -61,12 +61,10 @@ export const cafePage: PageDescription = {
     ),
     element: (
         <ArtworkView
-        navigator={false}
+            navigator={false}
             inner={
                 <Sidepanel2
                     position="left"
-                    
-                    visible
                     width={400}
                     closable
                     label=""
@@ -80,13 +78,13 @@ export const cafePage: PageDescription = {
                     </h1>
                     <div className='h-0.5 bg-gray-500 w-10 m-auto my-5' />
                     <p className='text-center'>
-                        <Icon primary={MapPinIcon}  label='Google Maps' className='text-sm text-white' onClick={() => window.open(cafeMapPosition, "_blank")}  />
+                        <Icon primary={MapPinIcon} label='Google Maps' className='text-sm text-white' onClick={() => window.open(cafeMapPosition, "_blank")} />
 
                     </p>
                     <p className='mt-4 px-4'>
-                    I illustrated this beautiful little Cafe Balthazar located near Rue Arcisse de Caumont in Caen in July 2024. 
+                        I illustrated this beautiful little Cafe Balthazar located near Rue Arcisse de Caumont in Caen in July 2024.
                     </p>
-                    
+
                 </Sidepanel2>
             }
             artwork={cafe}
