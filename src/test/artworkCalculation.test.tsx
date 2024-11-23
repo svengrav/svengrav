@@ -1,4 +1,4 @@
-import { calcLayerStateByIndex, calcLayerStateByValue, calcLayerStateByBoundary, sizeIsEqual, calcArtworkSize, calcArtworkRatio, calcCanvasPosition } from '../core/artworkCalculation'
+import { calcLayerStateByIndex, calcLayerStateByValue, calcLayerStateByBoundary, sizeIsEqual, calcArtworkSize, calcArtworkRatio, calcCanvasPosition, calcLayerOpacity } from '../core/artworkCalculation'
 
 // #region artwork size calculation
 test('artwork matches canvas', () => {
@@ -180,6 +180,14 @@ test('calc layer state by 2 layer for 1 gap', () => {
     gapEnd: 0,
     gapPercentage: 0
   })
+})
+
+test('calc layer state by 2 layer for 1 gap', () => {
+  expect(calcLayerOpacity(3, 2, 50)).toBe(1)
+})
+
+test('calc layer state by 2 layer for 1 gap', () => {
+  expect(calcLayerOpacity(3, 2, 50)).toBe(1)
 })
 
 test('calc layer state by index 5 for 5 layers', () => {
