@@ -7,6 +7,28 @@ import {
 import { calculateAllLayerStates, calculateLayerStateByIndex } from "../core/artworkLayerCalculation";
 
 describe("calculate full layer state", () => {
+  test("layer index for 2 layers is 2", () => {
+    expect(calculateLayerStateByIndex(2, 2)).toEqual({
+      active: 2,
+      progress: 100,
+      layers: [
+        { index: 1, transition: { start: 0, end: 0, progress: 1 } },
+        { index: 2, transition: { start: 0, end: 100, progress: 1 } },
+      ],
+    });
+  });
+
+  test("layer index for 2 layers is 1", () => {
+    expect(calculateLayerStateByIndex(2, 1)).toEqual({
+      active: 1,
+      progress: 0,
+      layers: [
+        { index: 1, transition: { start: 0, end: 0, progress: 1 } },
+        { index: 2, transition: { start: 0, end: 100, progress: 0 } },
+      ],
+    });
+  });
+
   test("layer full progress for 3 layers is 50", () => {
     expect(calculateAllLayerStates(3, 50)).toEqual({
       active: 2,
