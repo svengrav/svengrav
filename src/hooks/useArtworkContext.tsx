@@ -66,7 +66,7 @@ const calcInitialState = (artwork: Artwork, canvasSize: Size): ArtworkState => {
     layer: {
       length: artwork.layer.length,
       index: artwork.defaultIndex,
-      percentage: calculateLayerStateByIndex(artwork.defaultIndex, artwork.layer.length).progress,
+      percentage: calculateLayerStateByIndex(artwork.layer.length, artwork.defaultIndex).progress,
       values: artwork.layer
     },
     canvas: {
