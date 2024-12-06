@@ -1,17 +1,14 @@
 import {
-  calcLayerStateByBoundary,
   sizeIsEqual,
   calcArtworkSize,
   calcArtworkRatio,
   calcCanvasPosition,
-  calculateAllLayerStates,
-  calculateLayerStateByIndex,
-  LayerState2,
 } from "../core/artworkCalculation";
+import { calculateAllLayerStates, calculateLayerStateByIndex } from "../core/artworkLayerCalculation";
 
 describe("calculate full layer state", () => {
   test("layer full progress for 3 layers is 50", () => {
-    expect(calculateAllLayerStates(3, 50)).toEqual<LayerState2>({
+    expect(calculateAllLayerStates(3, 50)).toEqual({
       active: 2,
       progress: 50,
       layers: [
@@ -23,7 +20,7 @@ describe("calculate full layer state", () => {
   });
 
   test("layer index for 3 layers is 2", () => {
-    expect(calculateLayerStateByIndex(3, 2)).toEqual<LayerState2>({
+    expect(calculateLayerStateByIndex(3, 2)).toEqual({
       active: 2,
       progress: 50,
       layers: [
@@ -35,7 +32,7 @@ describe("calculate full layer state", () => {
   });
 
   test("layer index for 3 layers is 3", () => {
-    expect(calculateLayerStateByIndex(3, 3)).toEqual<LayerState2>({
+    expect(calculateLayerStateByIndex(3, 3)).toEqual({
       active: 3,
       progress: 100,
       layers: [
@@ -204,26 +201,3 @@ test("artwork position is not changed because canvas equals artwork", () => {
 });
 // #endregion
 
-// #region calc layer state by boundary
-test("calc layer state by boundary pos 0 and min 0", () => {
-  expect(calcLayerStateByBoundary(0, 5, -1, 0, 0)).toMatchObject({
-    layerPercentage: 0,
-  });
-});
-
-test("exceeding the maximum leads to one percent more", () => {
-  expect(calcLayerStateByBoundary(0, 5, 200, 0, 100)).toMatchObject({
-    layerPercentage: 1,
-  });
-});
-
-test("not exceeding the maximum and minimum leads to no change", () => {
-  expect(calcLayerStateByBoundary(50, 5, 50, 0, 100)).toMatchObject({
-    layerPercentage: 50,
-  });
-});
-
-test("negative percentage leads to error.", () => {
-  expect(() => calcLayerStateByBoundary(-50, 5, 50, 0, 100)).toThrow();
-});
-// #endregion

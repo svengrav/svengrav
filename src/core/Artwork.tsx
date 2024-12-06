@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Position, Size } from './BaseType'
+import { Position, Size } from './Geometry'
 
 export interface Artwork {
   id: string

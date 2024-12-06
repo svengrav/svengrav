@@ -1,13 +1,13 @@
 import { Artwork, ArtworkLayer } from '../core/Artwork';
-import { calcArtworkSize as calcArtworkState, calcCanvasPosition, calculateLayerStateByIndex, sizeIsEqual } from '../core/artworkCalculation';
+import { calcArtworkSize as calcArtworkState, calcCanvasPosition, sizeIsEqual } from '../core/artworkCalculation';
 import { useEffect, useState } from 'react';
 import { useWindowResize } from './useWindowResize';
+import { calculateLayerStateByIndex } from '../core/artworkLayerCalculation';
+import { Position, Size } from '../core/Geometry';
 
 type OverflowOptions = 'fit' | 'contain';
 
 ///#region private types
-interface Position { x: number, y: number }
-interface Size { width: number, height: number }
 
 interface ArtworkTransformation {
   overflow: OverflowOptions
@@ -49,7 +49,6 @@ export interface ArtworkContext {
   setScale: ({ scale }: { scale: number }) => void
   setLayer: ({ index, percentage }: { index: number, percentage: number }) => void
 }
-
 
 /**
  * Calculate initial state for the artwork context.

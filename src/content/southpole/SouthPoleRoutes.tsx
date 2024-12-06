@@ -58,10 +58,10 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 
   //controllers
   controller.setVisibility = (id: string, visible: boolean) => {
-    var circle = getSVGElement(getBaseSVG(), routeCircle(id))
-    var label = getSVGElement(getBaseSVG(), routeLabel(id))
-    var route = getSVGElement(getBaseSVG(), `${id}_route-path-p-1`)
-    var routeTip = getSVGElement(getBaseSVG(), `${id}_route-path-p-1-tip`)
+    const circle = getSVGElement(getBaseSVG(), routeCircle(id))
+    const label = getSVGElement(getBaseSVG(), routeLabel(id))
+    const route = getSVGElement(getBaseSVG(), `${id}_route-path-p-1`)
+    const routeTip = getSVGElement(getBaseSVG(), `${id}_route-path-p-1-tip`)
     if (visible) {
       circle.style.stroke = '#c45355'
       label.style.fill = '#c45355'

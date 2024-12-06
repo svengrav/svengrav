@@ -2,7 +2,8 @@ import { ReactZoomPanPinchContentRef, TransformWrapper } from 'react-zoom-pan-pi
 import { ArtworkContext, useArtworkContext } from '../hooks/useArtworkContext'
 import { createContext, useContext, useEffect, useRef } from 'react'
 import { Artwork } from '../core/Artwork'
-import {Size } from '../core/BaseType'
+import {Size } from '../core/Geometry'
+import { calculateSingleLayerState } from '../core/artworkLayerCalculation'
 
 const CanvasContext = createContext<ArtworkContext | undefined>(undefined)
 
@@ -17,8 +18,9 @@ export const CanvasWrapper = ({
   artwork,
   size
 }: CanwasWrapperProps) => {
-  const context = useArtworkContext(artwork, { canvasSize: size })
-  const { state } = context
+  const artwokContext = useArtworkContext(artwork, { canvasSize: size })
+
+  const { state } = artwokContext
   const transformRef = useRef<ReactZoomPanPinchContentRef>(null)
   const transformed = state.transformed
 
@@ -28,7 +30,7 @@ export const CanvasWrapper = ({
   }, [size])
 
   return (
-    <CanvasContext.Provider value={context}>
+    <CanvasContext.Provider value={artwokContext}>
       <TransformWrapper
       limitToBounds={true}
         centerOnInit

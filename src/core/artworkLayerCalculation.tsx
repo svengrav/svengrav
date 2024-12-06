@@ -1,4 +1,3 @@
-import { assert } from '../utils/helper'
 
 /**
  * Rundet eine Zahl auf die gewünschte Anzahl von Dezimalstellen.
@@ -6,7 +5,7 @@ import { assert } from '../utils/helper'
  * @param {number} decimals - Anzahl der Dezimalstellen.
  * @returns {number} - Gerundete Zahl.
  */
-const roundTo = (value: number, decimals = 2) => {
+const roundTo = (value: number, decimals: number = 2): number => {
   const factor = Math.pow(10, decimals);
   return Math.round(value * factor) / factor;
 };
@@ -74,6 +73,32 @@ export const calculateAllLayerStates = (totalLayers: number, currentState: numbe
 
   return layerState;
 };
+/**
+ * Calculates the properties of a single layer based on its index.
+ * @param {number} totalLayers - The total number of layers.
+ * @param {number} layerIndex - The index of the layer to calculate.
+ * @param {number} currentState - The current state (1–100).
+ * @returns {object} - An object with the properties of the layer.
+ */
+export const calculateSingleLayerState = (totalLayers: number, layerIndex: number, currentState: number) => {
+  const layerSize = totalLayers > 1 ? roundTo(100 / (totalLayers - 1), 2) : 100; // Size of each layer
+  const start = layerIndex === 0 ? 0 : roundTo((layerIndex - 1) * layerSize, 2);
+  const end = layerIndex === 0 ? 0 : roundTo(layerIndex * layerSize, 2);
+
+  const isLayerZeroAndCurrent = currentState === 0 && layerIndex === 0;
+  const isCurrentLayer = (currentState > start && currentState <= end) || isLayerZeroAndCurrent;
+  const isLayerVisible = (currentState > end) || isLayerZeroAndCurrent;
+  const relativeState = isLayerVisible ? 1 : isCurrentLayer ? roundTo((currentState - start) / (end - start), 2) : 0;
+
+  return {
+    index: layerIndex + 1,
+    transition: {
+      start,
+      end,
+      progress: relativeState
+    }
+  };
+};
 
 /**
  * Calculates the properties of a layer based on its index.
@@ -85,93 +110,3 @@ export const calculateLayerStateByIndex = (totalLayers: number, activeLayer: num
   const currentState = 100 / (totalLayers -1) * (activeLayer -1);
   return calculateAllLayerStates(totalLayers, currentState);
 };
-
-interface Size {
-  width: number
-  height: number
-}
-
-export function sizeIsEqual (a: Size, b: Size): boolean {
-  return a.width === b.width && a.height === b.height
-}
-
-export function calcArtworkShrinkBySize (
-  artworkSize: Size,
-  canvasSize: Size
-): number {
-  return isLandscape(artworkSize)
-    ? canvasSize.width / artworkSize.width
-    : canvasSize.height / artworkSize.height
-}
-
-export function calcArtworkShrinkByScale (scale: number): number {
-  return scale ** -1
-}
-
-export function calcArtworkRatio (
-  artworkSize: Size,
-  canvasSize: Size
-): { widthRatio: number, heightRatio: number } {
-  const widthRatio = canvasSize.width / artworkSize.width
-  const heightRatio = canvasSize.height / artworkSize.height
-  return {
-    widthRatio: Math.min(1, widthRatio),
-    heightRatio: Math.min(1, heightRatio)
-  }
-}
-
-export function calcArtworkSize (
-  artworkSize: Size,
-  canvasSize: Size,
-  canvasOverflow: 'fit' | 'contain' = 'fit'
-) {
-  const ratio = calcArtworkRatio(artworkSize, canvasSize)
-  let finalShrink: number
-
-  if (canvasOverflow === 'fit') {
-    finalShrink = ratio.heightRatio
-  } else {
-    finalShrink = Math.min(ratio.widthRatio, ratio.heightRatio)
-  }
-
-  const currentSize: Size = {
-    width: artworkSize.width * finalShrink,
-    height: artworkSize.height * finalShrink
-  }
-
-  const transformedRatio = calcArtworkRatio(currentSize, canvasSize)
-
-  const scale = {
-    maxScale: Math.min(ratio.widthRatio, ratio.heightRatio) ** -1,
-    minScale: Math.min(
-      transformedRatio.widthRatio,
-      transformedRatio.heightRatio
-    ),
-    current: 1
-  }
-
-  return { size: currentSize, scale }
-}
-
-export function isLandscape ({ width, height }: Size): boolean {
-  return width >= height
-}
-
-export const calcCanvasPosition = (
-  artworkSize: Size,
-  canvasSize: Size,
-  position: 'center' | 'top-left' = 'top-left'
-) => {
-  switch (position) {
-    case 'center':
-      return {
-        x: (canvasSize.width - artworkSize.width) / 2,
-        y: (canvasSize.height - artworkSize.height) / 2
-      }
-    default:
-      return {
-        x: 0,
-        y: 0
-      }
-  }
-}
