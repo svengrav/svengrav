@@ -1,6 +1,5 @@
-https://learn.microsoft.com/en-us/azure/static-web-apps/custom-domain-azure-dns
+## Blog
 
+### Todo
 
-Debug Test:
-
-VS Code: Terminal -> New Debug Terminal
+- Artwork Loader: The canvas should be shown when the full artwork is loaded.
