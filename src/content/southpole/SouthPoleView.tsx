@@ -21,7 +21,7 @@ interface SouthPoleViewProps {
 }
 
 export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
-  const [window] = useWindowResize()
+  const {window} = useWindowResize()
   const leftSidepanel = useRef<Sidepanel2Controller>(null)
   const controller = map.controller
   const [section, setSection] = useState({

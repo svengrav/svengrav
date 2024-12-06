@@ -1,14 +1,13 @@
-import { ReactZoomPanPinchContentRef, ReactZoomPanPinchRef, TransformWrapper } from 'react-zoom-pan-pinch'
+import { ReactZoomPanPinchContentRef, TransformWrapper } from 'react-zoom-pan-pinch'
 import { ArtworkContext, useArtworkContext } from '../hooks/useArtworkContext'
-import { createContext, useCallback, useContext, useEffect, useRef } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { Artwork } from '../core/Artwork'
 import {Size } from '../core/BaseType'
-import { calcLayerStateByBoundary } from '../core/artworkCalculation'
 
 const CanvasContext = createContext<ArtworkContext | undefined>(undefined)
 
 interface CanwasWrapperProps {
-  children: any
+  children: React.ReactNode
   artwork: Artwork
   size: Size
 }
