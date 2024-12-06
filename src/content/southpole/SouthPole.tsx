@@ -22,7 +22,6 @@ const controller: SouthPoleMapController = {
 }
 
 const SouthPoleQuote = () => {
-
   return <>
     <div className="text-slate-700 tracking-widestleading-loose text-3xl flex justify-center items-center absolute w-full h-full bg-white/70">
       <div>
@@ -36,9 +35,7 @@ const SouthPoleQuote = () => {
 
     </div>
     <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg' />
-
   </>
-
 }
 
 export const southPole: SouthpoleMap = {
