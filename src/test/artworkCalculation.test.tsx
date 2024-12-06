@@ -1,5 +1,4 @@
 import {
-  calcLayerStateByIndex,
   calcLayerStateByBoundary,
   sizeIsEqual,
   calcArtworkSize,
