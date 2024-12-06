@@ -12,6 +12,7 @@ const roundTo = (value: number, decimals = 2) => {
 };
 
 export interface LayerState2 {
+  progress: number;
   active: number;
   layers: Array<{
     index: number;
@@ -31,6 +32,7 @@ export interface LayerState2 {
  */
 export const calculateAllLayerStates = (totalLayers: number, currentState: number): LayerState2 => {
   const layerState : LayerState2 ={
+    progress: currentState,
     active: 0,
     layers: []
   };
@@ -81,7 +83,6 @@ export const calculateAllLayerStates = (totalLayers: number, currentState: numbe
  */
 export const calculateLayerStateByIndex = (totalLayers: number, activeLayer: number): LayerState2 => {
   const currentState = 100 / (totalLayers -1) * (activeLayer -1);
-
   return calculateAllLayerStates(totalLayers, currentState);
 };
 

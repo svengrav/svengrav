@@ -14,6 +14,7 @@ describe("calculate full layer state", () => {
   test("layer full progress for 3 layers is 50", () => {
     expect(calculateAllLayerStates(3, 50)).toEqual<LayerState2>({
       active: 2,
+      progress: 50,
       layers: [
         { index: 1, transition: { start: 0, end: 0, progress: 1 } },
         { index: 2, transition: { start: 0, end: 50, progress: 1 } },
@@ -25,6 +26,7 @@ describe("calculate full layer state", () => {
   test("layer index for 3 layers is 2", () => {
     expect(calculateLayerStateByIndex(3, 2)).toEqual<LayerState2>({
       active: 2,
+      progress: 50,
       layers: [
         { index: 1, transition: { start: 0, end: 0, progress: 1 } },
         { index: 2, transition: { start: 0, end: 50, progress: 1 } },
@@ -36,6 +38,7 @@ describe("calculate full layer state", () => {
   test("layer index for 3 layers is 3", () => {
     expect(calculateLayerStateByIndex(3, 3)).toEqual<LayerState2>({
       active: 3,
+      progress: 100,
       layers: [
         { index: 1, transition: { start: 0, end: 0, progress: 1 } },
         { index: 2, transition: { start: 0, end: 50, progress: 1 } },
@@ -200,124 +203,6 @@ test("artwork position is not changed because canvas equals artwork", () => {
     y: 0,
   });
 });
-// #endregion
-
-test("calc layer state by index 1 for 0 gaps", () => {
-  expect(calcLayerStateByIndex(1, 1)).toStrictEqual({
-    layerPercentage: 100,
-    layerIndex: 1,
-    gapLength: 0,
-    gapSize: 0,
-    gapStart: 0,
-    gapEnd: 0,
-    gapPercentage: 0,
-  });
-});
-
-// #region calc layer states
-// test('calc layer state by index 1 for 0 gaps', () => {
-//   expect(calcLayerStateByIndex(1, 1)).toStrictEqual({
-//     layerPercentage: 100,
-//     layerIndex: 1,
-//     gapLength: 0,
-//     gapSize: 0,
-//     gapStart: 0,
-//     gapEnd: 0,
-//     gapPercentage: 0
-//   })
-// })
-
-// test('calc layer state by 2 layer for 1 gap', () => {
-//   expect(calcLayerStateByIndex(1, 2)).toStrictEqual({
-//     layerPercentage: 0,
-//     layerIndex: 1,
-//     gapLength: 1,
-//     gapSize: 100,
-//     gapStart: 0,
-//     gapEnd: 0,
-//     gapPercentage: 0
-//   })
-// })
-
-// test('calc layer state by 2 layer for 1 gap', () => {
-//   expect(calcLayerOpacity(3, 2, 50)).toBe(1)
-// })
-
-// test('calc layer state by 2 layer for 1 gap', () => {
-//   expect(calcLayerOpacity(3, 2, 50)).toBe(1)
-// })
-
-// test('calc layer state by index 5 for 5 layers', () => {
-//   expect(calcLayerStateByIndex(5, 5)).toStrictEqual({
-//     layerPercentage: 100,
-//     layerIndex: 5,
-//     gapLength: 4,
-//     gapSize: 25,
-//     gapStart: 75,
-//     gapEnd: 100,
-//     gapPercentage: 100
-//   })
-// })
-
-// test('calc layer state by index 6 for 8 layers', () => {
-//   expect(calcLayerStateByIndex(6, 9)).toStrictEqual({
-//     layerPercentage: 62.5,
-//     layerIndex: 6,
-//     gapLength: 8,
-//     gapSize: 12.5,
-//     gapStart: 50,
-//     gapEnd: 62.5,
-//     gapPercentage: 100
-//   })
-// })
-
-// test('calc layer state by value 100 for 5 layers', () => {
-//   expect(calcLayerStateByValue(100, 5)).toStrictEqual({
-//     layerPercentage: 100,
-//     layerIndex: 5,
-//     gapLength: 4,
-//     gapSize: 25,
-//     gapStart: 75,
-//     gapEnd: 100,
-//     gapPercentage: 100
-//   })
-// })
-
-// test('calc layer state by value 50 for 5 layers', () => {
-//   expect(calcLayerStateByValue(50, 5)).toStrictEqual({
-//     layerPercentage: 50,
-//     layerIndex: 3,
-//     gapLength: 4,
-//     gapSize: 25,
-//     gapStart: 25,
-//     gapEnd: 50,
-//     gapPercentage: 100
-//   })
-// })
-
-// test('calc layer state by value 0 for 5 parts', () => {
-//   expect(calcLayerStateByValue(0, 5)).toStrictEqual({
-//     layerPercentage: 0,
-//     layerIndex: 1,
-//     gapLength: 4,
-//     gapSize: 25,
-//     gapStart: 0,
-//     gapEnd: 0,
-//     gapPercentage: 0
-//   })
-// })
-
-// test('calc layer state by value 25 for 5 parts', () => {
-//   expect(calcLayerStateByValue(25, 5)).toStrictEqual({
-//     layerPercentage: 25,
-//     layerIndex: 2,
-//     gapLength: 4,
-//     gapSize: 25,
-//     gapStart: 0,
-//     gapEnd: 25,
-//     gapPercentage: 100
-//   })
-// })
 // #endregion
 
 // #region calc layer state by boundary
