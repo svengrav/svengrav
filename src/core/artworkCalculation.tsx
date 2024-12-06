@@ -27,7 +27,7 @@ export interface LayerState2 {
  * Calculates all layers and their states.
  * @param {number} totalLayers - Total number of layers.
  * @param {number} currentState - The current state (1–100).
- * @returns {Array<Object>} - A list of all layers with their properties.
+ * @returns {LayerState2} - A list of all layers with their properties.
  */
 export const calculateAllLayerStates = (totalLayers: number, currentState: number): LayerState2 => {
   const layerState : LayerState2 ={
@@ -74,12 +74,12 @@ export const calculateAllLayerStates = (totalLayers: number, currentState: numbe
 };
 
 /**
- * Berechnet die Eigenschaften eines Layers basierend auf seinem Index.
- * @param {number} totalLayers - Die Gesamtanzahl der Layer.
- * @param {number} activeLayer - Der Index des aktiven Layers.
- * @returns {Object} - Eigenschaften des angegebenen Layers.
+ * Calculates the properties of a layer based on its index.
+ * @param {number} totalLayers - The total number of layers.
+ * @param {number} activeLayer - The index of the active layer.
+ * @returns {LayerState2} - An object with the properties of the layer.
  */
-export const calculateLayerStateByIndex = (totalLayers: number, activeLayer: number) => {
+export const calculateLayerStateByIndex = (totalLayers: number, activeLayer: number): LayerState2 => {
   const currentState = 100 / (totalLayers -1) * (activeLayer -1);
 
   return calculateAllLayerStates(totalLayers, currentState);
