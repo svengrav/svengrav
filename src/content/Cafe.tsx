@@ -16,7 +16,7 @@ export const cafe: Artwork = {
     description: 'I illustrated this beautiful little Cafe Balthazar located near Rue Arcisse de Caumont in Caen in July 2024. ',
     year: 2024,
     size: { width: 2000, height: 2700 },
-    defaultIndex: 2,
+    defaultIndex: 3,
     layer: [
         {
             id: 'outlines',
@@ -26,14 +26,14 @@ export const cafe: Artwork = {
                 <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_2.jpg' />
             )
         },
-        // {
-        //     id: 'cafe-print',
-        //     name: 'The Cafe Balthazar',
-        //     description: 'Painting of the Cafe Balthazar.',
-        //     inner: (
-        //         <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_1.jpg' />
-        //     )
-        // },
+        {
+            id: 'cafe-print',
+            name: 'The Cafe Balthazar',
+            description: 'Painting of the Cafe Balthazar.',
+            inner: (
+                <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/cafe/cafe_1.jpg' />
+            )
+        },
         {
             id: 'cafe',
             name: 'The Cafe Balthazar',
