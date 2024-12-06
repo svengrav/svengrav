@@ -1,7 +1,7 @@
 import { TransformComponent } from 'react-zoom-pan-pinch'
-import { calcLayerOpacity } from '../core/artworkCalculation'
 import { CanvasLayer } from './CanvasLayer'
 import { useCanvasContext } from './CanvasWrapper'
+import { calculateSingleLayerState } from '../core/artworkLayerCalculation'
 
 // https://bettertyped.github.io/react-zoom-pan-pinch/?path=/story/docs-props--page
 export const Canvas = ({ className }: { className?: string }) => {
@@ -13,8 +13,8 @@ export const Canvas = ({ className }: { className?: string }) => {
           <TransformComponent contentStyle={{ ...transformed.size }} wrapperStyle={{ ...canvas.size }}>
             {
                 layer.values.map((v, i) => {
-                  const opacity = calcLayerOpacity(layer.index, i, layer.percentage)
-                  return <CanvasLayer key={'l' + i} opacity={opacity}>{v.inner}</CanvasLayer>
+                  const state = calculateSingleLayerState(layer.length, i, layer.percentage)
+                  return <CanvasLayer key={'l' + i} opacity={state.transition.progress}>{v.inner}</CanvasLayer>
                 })
               }
           </TransformComponent>

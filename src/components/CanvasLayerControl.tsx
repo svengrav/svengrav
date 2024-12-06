@@ -1,7 +1,7 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { calculateLayerStateByIndex, calculateAllLayerStates } from "../core/artworkCalculation";
 import classNames from "classnames";
 import { useCanvasContext } from "./CanvasWrapper";
+import { calculateAllLayerStates, calculateLayerStateByIndex } from "../core/artworkLayerCalculation";
 
 /**
  * CanvasLayerControl component provides controls for managing canvas layers.
