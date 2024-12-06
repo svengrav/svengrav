@@ -2,9 +2,11 @@ import { PlusIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import {
   calcLayerStateByIndex,
   calcLayerStateByValue,
-  calcLayerStateByBoundary
+  calcLayerStateByBoundary,
+  calculateLayerStateByIndex,
+  calculateAllLayerStates
 } from '../core/artworkCalculation'
-import { useTransformComponent, useTransformContext } from 'react-zoom-pan-pinch'
+import { useTransformContext } from 'react-zoom-pan-pinch'
 import classNames from 'classnames'
 import { useCanvasContext } from './CanvasWrapper'
 
@@ -18,18 +20,18 @@ export function CanvasLayerControl () {
 
 
   const onInputChangeByValue = (value: number) => {
-    const newState = calcLayerStateByValue(value, state.layer.length)
+    const newState = calculateAllLayerStates(state.layer.length, value)
     setLayer({
-      index: newState.layerIndex,
-      percentage: newState.layerPercentage
+      index: newState.active,
+      percentage: newState.progress
     })
   }
 
   const onInputChangeByLayer = (layer: number) => {
-    const newState = calcLayerStateByIndex(layer, state.layer.length)
+    const newState = calculateLayerStateByIndex(state.layer.length, layer)
     setLayer({
-      index: newState.layerIndex,
-      percentage: newState.layerPercentage
+      index: newState.active,
+      percentage: newState.progress
     })
   }
 

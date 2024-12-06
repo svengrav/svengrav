@@ -1,5 +1,5 @@
 import { Artwork, ArtworkLayer } from '../core/Artwork'
-import { calcArtworkSize as calcArtworkState, calcCanvasPosition, calcLayerStateByIndex, sizeIsEqual } from '../core/artworkCalculation'
+import { calcArtworkSize as calcArtworkState, calcCanvasPosition, calcLayerStateByIndex, calculateLayerStateByIndex, sizeIsEqual } from '../core/artworkCalculation'
 import { useEffect, useState } from 'react'
 import { useWindowResize } from './useWindowResize'
 
@@ -61,7 +61,7 @@ const calcInitialState = (artwork: Artwork, canvasSize: Size): ArtworkState => {
     layer: {
       length: artwork.layer.length,
       index: artwork.defaultIndex,
-      percentage: calcLayerStateByIndex(artwork.defaultIndex, artwork.layer.length).layerPercentage,
+      percentage: calculateLayerStateByIndex(artwork.defaultIndex, artwork.layer.length).progress,
       values: artwork.layer
     },
     canvas: {
