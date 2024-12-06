@@ -69,14 +69,14 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
 
 
   // Get window size and initialize state
-  const [windowSize] = useWindowResize();
+  const { window } = useWindowResize();
   const [viewState, setViewState] = useState<SpitalViewState>({
     activeId: undefined,
     chapters: campChapters,
     view: SpitalCategory.Camp,
     leftPanel: "open",
     rightPanel: "closed",
-    canvasWidth: windowSize.width,
+    canvasWidth: window.width,
   });
 
   // Use refs for the container and side panels
@@ -181,7 +181,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
           width={SIDEPANEL_WIDTH}
           closable
           ref={leftSidepanel}
-          full={windowSize.width < 600}
+          full={window.width < 600}
           className="bg-spital-surface text-spital-onSurface"
           scrollbar={{
             className:
@@ -216,7 +216,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
           position="right"
           closable
           width={SIDEPANEL_WIDTH}
-          full={windowSize.width < 600}
+          full={window.width < 600}
           className="bg-spital-surface text-spital-onPrimary pl-8"
           scrollbar={{
             className:
@@ -249,7 +249,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
         </Sidepanel2>
 
         {/* Main content area */}
-        <div className="flex w-full h-full bg-spital-background" style={{ height: windowSize.height - 50 }}>
+        <div className="flex w-full h-full bg-spital-background" style={{ height: window.height - 50 }}>
           <div className="flex grow flex-col ">
             <div
               className={`bg-spital-map-background flex justify-center transition-transform duration-1000`}
@@ -267,7 +267,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
               <CanvasWrapper
                 artwork={artwork}
                 size={{
-                  height: windowSize.height - 140,
+                  height: window.height - 140,
                   width: viewState.canvasWidth - SIDEPANEL_WIDTH,
                 }}
               >
