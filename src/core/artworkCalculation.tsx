@@ -1,5 +1,91 @@
 import { assert } from '../utils/helper'
 
+/**
+ * Rundet eine Zahl auf die gewünschte Anzahl von Dezimalstellen.
+ * @param {number} value - Die zu rundende Zahl.
+ * @param {number} decimals - Anzahl der Dezimalstellen.
+ * @returns {number} - Gerundete Zahl.
+ */
+const roundTo = (value: number, decimals = 2) => {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+};
+
+export interface LayerState2 {
+  active: number;
+  layers: Array<{
+    index: number;
+    transition: {
+      start: number;
+      end: number;
+      progress: number;
+    };
+  }>;
+}
+
+/**
+ * Calculates all layers and their states.
+ * @param {number} totalLayers - Total number of layers.
+ * @param {number} currentState - The current state (1–100).
+ * @returns {LayerState2} - A list of all layers with their properties.
+ */
+export const calculateAllLayerStates = (totalLayers: number, currentState: number): LayerState2 => {
+  const layerState : LayerState2 ={
+    active: 0,
+    layers: []
+  };
+  const layerSize = totalLayers > 1 ? roundTo(100 / (totalLayers - 1), 2) : 100; // Size of each layer
+
+  for (let i = 0; i < totalLayers; i++) {
+    // Calculate the start and end points of each layer
+    const start = i === 0 ? 0 : roundTo((i - 1) * layerSize, 2);
+    const end = i === 0 ? 0 : roundTo(i * layerSize, 2);
+
+    // Check if this is the first layer and the current state is 0.
+    const isLayerZeroAndCurrent = currentState === 0 && i === 0;
+
+    // Check if this layer is the current layer
+    const isCurrentLayer = (currentState > start && currentState <= end) || isLayerZeroAndCurrent;
+
+    // Check if this layer is visible
+    const isLayerVisible = (currentState > end) || isLayerZeroAndCurrent;
+
+    // Calculate the relative state within the layer. If it is already an visible layer it is 1, 
+    // if it is the current layer it is the relative state, otherwise 0
+    const relativeState = isLayerVisible ? 1: isCurrentLayer ? 
+      roundTo((currentState - start) / (end - start), 2): 0;
+
+    if(isCurrentLayer) {
+      layerState.active = i + 1;
+    }
+
+    // Add the layer object to the list
+    layerState.layers.push({
+      index: i + 1,
+      transition: {
+        start,
+        end,
+        progress: relativeState
+      }
+    });
+  }
+
+  return layerState;
+};
+
+/**
+ * Calculates the properties of a layer based on its index.
+ * @param {number} totalLayers - The total number of layers.
+ * @param {number} activeLayer - The index of the active layer.
+ * @returns {LayerState2} - An object with the properties of the layer.
+ */
+export const calculateLayerStateByIndex = (totalLayers: number, activeLayer: number): LayerState2 => {
+  const currentState = 100 / (totalLayers -1) * (activeLayer -1);
+
+  return calculateAllLayerStates(totalLayers, currentState);
+};
+
+
 interface Size {
   width: number
   height: number
