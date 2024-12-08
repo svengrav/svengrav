@@ -1,0 +1,261 @@
+strict digraph "dependency-cruiser output"{
+    rankdir="LR" splines="true" overlap="false" nodesep="0.16" ranksep="0.18" fontname="Helvetica-bold" fontsize="9" style="rounded,bold,filled" fillcolor="#ffffff" compound="true"
+    node [shape="box" style="rounded, filled" height="0.2" color="black" fillcolor="#ffffcc" fontcolor="black" fontname="Helvetica" fontsize="9"]
+    edge [arrowhead="normal" arrowsize="0.6" penwidth="2.0" color="#00000033" fontname="Helvetica" fontsize="9"]
+
+    subgraph "cluster_src" {label="src" "src/App.tsx" [label=<App.tsx> tooltip="App.tsx" URL="src/App.tsx" fillcolor="#bbfeff"] }
+    "src/App.tsx" -> "src/assets/styles.css"
+    "src/App.tsx" -> "src/content/Cafe.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/Castle.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/Columbus.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/JamesCook.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/Lab.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/NewZealand.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/NorthSouth.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/southpole/SouthPole.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/Spital/SpitalPage.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/Three.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/App.tsx" -> "src/content/walsperger/WalspergMap.tsx"
+    "src/App.tsx" -> "src/core/Page.tsx"
+    "src/App.tsx" -> "src/views/HomeView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/assets" {label="assets" "src/assets/baseTheme.ts" [label=<baseTheme.ts> tooltip="no-orphans" URL="src/assets/baseTheme.ts" fillcolor="#ccffcc" fontcolor="orange" color="orange"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/assets" {label="assets" "src/assets/icons.tsx" [label=<icons.tsx> tooltip="icons.tsx" URL="src/assets/icons.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/assets" {label="assets" "src/assets/styles.css" [label=<styles.css> tooltip="styles.css" URL="src/assets/styles.css" ] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Grid.tsx" [label=<Grid.tsx> tooltip="no-orphans" URL="src/components/Grid.tsx" fillcolor="#ccffcc" fontcolor="orange" color="orange"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Icon.tsx" [label=<Icon.tsx> tooltip="Icon.tsx" URL="src/components/Icon.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Image.tsx" [label=<Image.tsx> tooltip="Image.tsx" URL="src/components/Image.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Image.tsx" -> "src/assets/icons.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/ImageLoader.tsx" [label=<ImageLoader.tsx> tooltip="ImageLoader.tsx" URL="src/components/ImageLoader.tsx" fillcolor="#bbfeff"] } }
+    "src/components/ImageLoader.tsx" -> "src/assets/icons.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Link.tsx" [label=<Link.tsx> tooltip="Link.tsx" URL="src/components/Link.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Navigation.tsx" [label=<Navigation.tsx> tooltip="Navigation.tsx" URL="src/components/Navigation.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Navigation.tsx" -> "src/App.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/components/Navigation.tsx" -> "src/core/Page.tsx"
+    "src/components/Navigation.tsx" -> "src/components/Icon.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Navigator.tsx" [label=<Navigator.tsx> tooltip="Navigator.tsx" URL="src/components/Navigator.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Navigator.tsx" -> "src/components/Icon.tsx"
+    "src/components/Navigator.tsx" -> "src/components/Sidepanel.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Overlay.tsx" [label=<Overlay.tsx> tooltip="Overlay.tsx" URL="src/components/Overlay.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Overlay.tsx" -> "src/components/Icon.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Page.tsx" [label=<Page.tsx> tooltip="Page.tsx" URL="src/components/Page.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Page.tsx" -> "src/assets/icons.tsx"
+    "src/components/Page.tsx" -> "src/hooks/useWindowResize.tsx"
+    "src/components/Page.tsx" -> "src/components/Icon.tsx"
+    "src/components/Page.tsx" -> "src/components/Navigation.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/PageThumbnail.tsx" [label=<PageThumbnail.tsx> tooltip="PageThumbnail.tsx" URL="src/components/PageThumbnail.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Point.tsx" [label=<Point.tsx> tooltip="no-orphans" URL="src/components/Point.tsx" fillcolor="#ccffcc" fontcolor="orange" color="orange"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Scalable.tsx" [label=<Scalable.tsx> tooltip="Scalable.tsx" URL="src/components/Scalable.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Scalable.tsx" -> "src/hooks/useContainerSize.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Sidepanel.tsx" [label=<Sidepanel.tsx> tooltip="Sidepanel.tsx" URL="src/components/Sidepanel.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Sidepanel2.tsx" [label=<Sidepanel2.tsx> tooltip="Sidepanel2.tsx" URL="src/components/Sidepanel2.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Sidepanel2.tsx" -> "src/components/Icon.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" subgraph "cluster_src/components/canvas" {label="canvas" "src/components/canvas/Canvas.tsx" [label=<Canvas.tsx> tooltip="Canvas.tsx" URL="src/components/canvas/Canvas.tsx" fillcolor="#bbfeff"] } } }
+    "src/components/canvas/Canvas.tsx" -> "src/core/artworkLayerCalculation.tsx"
+    "src/components/canvas/Canvas.tsx" -> "src/components/canvas/CanvasLayer.tsx"
+    "src/components/canvas/Canvas.tsx" -> "src/components/canvas/CanvasWrapper.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" subgraph "cluster_src/components/canvas" {label="canvas" "src/components/canvas/CanvasLayer.tsx" [label=<CanvasLayer.tsx> tooltip="CanvasLayer.tsx" URL="src/components/canvas/CanvasLayer.tsx" fillcolor="#bbfeff"] } } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" subgraph "cluster_src/components/canvas" {label="canvas" "src/components/canvas/CanvasLayerControl.tsx" [label=<CanvasLayerControl.tsx> tooltip="CanvasLayerControl.tsx" URL="src/components/canvas/CanvasLayerControl.tsx" fillcolor="#bbfeff"] } } }
+    "src/components/canvas/CanvasLayerControl.tsx" -> "src/components/canvas/CanvasWrapper.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" subgraph "cluster_src/components/canvas" {label="canvas" "src/components/canvas/CanvasWrapper.tsx" [label=<CanvasWrapper.tsx> tooltip="CanvasWrapper.tsx" URL="src/components/canvas/CanvasWrapper.tsx" fillcolor="#bbfeff"] } } }
+    "src/components/canvas/CanvasWrapper.tsx" -> "src/core/Artwork.tsx"
+    "src/components/canvas/CanvasWrapper.tsx" -> "src/core/artworkLayerCalculation.tsx"
+    "src/components/canvas/CanvasWrapper.tsx" -> "src/core/Geometry.tsx"
+    "src/components/canvas/CanvasWrapper.tsx" -> "src/hooks/useArtworkContext.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" subgraph "cluster_src/components/canvas" {label="canvas" "src/components/canvas/CanvasZoomControl.tsx" [label=<CanvasZoomControl.tsx> tooltip="CanvasZoomControl.tsx" URL="src/components/canvas/CanvasZoomControl.tsx" fillcolor="#bbfeff"] } } }
+    "src/components/canvas/CanvasZoomControl.tsx" -> "src/components/canvas/CanvasWrapper.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" subgraph "cluster_src/components/map" {label="map" "src/components/map/MapComponents.tsx" [label=<MapComponents.tsx> tooltip="MapComponents.tsx" URL="src/components/map/MapComponents.tsx" fillcolor="#bbfeff"] } } }
+    "src/components/map/MapComponents.tsx" -> "src/content/Spital/SpitalTheme.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/Cafe.tsx" [label=<Cafe.tsx> tooltip="Cafe.tsx" URL="src/content/Cafe.tsx" fillcolor="#bbfeff"] } }
+    "src/content/Cafe.tsx" -> "src/components/Icon.tsx"
+    "src/content/Cafe.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/Cafe.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/Cafe.tsx" -> "src/components/Sidepanel2.tsx"
+    "src/content/Cafe.tsx" -> "src/core/Artwork.tsx"
+    "src/content/Cafe.tsx" -> "src/core/Page.tsx"
+    "src/content/Cafe.tsx" -> "src/utils/helper.tsx"
+    "src/content/Cafe.tsx" -> "src/views/ArtworkView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/Castle.tsx" [label=<Castle.tsx> tooltip="Castle.tsx" URL="src/content/Castle.tsx" fillcolor="#bbfeff"] } }
+    "src/content/Castle.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/Castle.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/Castle.tsx" -> "src/core/Artwork.tsx"
+    "src/content/Castle.tsx" -> "src/core/Page.tsx"
+    "src/content/Castle.tsx" -> "src/utils/helper.tsx"
+    "src/content/Castle.tsx" -> "src/views/ArtworkView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/Columbus.tsx" [label=<Columbus.tsx> tooltip="Columbus.tsx" URL="src/content/Columbus.tsx" fillcolor="#bbfeff"] } }
+    "src/content/Columbus.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/Columbus.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/Columbus.tsx" -> "src/core/Artwork.tsx"
+    "src/content/Columbus.tsx" -> "src/core/Page.tsx"
+    "src/content/Columbus.tsx" -> "src/utils/helper.tsx"
+    "src/content/Columbus.tsx" -> "src/views/ArtworkView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Columbus.tsx" -> "src/content/ColumbusRoutes.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/ColumbusRoutes.tsx" [label=<ColumbusRoutes.tsx> tooltip="ColumbusRoutes.tsx" URL="src/content/ColumbusRoutes.tsx" fillcolor="#bbfeff"] } }
+    "src/content/ColumbusRoutes.tsx" -> "src/components/Scalable.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/JamesCook.tsx" [label=<JamesCook.tsx> tooltip="JamesCook.tsx" URL="src/content/JamesCook.tsx" fillcolor="#bbfeff"] } }
+    "src/content/JamesCook.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/JamesCook.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/JamesCook.tsx" -> "src/core/Artwork.tsx"
+    "src/content/JamesCook.tsx" -> "src/core/Page.tsx"
+    "src/content/JamesCook.tsx" -> "src/utils/helper.tsx"
+    "src/content/JamesCook.tsx" -> "src/views/ArtworkView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/Lab.tsx" [label=<Lab.tsx> tooltip="Lab.tsx" URL="src/content/Lab.tsx" fillcolor="#bbfeff"] } }
+    "src/content/Lab.tsx" -> "src/components/Page.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Lab.tsx" -> "src/core/Page.tsx"
+    "src/content/Lab.tsx" -> "src/core/pathAnimation.tsx"
+    "src/content/Lab.tsx" -> "src/hooks/usePathAnimation.tsx"
+    "src/content/Lab.tsx" -> "src/utils/helper.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/NewZealand.tsx" [label=<NewZealand.tsx> tooltip="NewZealand.tsx" URL="src/content/NewZealand.tsx" fillcolor="#bbfeff"] } }
+    "src/content/NewZealand.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/NewZealand.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/NewZealand.tsx" -> "src/core/Artwork.tsx"
+    "src/content/NewZealand.tsx" -> "src/core/Page.tsx"
+    "src/content/NewZealand.tsx" -> "src/utils/helper.tsx"
+    "src/content/NewZealand.tsx" -> "src/views/ArtworkView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/NewZealand.tsx" -> "src/content/NewZealandRoutes.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/NewZealandRoutes.tsx" [label=<NewZealandRoutes.tsx> tooltip="NewZealandRoutes.tsx" URL="src/content/NewZealandRoutes.tsx" fillcolor="#bbfeff"] } }
+    "src/content/NewZealandRoutes.tsx" -> "src/components/Scalable.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/NorthSouth.tsx" [label=<NorthSouth.tsx> tooltip="NorthSouth.tsx" URL="src/content/NorthSouth.tsx" fillcolor="#bbfeff"] } }
+    "src/content/NorthSouth.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/NorthSouth.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/NorthSouth.tsx" -> "src/core/Artwork.tsx"
+    "src/content/NorthSouth.tsx" -> "src/core/Page.tsx"
+    "src/content/NorthSouth.tsx" -> "src/utils/helper.tsx"
+    "src/content/NorthSouth.tsx" -> "src/views/ArtworkView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/NorthSouth.tsx" -> "src/content/NorthSouthRoutes.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/NorthSouthRoutes.tsx" [label=<NorthSouthRoutes.tsx> tooltip="NorthSouthRoutes.tsx" URL="src/content/NorthSouthRoutes.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/Spital.tsx" [label=<Spital.tsx> tooltip="Spital.tsx" URL="src/content/Spital/Spital.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/Spital/Spital.tsx" -> "src/components/Link.tsx"
+    "src/content/Spital/Spital.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/Spital/Spital.tsx" -> "src/core/Artwork.tsx"
+    "src/content/Spital/Spital.tsx" -> "src/core/Page.tsx"
+    "src/content/Spital/Spital.tsx" -> "src/utils/helper.tsx"
+    "src/content/Spital/Spital.tsx" -> "src/content/Spital/SpitalTheme.ts"
+    "src/content/Spital/Spital.tsx" -> "src/content/Spital/SpitalView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalCampMap.tsx" [label=<SpitalCampMap.tsx> tooltip="SpitalCampMap.tsx" URL="src/content/Spital/SpitalCampMap.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/Spital/SpitalCampMap.tsx" -> "src/components/map/MapComponents.tsx"
+    "src/content/Spital/SpitalCampMap.tsx" -> "src/content/Spital/SpitalMapData.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Spital/SpitalCampMap.tsx" -> "src/content/Spital/SpitalTheme.ts"
+    "src/content/Spital/SpitalCampMap.tsx" -> "src/content/Spital/svgUtils.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalLogo.tsx" [label=<SpitalLogo.tsx> tooltip="SpitalLogo.tsx" URL="src/content/Spital/SpitalLogo.tsx" fillcolor="#bbfeff"] } } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalMap.tsx" [label=<SpitalMap.tsx> tooltip="SpitalMap.tsx" URL="src/content/Spital/SpitalMap.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/Spital/SpitalMap.tsx" -> "src/components/map/MapComponents.tsx"
+    "src/content/Spital/SpitalMap.tsx" -> "src/content/Spital/Spital.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Spital/SpitalMap.tsx" -> "src/content/Spital/SpitalCampMap.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Spital/SpitalMap.tsx" -> "src/content/Spital/SpitalMapData.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Spital/SpitalMap.tsx" -> "src/content/Spital/SpitalMapSVG.tsx"
+    "src/content/Spital/SpitalMap.tsx" -> "src/content/Spital/SpitalTheme.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalMapData.tsx" [label=<SpitalMapData.tsx> tooltip="SpitalMapData.tsx" URL="src/content/Spital/SpitalMapData.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/Spital/SpitalMapData.tsx" -> "src/content/Spital/Spital.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalMapSVG.tsx" [label=<SpitalMapSVG.tsx> tooltip="SpitalMapSVG.tsx" URL="src/content/Spital/SpitalMapSVG.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/Spital/SpitalMapSVG.tsx" -> "src/content/Spital/SpitalTheme.ts"
+    "src/content/Spital/SpitalMapSVG.tsx" -> "src/content/Spital/svgUtils.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalPage.tsx" [label=<SpitalPage.tsx> tooltip="SpitalPage.tsx" URL="src/content/Spital/SpitalPage.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/Spital/SpitalPage.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/Spital/SpitalPage.tsx" -> "src/core/Page.tsx"
+    "src/content/Spital/SpitalPage.tsx" -> "src/utils/helper.tsx"
+    "src/content/Spital/SpitalPage.tsx" -> "src/content/Spital/Spital.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Spital/SpitalPage.tsx" -> "src/content/Spital/SpitalView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalTheme.ts" [label=<SpitalTheme.ts> tooltip="SpitalTheme.ts" URL="src/content/Spital/SpitalTheme.ts" fillcolor="#ddfeff"] } } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/SpitalView.tsx" [label=<SpitalView.tsx> tooltip="SpitalView.tsx" URL="src/content/Spital/SpitalView.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/Spital/SpitalView.tsx" -> "src/components/Icon.tsx"
+    "src/content/Spital/SpitalView.tsx" -> "src/components/Overlay.tsx"
+    "src/content/Spital/SpitalView.tsx" -> "src/components/Page.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Spital/SpitalView.tsx" -> "src/components/Scalable.tsx"
+    "src/content/Spital/SpitalView.tsx" -> "src/components/Sidepanel2.tsx"
+    "src/content/Spital/SpitalView.tsx" -> "src/hooks/useWindowResize.tsx"
+    "src/content/Spital/SpitalView.tsx" -> "src/content/Spital/Spital.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Spital/SpitalView.tsx" -> "src/content/Spital/SpitalLogo.tsx"
+    "src/content/Spital/SpitalView.tsx" -> "src/content/Spital/SpitalMap.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/Spital" {label="Spital" "src/content/Spital/svgUtils.ts" [label=<svgUtils.ts> tooltip="svgUtils.ts" URL="src/content/Spital/svgUtils.ts" fillcolor="#ddfeff"] } } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/Three.tsx" [label=<Three.tsx> tooltip="Three.tsx" URL="src/content/Three.tsx" fillcolor="#bbfeff"] } }
+    "src/content/Three.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/Three.tsx" -> "src/core/Artwork.tsx"
+    "src/content/Three.tsx" -> "src/core/Page.tsx"
+    "src/content/Three.tsx" -> "src/utils/helper.tsx"
+    "src/content/Three.tsx" -> "src/views/ArtworkView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/Three.tsx" -> "src/content/ThreeLayers.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" "src/content/ThreeLayers.tsx" [label=<ThreeLayers.tsx> tooltip="ThreeLayers.tsx" URL="src/content/ThreeLayers.tsx" fillcolor="#bbfeff"] } }
+    "src/content/ThreeLayers.tsx" -> "src/assets/icons.tsx"
+    "src/content/ThreeLayers.tsx" -> "src/components/Scalable.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/southpole" {label="southpole" "src/content/southpole/SouthPole.tsx" [label=<SouthPole.tsx> tooltip="SouthPole.tsx" URL="src/content/southpole/SouthPole.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/southpole/SouthPole.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/southpole/SouthPole.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/southpole/SouthPole.tsx" -> "src/core/Artwork.tsx"
+    "src/content/southpole/SouthPole.tsx" -> "src/core/Page.tsx"
+    "src/content/southpole/SouthPole.tsx" -> "src/utils/helper.tsx"
+    "src/content/southpole/SouthPole.tsx" -> "src/content/southpole/SouthPoleData.tsx"
+    "src/content/southpole/SouthPole.tsx" -> "src/content/southpole/SouthPoleRoutes.tsx"
+    "src/content/southpole/SouthPole.tsx" -> "src/content/southpole/SouthPoleView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/southpole" {label="southpole" "src/content/southpole/SouthPoleData.tsx" [label=<SouthPoleData.tsx> tooltip="SouthPoleData.tsx" URL="src/content/southpole/SouthPoleData.tsx" fillcolor="#bbfeff"] } } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/southpole" {label="southpole" "src/content/southpole/SouthPoleRoutes.tsx" [label=<SouthPoleRoutes.tsx> tooltip="SouthPoleRoutes.tsx" URL="src/content/southpole/SouthPoleRoutes.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/southpole/SouthPoleRoutes.tsx" -> "src/components/Scalable.tsx"
+    "src/content/southpole/SouthPoleRoutes.tsx" -> "src/hooks/usePathAnimation.tsx"
+    "src/content/southpole/SouthPoleRoutes.tsx" -> "src/content/Spital/svgUtils.ts"
+    "src/content/southpole/SouthPoleRoutes.tsx" -> "src/content/southpole/SouthPoleData.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/southpole" {label="southpole" "src/content/southpole/SouthPoleView.tsx" [label=<SouthPoleView.tsx> tooltip="SouthPoleView.tsx" URL="src/content/southpole/SouthPoleView.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/southpole/SouthPoleView.tsx" -> "src/components/Icon.tsx"
+    "src/content/southpole/SouthPoleView.tsx" -> "src/components/Navigator.tsx"
+    "src/content/southpole/SouthPoleView.tsx" -> "src/components/Overlay.tsx"
+    "src/content/southpole/SouthPoleView.tsx" -> "src/components/Page.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/southpole/SouthPoleView.tsx" -> "src/components/Sidepanel2.tsx"
+    "src/content/southpole/SouthPoleView.tsx" -> "src/hooks/useWindowResize.tsx"
+    "src/content/southpole/SouthPoleView.tsx" -> "src/content/Spital/svgUtils.ts"
+    "src/content/southpole/SouthPoleView.tsx" -> "src/content/southpole/SouthPole.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/southpole/SouthPoleView.tsx" -> "src/content/southpole/SouthPoleData.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/walsperger" {label="walsperger" "src/content/walsperger/WalspergMap.tsx" [label=<WalspergMap.tsx> tooltip="WalspergMap.tsx" URL="src/content/walsperger/WalspergMap.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/walsperger/WalspergMap.tsx" -> "src/components/ImageLoader.tsx"
+    "src/content/walsperger/WalspergMap.tsx" -> "src/components/PageThumbnail.tsx"
+    "src/content/walsperger/WalspergMap.tsx" -> "src/core/Artwork.tsx"
+    "src/content/walsperger/WalspergMap.tsx" -> "src/core/Page.tsx"
+    "src/content/walsperger/WalspergMap.tsx" -> "src/utils/helper.tsx"
+    "src/content/walsperger/WalspergMap.tsx" -> "src/content/walsperger/WalspergerData.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/walsperger/WalspergMap.tsx" -> "src/content/walsperger/WalspergerView.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/walsperger" {label="walsperger" "src/content/walsperger/WalspergerData.tsx" [label=<WalspergerData.tsx> tooltip="WalspergerData.tsx" URL="src/content/walsperger/WalspergerData.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/walsperger/WalspergerData.tsx" -> "src/components/Scalable.tsx"
+    "src/content/walsperger/WalspergerData.tsx" -> "src/content/walsperger/WalspergMap.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/content" {label="content" subgraph "cluster_src/content/walsperger" {label="walsperger" "src/content/walsperger/WalspergerView.tsx" [label=<WalspergerView.tsx> tooltip="WalspergerView.tsx" URL="src/content/walsperger/WalspergerView.tsx" fillcolor="#bbfeff"] } } }
+    "src/content/walsperger/WalspergerView.tsx" -> "src/components/Icon.tsx"
+    "src/content/walsperger/WalspergerView.tsx" -> "src/components/Navigator.tsx"
+    "src/content/walsperger/WalspergerView.tsx" -> "src/components/Overlay.tsx"
+    "src/content/walsperger/WalspergerView.tsx" -> "src/components/Page.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/content/walsperger/WalspergerView.tsx" -> "src/components/Sidepanel2.tsx"
+    "src/content/walsperger/WalspergerView.tsx" -> "src/hooks/useWindowResize.tsx"
+    "src/content/walsperger/WalspergerView.tsx" -> "src/content/walsperger/WalspergMap.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/core" {label="core" "src/core/Artwork.tsx" [label=<Artwork.tsx> tooltip="Artwork.tsx" URL="src/core/Artwork.tsx" fillcolor="#bbfeff"] } }
+    "src/core/Artwork.tsx" -> "src/core/Geometry.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/core" {label="core" "src/core/Geometry.tsx" [label=<Geometry.tsx> tooltip="Geometry.tsx" URL="src/core/Geometry.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/core" {label="core" "src/core/Page.tsx" [label=<Page.tsx> tooltip="Page.tsx" URL="src/core/Page.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/core" {label="core" "src/core/artworkCalculation.tsx" [label=<artworkCalculation.tsx> tooltip="artworkCalculation.tsx" URL="src/core/artworkCalculation.tsx" fillcolor="#bbfeff"] } }
+    "src/core/artworkCalculation.tsx" -> "src/utils/helper.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/core" {label="core" "src/core/artworkLayerCalculation.tsx" [label=<artworkLayerCalculation.tsx> tooltip="artworkLayerCalculation.tsx" URL="src/core/artworkLayerCalculation.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/core" {label="core" "src/core/pathAnimation.tsx" [label=<pathAnimation.tsx> tooltip="pathAnimation.tsx" URL="src/core/pathAnimation.tsx" fillcolor="#bbfeff"] } }
+    "src/core/pathAnimation.tsx" -> "src/utils/helper.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/useArtworkContext.tsx" [label=<useArtworkContext.tsx> tooltip="useArtworkContext.tsx" URL="src/hooks/useArtworkContext.tsx" fillcolor="#bbfeff"] } }
+    "src/hooks/useArtworkContext.tsx" -> "src/core/Artwork.tsx"
+    "src/hooks/useArtworkContext.tsx" -> "src/core/artworkCalculation.tsx"
+    "src/hooks/useArtworkContext.tsx" -> "src/core/artworkLayerCalculation.tsx"
+    "src/hooks/useArtworkContext.tsx" -> "src/core/Geometry.tsx"
+    "src/hooks/useArtworkContext.tsx" -> "src/hooks/useWindowResize.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/useContainerSize.tsx" [label=<useContainerSize.tsx> tooltip="useContainerSize.tsx" URL="src/hooks/useContainerSize.tsx" fillcolor="#bbfeff"] } }
+    "src/hooks/useContainerSize.tsx" -> "src/hooks/useWindowResize.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/usePathAnimation.tsx" [label=<usePathAnimation.tsx> tooltip="usePathAnimation.tsx" URL="src/hooks/usePathAnimation.tsx" fillcolor="#bbfeff"] } }
+    "src/hooks/usePathAnimation.tsx" -> "src/core/pathAnimation.tsx"
+    "src/hooks/usePathAnimation.tsx" -> "src/utils/helper.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/useWindowResize.tsx" [label=<useWindowResize.tsx> tooltip="useWindowResize.tsx" URL="src/hooks/useWindowResize.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/test" {label="test" "src/test/artworkCalculation.test.tsx" [label=<artworkCalculation.test.tsx> tooltip="artworkCalculation.test.tsx" URL="src/test/artworkCalculation.test.tsx" fillcolor="#bbfeff"] } }
+    "src/test/artworkCalculation.test.tsx" -> "src/core/artworkCalculation.tsx"
+    "src/test/artworkCalculation.test.tsx" -> "src/core/artworkLayerCalculation.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/test" {label="test" "src/test/pathAnimation.test.tsx" [label=<pathAnimation.test.tsx> tooltip="pathAnimation.test.tsx" URL="src/test/pathAnimation.test.tsx" fillcolor="#bbfeff"] } }
+    "src/test/pathAnimation.test.tsx" -> "src/core/pathAnimation.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/utils" {label="utils" "src/utils/helper.tsx" [label=<helper.tsx> tooltip="helper.tsx" URL="src/utils/helper.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/views" {label="views" "src/views/ArtworkView.tsx" [label=<ArtworkView.tsx> tooltip="ArtworkView.tsx" URL="src/views/ArtworkView.tsx" fillcolor="#bbfeff"] } }
+    "src/views/ArtworkView.tsx" -> "src/components/Navigator.tsx"
+    "src/views/ArtworkView.tsx" -> "src/components/Page.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/views/ArtworkView.tsx" -> "src/core/Artwork.tsx"
+    "src/views/ArtworkView.tsx" -> "src/hooks/useWindowResize.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/views" {label="views" "src/views/HomeView.tsx" [label=<HomeView.tsx> tooltip="HomeView.tsx" URL="src/views/HomeView.tsx" fillcolor="#bbfeff"] } }
+    "src/views/HomeView.tsx" -> "src/assets/icons.tsx"
+    "src/views/HomeView.tsx" -> "src/components/Icon.tsx"
+    "src/views/HomeView.tsx" -> "src/components/Page.tsx" [xlabel="no-circular" tooltip="no-circular" arrowhead="normalnoneodot" fontcolor="orange" color="orange"]
+    "src/views/HomeView.tsx" -> "src/core/Page.tsx"
+}

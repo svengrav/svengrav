@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Icon from './Icon'
 import classNames from 'classnames'
 import Sidepanel from './Sidepanel'
-import { useCanvasContext } from './CanvasWrapper'
+import { useCanvasContext } from './canvas/CanvasWrapper'
 
 interface NavigatorProps {
   className?: string

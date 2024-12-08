@@ -1,10 +1,10 @@
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { useWindowResize } from "../../hooks/useWindowResize"
 import Page from "../../components/Page"
-import { CanvasWrapper } from "../../components/CanvasWrapper"
-import { Canvas } from "../../components/Canvas"
-import { CanvasZoomControl } from "../../components/CanvasZoomControl"
-import { CanvasLayerControl } from "../../components/CanvasLayerControl"
+import { CanvasWrapper } from "../../components/canvas/CanvasWrapper"
+import { Canvas } from "../../components/canvas/Canvas"
+import { CanvasZoomControl } from "../../components/canvas/CanvasZoomControl"
+import { CanvasLayerControl } from "../../components/canvas/CanvasLayerControl"
 import { Navigator } from "../../components/Navigator"
 import { Sidepanel2, Sidepanel2Controller } from "../../components/Sidepanel2"
 import { OverlayProvider, useOverlay } from "../../components/Overlay"
@@ -13,7 +13,7 @@ import Icon from "../../components/Icon"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { SouthpoleMap } from "./SouthPole"
 import { description } from "./SouthPoleData"
-import { fetchSVG } from "../Spital/svgUtils"
+import { fetchSVG } from "../spital2/svgUtils"
 
 interface SouthPoleViewProps {
   map: SouthpoleMap

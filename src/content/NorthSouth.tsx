@@ -1,4 +1,3 @@
-import NorthSouth from './NorthSouthRoutes'
 import { ImageLoader } from '../components/ImageLoader'
 import { Artwork } from '../core/Artwork'
 import { date } from '../utils/helper'
@@ -37,16 +36,6 @@ export const northSouth: Artwork = {
       description: 'Layers with descriptions of the map.',
       inner: (
         <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/northsouth/northsouth4.jpg' />
-      )
-    },
-    {
-      id: 'layer4',
-      name: 'Routes',
-      description: '',
-      inner: (
-        <div className=' bg-black/70'>
-          <NorthSouth />
-        </div>
       )
     }
   ]

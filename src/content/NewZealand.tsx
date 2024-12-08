@@ -9,8 +9,8 @@ import ArtworkView from '../views/ArtworkView'
 export const newZealand: Artwork = {
   id: 'newzealand',
   name: 'New Zealand',
-  description: 'New Zealand artwork to test my homepage.',
-  year: 2000,
+  description: 'Artwork of the map of New Zealand based on the first map made by James Cook in 1769.',
+  year: 2020,
   size: { width: 3300, height: 4400 },
   defaultIndex: 1,
   layer: [
@@ -35,7 +35,7 @@ export const newZealandPage: PageDescription = {
   title: 'New Zealand',
   id: 'newzealand',
   description: 'Artwork of the map of New Zealand based on the first map made by James Cook in 1769.',
-  date: date(5, 5, 2024),
+  date: date(1, 1, 2024),
   tags: ['art', 'map'],
   thumbnail: <PageThumbnail color='indigo' src='https://stsvengrav.blob.core.windows.net/stsvengrav/newzealand/newzealand-thumbnail.png' />,
   element: <ArtworkView artwork={newZealand} />

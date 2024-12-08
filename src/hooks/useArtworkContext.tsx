@@ -56,6 +56,8 @@ export interface ArtworkContext {
 const calcInitialState = (artwork: Artwork, canvasSize: Size): ArtworkState => {
   const transformation = calcArtworkState(artwork.size, canvasSize, 'fit');
   const canvasPosition = calcCanvasPosition(transformation.size, canvasSize, 'center');
+  const progress = calculateLayerStateByIndex(artwork.layer.length, artwork.defaultIndex).progress;
+
   return {
     artwork,
     transformed: {
@@ -66,7 +68,7 @@ const calcInitialState = (artwork: Artwork, canvasSize: Size): ArtworkState => {
     layer: {
       length: artwork.layer.length,
       index: artwork.defaultIndex,
-      percentage: calculateLayerStateByIndex(artwork.layer.length, artwork.defaultIndex).progress,
+      percentage: progress,
       values: artwork.layer
     },
     canvas: {

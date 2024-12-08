@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
-import spitalTheme from '../../content/Spital/SpitalTheme';
+import spitalTheme from '../../content/spital2/SpitalTheme';
 
 /**
  * Interface for position props.

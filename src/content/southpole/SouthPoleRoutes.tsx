@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import Scalable from '../../components/Scalable'
 import { usePathAnimation } from '../../hooks/usePathAnimation'
 import { Expedition } from './SouthPoleData'
-import { fetchSVG } from '../Spital/svgUtils'
+import { fetchSVG } from '../spital2/svgUtils'
 
 const SOUTPOLE_SVG = "https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg"
 const SVG_ID = 'svg-base'

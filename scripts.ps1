@@ -36,6 +36,11 @@ yarn test --watchAll
 # start local server
 yarn run start
 
+yarn add -D dependency-cruiser
+npx depcruise --init
+
+npx depcruise src --include-only "^src" --output-type dot | Set-Content ./dependencygraph.dot
+
 # split long classnames
 function Invoke-TransformCSSClasses([string] $ClassNames) {
   $classesArray = $ClassNames.Split(" ") | ForEach-Object { "`""+ $_ + "`"" }
@@ -44,3 +49,6 @@ function Invoke-TransformCSSClasses([string] $ClassNames) {
 
 $ClassName
 Invoke-TransformCSSClasses -ClassNames $ClassName | Set-Clipboard
+
+
+yarn add -D dependency-cruiser

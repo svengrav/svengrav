@@ -1,10 +1,6 @@
 import { ReactNode } from "react";
-import PageThumbnail from "../../components/PageThumbnail";
 import { Artwork } from "../../core/Artwork";
-import { PageDescription } from "../../core/Page";
-import { date } from "../../utils/helper";
 import spitalTheme from "./SpitalTheme";
-import SpitalView from "./SpitalView";
 import { TextLink } from "../../components/Link";
 
 const colors = spitalTheme.colors.spital;

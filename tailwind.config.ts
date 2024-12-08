@@ -1,6 +1,6 @@
 // tailwind.config.ts
 import type { Config } from 'tailwindcss';
-import spitalTheme from './src/content/Spital/SpitalTheme.ts';
+import spitalTheme from './src/content/spital2/SpitalTheme.ts';
 import tailwindScrollbar from 'tailwind-scrollbar';
 
 const config: Config = {

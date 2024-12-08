@@ -1,12 +1,10 @@
 import Page from "../../components/Page";
-import { Canvas } from "../../components/Canvas";
-import { CanvasWrapper } from "../../components/CanvasWrapper";
+import { Canvas } from "../../components/canvas/Canvas";
+import { CanvasWrapper } from "../../components/canvas/CanvasWrapper";
 import { useWindowResize } from "../../hooks/useWindowResize";
-import { SpitalMap, SpitalMapController } from "./SpitalMap";
 import { ReactNode, useRef, useState } from "react";
 import Scalable from "../../components/Scalable";
 import { Sidepanel2, Sidepanel2Controller } from "../../components/Sidepanel2";
-import SpitalLogo from "./SpitalLogo";
 import {
   SpitalArtwork,
   SpitalCategory,
@@ -23,6 +21,8 @@ import {
   ArrowUpLeftIcon,
 } from "@heroicons/react/24/solid";
 import Icon from "../../components/Icon";
+import { SpitalMap, SpitalMapController } from "./SpitalMap"
+import SpitalLogo from "./SpitalLogo";
 
 const BASE_BUTTON_STYLE =
   "text-spital-primary hover:bg-spital-surface border-spital-primary tracking-widest rounded-md px-1 uppercase";

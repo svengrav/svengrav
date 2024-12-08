@@ -9,7 +9,7 @@ import ArtworkView from '../views/ArtworkView'
 export const three: Artwork = {
   id: 'Three',
   name: 'Three',
-  description: 'Sample artwork to test my homepage.',
+  description: 'Sample artwork.',
   year: 2000,
   size: { width: 800, height: 1100 },
   defaultIndex: 7,
@@ -56,7 +56,7 @@ export const three: Artwork = {
 export const threePage: PageDescription = {
   title: 'Three',
   id: 'Three',
-  description: 'Sample artwork to test my homepage.',
+  description: 'Sample artwork.',
   date: date(5, 5, 2024),
   tags: ['art'],
   thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/triangle/panel.png' color='sky' />,

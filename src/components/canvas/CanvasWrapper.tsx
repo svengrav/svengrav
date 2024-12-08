@@ -1,9 +1,9 @@
 import { ReactZoomPanPinchContentRef, TransformWrapper } from 'react-zoom-pan-pinch'
-import { ArtworkContext, useArtworkContext } from '../hooks/useArtworkContext'
+import { ArtworkContext, useArtworkContext } from '../../hooks/useArtworkContext'
 import { createContext, useContext, useEffect, useRef } from 'react'
-import { Artwork } from '../core/Artwork'
-import {Size } from '../core/Geometry'
-import { calculateSingleLayerState } from '../core/artworkLayerCalculation'
+import { Artwork } from '../../core/Artwork'
+import {Size } from '../../core/Geometry'
+import { calculateSingleLayerState } from '../../core/artworkLayerCalculation'
 
 const CanvasContext = createContext<ArtworkContext | undefined>(undefined)
 
@@ -28,6 +28,7 @@ export const CanvasWrapper = ({
   useEffect(() => {
     transformRef.current?.resetTransform();
   }, [size])
+
 
   return (
     <CanvasContext.Provider value={artwokContext}>

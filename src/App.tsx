@@ -16,7 +16,7 @@ import newZealandPage from './content/NewZealand'
 import columbusPage from './content/Columbus'
 import southPolePage from './content/southpole/SouthPole'
 import { routeLabPage } from './content/Lab'
-import spitalPage from './content/Spital/SpitalPage'
+import spitalPage from './content/spital2/SpitalPage'
 import walspergerPage from './content/walsperger/WalspergMap'
 import { cafePage } from './content/Cafe'
 

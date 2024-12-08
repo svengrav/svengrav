@@ -10,7 +10,7 @@ export const columbus: Artwork = {
   id: 'columbus',
   name: 'Voyages of Columbus',
   description: 'Columbus voyages in the 15th century were groundbreaking for the European discovery of the Americas.',
-  year: 2000,
+  year: 2015,
   size: { width: 2861, height: 3865 },
   defaultIndex: 1,
   layer: [
@@ -32,10 +32,10 @@ export const columbus: Artwork = {
 export const columbusPage: PageDescription = {
   title: 'Columbus',
   id: 'columbus',
-  description: 'Columbus Artwork.',
+  description: 'Columbus voyages in the 15th century were groundbreaking for the European discovery of the Americas.',
   tags: ['art', 'map'],
   date: date(5, 5, 2024),
-  thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/columbus/columbus-panel.png' color='rose' />,
+  thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/columbus/columbus-panel.png' />,
   element: <ArtworkView
     artwork={columbus} inner={
       <div className='absolute hidden lg:flex flex-col text-white font-light left-10 top-10 font-serif w-40 '>

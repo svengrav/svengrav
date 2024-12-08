@@ -9,7 +9,7 @@ export const castle: Artwork = {
   id: 'castle',
   name: 'Castle ',
   description: 'Simple castle artwork.',
-  year: 2000,
+  year: 2024,
   size: { width: 1755, height: 1105 },
   defaultIndex: 5,
   layer: [
@@ -62,9 +62,9 @@ export const castle: Artwork = {
 }
 
 export const castlePage: PageDescription = {
-  title: 'Castle',
+  title: 'Castle Artwork',
   id: 'castle',
-  description: 'Castle Artwork.',
+  description: 'Castle Artwork from spring 2024.',
   date: date(5, 5, 2024),
   tags: ['art'],
   hidden: true,
