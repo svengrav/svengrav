@@ -1,30 +1,25 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './assets/styles.css'
-import {
-  Navigate,
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom'
-import Home from './views/HomeView'
-import { threePage } from './content/Three'
-import castlePage from './content/Castle'
-import northSouthPage from './content/NorthSouth'
-import jamesCookPage from './content/JamesCook'
-import { PageDescription } from './core/Page'
-import newZealandPage from './content/NewZealand'
-import columbusPage from './content/Columbus'
-import southPolePage from './content/southpole/SouthPole'
-import { routeLabPage } from './content/Lab'
-import spitalPage from './content/Spital/SpitalPage'
-import walspergerPage from './content/walsperger/WalspergMap'
-import { cafePage } from './content/Cafe'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import "./assets/styles.css";
+import { cafePage } from "./content/Cafe";
+import castlePage from "./content/Castle";
+import columbusPage from "./content/Columbus";
+import jamesCookPage from "./content/JamesCook";
+import { routeLabPage } from "./content/Lab";
+import newZealandPage from "./content/NewZealand";
+import northSouthPage from "./content/NorthSouth";
+import southPolePage from "./content/southpole/SouthPole";
+import spitalPage from "./content/Spital/SpitalPage";
+import { threePage } from "./content/Three";
+import walspergerPage from "./content/walsperger/WalspergMap";
+import { PageDescription } from "./core/Page";
+import Home from "./views/HomeView";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-)
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
-const pages = [
+// List of all content pages
+const contentPages = [
   cafePage,
   northSouthPage,
   threePage,
@@ -35,33 +30,44 @@ const pages = [
   routeLabPage,
   southPolePage,
   spitalPage,
-  walspergerPage
-]
+  walspergerPage,
+];
 
-const homePage = <><Navigate replace to='/' /><Home panels={pages} /></>
+// Home / Root page element
+const homePageElement = (
+  <>
+    <Navigate replace to="/" />
+    <Home panels={contentPages} />
+  </>
+);
+const homePage = {
+  path: "/",
+  id: "home",
+  handle: {
+    title: "Home",
+  } as PageDescription,
+  errorElement: homePageElement,
+  element: homePageElement,
+};
 
+// Sort pages by date descending
+const sortDateDescending = (a: PageDescription, b: PageDescription): number => new Date(b.date).getTime() - new Date(a.date).getTime();
+
+// Create router
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    id: 'home',
-    handle: {
-      title: 'Home'
-    } as PageDescription,
-    errorElement: homePage,
-    element: homePage
-  },
-  ...pages.map(page => {
+  homePage,
+  ...contentPages.sort(sortDateDescending).map((page) => {
     return {
       path: page.id,
       id: page.id,
       handle: page,
-      element: page.element
-    }
-  })
-])
+      element: page.element,
+    };
+  }),
+]);
 
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
-)
+);

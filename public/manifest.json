@@ -2,7 +2,7 @@
   "short_name": "Sven Grav",
   "name": "Sven Grav",
   "icons": [],
-  "start_url": ".",
+  "start_url": "https://svengrav.de",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#000000"
