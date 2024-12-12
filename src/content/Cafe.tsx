@@ -78,7 +78,7 @@ export const cafePage: PageDescription = {
                     </h1>
                     <div className='h-0.5 bg-gray-500 w-10 m-auto my-5' />
                     <p className='text-center'>
-                        <Icon primary={MapPinIcon} label='Google Maps' className='text-sm text-white' onClick={() => window.open(cafeMapPosition, "_blank")} />
+                        <Icon onIconOpen={MapPinIcon} label='Google Maps' className='text-sm text-white' onClick={() => window.open(cafeMapPosition, "_blank")} />
 
                     </p>
                     <p className='mt-4 px-4'>

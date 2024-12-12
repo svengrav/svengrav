@@ -27,7 +27,7 @@ export default function Navigation ({ showSubtitle = false, isOpen = false }: Na
     <div className='w-min'>
 
       {/** toggle */}
-      <Icon primary={Bars3Icon} secondary={XMarkIcon} active={showNavigation} onClick={() => setShowNavigation(!showNavigation)} />
+      <Icon onIconOpen={Bars3Icon} onIconClose={XMarkIcon} active={showNavigation} onClick={() => setShowNavigation(!showNavigation)} />
 
       <div className={`absolute left-0 w-full h-[calc(100%-_48px)] z-50 top-12 ${hiddenAttribute ? 'hidden' : 'visible'}`}>
         <Transition show={showNavigation}>

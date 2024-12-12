@@ -115,7 +115,7 @@ const InformationSection = ({
       <Disclosure key={"" + open} defaultOpen={open}>
         <DisclosureButton className="flex w-full justify-between py-2 text-white hover:text-blue-300" onClick={onClick}>
           {title}
-          <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
+          <Icon onIconOpen={ChevronDownIcon} onIconClose={ChevronUpIcon} active={open} />
         </DisclosureButton>
         <DisclosurePanel className="text-gray-300/80">{children}</DisclosurePanel>
       </Disclosure>
@@ -175,7 +175,7 @@ const Information = () => {
 
   return (
     <div className="justify-start w-full flex">
-      <Icon onClick={() => showOverlay()} primary={InformationCircleIcon} label="Projekt" />
+      <Icon onClick={() => showOverlay()} onIconOpen={InformationCircleIcon} label="Projekt" />
     </div>
   );
 };
