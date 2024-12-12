@@ -10,6 +10,18 @@ const roundTo = (value: number, decimals: number = 2): number => {
   return Math.round(value * factor) / factor;
 };
 
+/**
+ * Represents the state of a layer in the artwork calculation process.
+ *
+ * @property {number} progress - The overall progress of the layer.
+ * @property {number} active - The index of the currently active layer.
+ * @property {Array} layers - An array of layer objects, each containing an index and a transition object.
+ * @property {number} layers[].index - The index of the layer.
+ * @property {Object} layers[].transition - The transition details of the layer.
+ * @property {number} layers[].transition.start - The start value of the transition.
+ * @property {number} layers[].transition.end - The end value of the transition.
+ * @property {number} layers[].transition.progress - The progress of the transition.
+ */
 export interface LayerState {
   progress: number;
   active: number;

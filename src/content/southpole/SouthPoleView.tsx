@@ -99,24 +99,17 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   )
 }
 
-const InformationTitle = ({ title, year }: { title: string, year: string }) => {
+
+type InformationTitleProps = { title: string, year: string };
+const InformationTitle = ({ title, year }: InformationTitleProps) => {
   return <div className="flex w-full justify-between">
     <h1>{title}</h1>
     <p className=" text-gray-500 mr-2">{year}</p>
   </div>
 }
 
-const InformationSection = ({
-  title,
-  children,
-  open = false,
-  onClick,
-}: {
-  title: ReactNode
-  children?: any
-  open?: boolean
-  onClick?: () => void
-}) => {
+type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void };
+const InformationSection = ({title, children, open = false, onClick }: InformationSectionProps) => {
   return (
     <>
       <Disclosure key={"" + open} defaultOpen={open}>
@@ -166,7 +159,6 @@ const ProjectInformation = () => {
       ),
     })
   }
-  return <div>
-    <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Projekt" className="text-gray-200" />
-  </div>
+  return     <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Projekt" className="text-gray-200" />
+
 }
