@@ -15,7 +15,7 @@ interface ArtworkViewProps {
 }
 
 export default function ArtworkView ({ artwork, inner, navigator = true }: ArtworkViewProps) {
-  const { window } = useWindowResize()
+  const { windowSize: window } = useWindowResize()
   return (
     <Page>
       {inner}

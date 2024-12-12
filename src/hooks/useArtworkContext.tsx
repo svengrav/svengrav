@@ -81,7 +81,7 @@ const calcInitialState = (artwork: Artwork, canvasSize: Size): ArtworkState => {
 export const useArtworkContext = (artwork: Artwork, options?: ArtworkContextOptions): ArtworkContext => {
   const artworkConst = artwork;
   const canvasSize = options?.canvasSize ?? { width: 0, height: 0 };
-  const {window} = useWindowResize();
+  const {windowSize: window} = useWindowResize();
   const [context, setContext] = useState<ArtworkState>(calcInitialState(artwork, canvasSize));
 
   useEffect(() => {

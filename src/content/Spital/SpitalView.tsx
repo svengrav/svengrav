@@ -69,7 +69,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
 
 
   // Get window size and initialize state
-  const { window } = useWindowResize();
+  const { windowSize: window } = useWindowResize();
   const [viewState, setViewState] = useState<SpitalViewState>({
     activeId: undefined,
     chapters: campChapters,

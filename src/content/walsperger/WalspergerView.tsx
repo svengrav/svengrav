@@ -19,7 +19,7 @@ interface WalspergerViewProps {
 }
 
 export default function WalspergerView({ map, inner }: WalspergerViewProps) {
-  const { window } = useWindowResize();
+  const { windowSize: window } = useWindowResize();
   const leftSidepanel = useRef<Sidepanel2Controller>(null);
   const [section, setSection] = useState({
     1: false,

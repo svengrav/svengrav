@@ -52,7 +52,7 @@ export const useWindowResize = () => {
   }, []);
 
   return {
-    window: windowSize,
+    windowSize: windowSize,
     isResizing,
   }
 };

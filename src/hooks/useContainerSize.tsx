@@ -11,7 +11,7 @@ interface Size {
  * @returns the container size
  */
 export const useContainerSize = (ref: MutableRefObject<any>): [window: Size, container: Size | undefined] => {
-  const {window} = useWindowResize()
+  const {windowSize: window} = useWindowResize()
   const [size, setSize] = useState<Size | undefined>()
 
   useEffect(() => {

@@ -107,6 +107,10 @@ export const calculateSingleLayerState = (totalLayers: number, layerIndex: numbe
  * @returns {LayerState} - An object with the properties of the layer.
  */
 export const calculateLayerStateByIndex = (totalLayers: number, activeLayer: number): LayerState => {
+  if(totalLayers === 1) {
+    return calculateAllLayerStates(1, 100);
+  }
+
   const currentState = 100 / (totalLayers -1) * (activeLayer -1);
   return calculateAllLayerStates(totalLayers, currentState);
 };

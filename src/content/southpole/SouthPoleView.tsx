@@ -21,7 +21,7 @@ interface SouthPoleViewProps {
 }
 
 export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
-  const {window} = useWindowResize()
+  const { windowSize } = useWindowResize()
   const leftSidepanel = useRef<Sidepanel2Controller>(null)
   const controller = map.controller
   const [section, setSection] = useState({
@@ -61,7 +61,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
           closable
           label="The Project"
           ref={leftSidepanel}
-          full={window.width < 600}
+          full={windowSize.width < 600}
           className="bg-gray-950 border-r-white/20 border-r text-gray-400"
           scrollbar={{
             className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900",
@@ -88,7 +88,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
           }
         </Sidepanel2>
 
-        <CanvasWrapper artwork={map} size={{ height: window.height - 150, width: window.width }}>
+        <CanvasWrapper artwork={map} size={{ height: windowSize.height - 150, width: windowSize.width }}>
           <Navigator className="md:w-96 md:absolute right-0 z-20 " />
           <Canvas className="m-auto" />
           <CanvasZoomControl />
@@ -149,6 +149,7 @@ function ProjectTitle() {
 
 const ProjectInformation = () => {
   const overlay = useOverlay()
+
   const showOverlay = () => {
     overlay?.showOverlay({
       backdropClassName: "bg-gray-950",
@@ -166,6 +167,6 @@ const ProjectInformation = () => {
     })
   }
   return <div>
-    <Icon onClick={() => showOverlay()} primary={InformationCircleIcon} label="Projekt" className="text-gray-200" />
+    <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Projekt" className="text-gray-200" />
   </div>
 }
