@@ -93,7 +93,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
         </Sidepanel2>
 
         <CanvasWrapper artwork={map} size={{ height: windowSize.height - 150, width: windowSize.width }}>
-          <Navigator className="md:w-96 md:absolute right-0 z-20 " />
+          <Navigator />
           <Canvas className="m-auto" />
           <CanvasZoomControl />
           <CanvasLayerControl />

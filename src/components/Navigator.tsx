@@ -16,7 +16,7 @@ interface NavigatorProps {
  * @param Context
  * @returns
  */
-export function Navigator ({ className }: NavigatorProps) {
+export function Navigator ({ className = "md:w-96 md:absolute right-0 z-20" }: NavigatorProps) {
   const [visible, setVisible] = useState(window.innerWidth > 1000)
   const { layer, transformed, artwork } = useCanvasContext().state
   const propertyStyles = 'text-sm font-medium flex text-gray-200'

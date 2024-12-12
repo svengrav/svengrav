@@ -21,7 +21,7 @@ export default function ArtworkView ({ artwork, inner, navigator = true }: Artwo
       {inner}
 
       <CanvasWrapper artwork={artwork} size={{ height: window.height - 150, width: window.width }}>
-        { navigator && <Navigator className='md:w-96 md:absolute right-0 z-20 ' />}
+        { navigator && <Navigator />}
         <Canvas className='m-auto' />
         <CanvasZoomControl />
         <CanvasLayerControl />

@@ -89,7 +89,7 @@ export default function WalspergerView({ map, inner }: WalspergerViewProps) {
         </Sidepanel2>
 
         <CanvasWrapper artwork={map} size={{ height: window.height - 150, width: window.width }}>
-          <Navigator className="md:w-96 md:absolute right-0 z-20 " />
+          <Navigator />
           <Canvas className="m-auto" />
           <CanvasZoomControl />
           <CanvasLayerControl />
