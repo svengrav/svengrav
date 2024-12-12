@@ -1,5 +1,5 @@
 import Page from '../components/Page'
-import { PageDescription } from '../core/Page'
+import { PageDescription } from '../components/PageDescription'
 import { date } from '../utils/helper'
 import { usePathAnimation } from '../hooks/usePathAnimation'
 import { PathState } from '../core/pathAnimation'

@@ -3,7 +3,7 @@ import { GithubIcon, LinkedInIcon, Logo } from '../assets/icons'
 import Page from '../components/Page'
 import { Transition } from '@headlessui/react'
 import Icon from '../components/Icon'
-import { PageDescription, PageTag, getPageTagColor } from '../core/Page'
+import { PageDescription, PageTag, getPageTagColor } from '../components/PageDescription'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
 interface HomeProps {
@@ -38,18 +38,18 @@ export default function Home ({ panels }: HomeProps) {
             onIconOpen={GithubIcon}
             label='Github'
             href='https://github.com/svengrav'
+            className='hover:text-blue-400'
             />
           <Icon
             onIconOpen={LinkedInIcon}
-            label='Linkedin'
+            label='LinkedIn'
             href='https://www.linkedin.com/in/svengrav/'
-            className='ml-4'
+            className='ml-4 hover:text-blue-400'
           />
         </div>
 
-        <div className='m-auto flex flex-initialflex-wrap w-full max-w-screen-xl justify-center mb-4 items-center px-4'>
-          A site about software architecture, art and maps. Feel free to contact
-          me.
+        <div className='m-auto flex flex-initialflex-wrap w-full max-w-screen-xl justify-center mb-4 items-center px-4 text-gray-400'>
+          A site about software architecture, art and maps. 
         </div>
 
         <div className='m-auto flex flex-initial flex-wrap w-full max-w-screen-xl justify-center'>

@@ -1,7 +1,7 @@
 import { Artwork } from '../../core/Artwork'
 import { date } from '../../utils/helper'
 import PageThumbnail from '../../components/PageThumbnail'
-import { PageDescription } from '../../core/Page'
+import { PageDescription } from '../../components/PageDescription'
 import { ImageLoader } from '../../components/ImageLoader'
 import SouthPoleMap from './SouthPoleRoutes'
 import { Expedition, expeditions } from './SouthPoleData'

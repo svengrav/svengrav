@@ -1,7 +1,7 @@
 import { ImageLoader } from '../components/ImageLoader'
 import PageThumbnail from '../components/PageThumbnail'
 import { Artwork } from '../core/Artwork'
-import { PageDescription } from '../core/Page'
+import { PageDescription } from '../components/PageDescription'
 import { date } from '../utils/helper'
 import ArtworkView from '../views/ArtworkView'
 

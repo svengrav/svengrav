@@ -7,7 +7,7 @@ import { useControls, useTransformContext } from 'react-zoom-pan-pinch'
 import { useCanvasContext } from './CanvasWrapper'
 
 export const CanvasZoomControl = () => {
-  const { zoomIn, zoomOut, setTransform } = useControls()
+  const { zoomIn, zoomOut } = useControls()
   const transformationContext = useTransformContext()
   const canvasContext = useCanvasContext()
 
@@ -22,12 +22,13 @@ export const CanvasZoomControl = () => {
     })
   })
 
+  console.log(canvasContext.state.transformed.position.x, canvasContext.state.transformed.position.y)
   return (
     <div className='mt-2 m-auto w-full flex justify-center text-white'>
       <button onClick={() => zoomOut()}>
         <MagnifyingGlassMinusIcon className='h-6 w-6 m-1 hover:fill-gray-300' />
       </button>
-      <button onClick={() => setTransform(0, 0, 1)}>
+      <button onClick={() => zoomOut(10)} >
         <ArrowsPointingInIcon className='h-6 w-6 m-1 hover:fill-gray-300' />
       </button>
       <button onClick={() => zoomIn()}>

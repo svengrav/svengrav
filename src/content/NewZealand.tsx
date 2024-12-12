@@ -3,7 +3,7 @@ import { ImageLoader } from '../components/ImageLoader'
 import PageThumbnail from '../components/PageThumbnail'
 import { Artwork } from '../core/Artwork'
 import { date } from '../utils/helper'
-import { PageDescription } from '../core/Page'
+import { PageDescription } from '../components/PageDescription'
 import ArtworkView from '../views/ArtworkView'
 
 export const newZealand: Artwork = {

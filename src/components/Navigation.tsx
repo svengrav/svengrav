@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { Transition, TransitionChild } from '@headlessui/react'
 import Icon from './Icon'
-import { PageDescription } from '../core/Page'
+import { PageDescription } from './PageDescription'
 import classNames from 'classnames'
 import { router } from '../App'
 

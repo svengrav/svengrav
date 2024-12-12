@@ -32,7 +32,8 @@ export const CanvasWrapper = ({
   return (
     <CanvasContext.Provider value={artwokContext}>
       <TransformWrapper
-      limitToBounds={true}
+        doubleClick={{ disabled: true }}
+        limitToBounds={true}
         centerOnInit
         maxScale={transformed.scale.maxScale}
         minScale={transformed.scale.minScale}

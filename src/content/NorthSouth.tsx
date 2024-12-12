@@ -4,7 +4,7 @@ import { Artwork } from '../core/Artwork'
 import { date } from '../utils/helper'
 import ArtworkView from '../views/ArtworkView'
 import PageThumbnail from '../components/PageThumbnail'
-import { PageDescription } from '../core/Page'
+import { PageDescription } from '../components/PageDescription'
 
 export const northSouth: Artwork = {
   id: 'northsouth',
