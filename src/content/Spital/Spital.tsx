@@ -1,14 +1,10 @@
-import { ReactNode } from "react";
-import PageThumbnail from "../../components/PageThumbnail";
-import { Artwork } from "../../core/Artwork";
-import { PageDescription } from "../../components/PageDescription";
-import { date } from "../../utils/helper";
-import spitalTheme from "./SpitalTheme";
-import SpitalView from "./SpitalView";
-import { TextLink } from "../../components/Link";
+import { ReactNode } from "react"
+import { TextLink } from "../../components/Link"
+import { Artwork } from "../../core/Artwork"
+import spitalTheme from "./SpitalTheme"
 
-const colors = spitalTheme.colors.spital;
-export type SpitalArtwork = Artwork & SpitalChapters;
+const colors = spitalTheme.colors.spital
+export type SpitalArtwork = Artwork & SpitalChapters
 
 export enum SpitalCategory {
   Event = "event",
@@ -69,7 +65,7 @@ export const spital: SpitalArtwork = {
       image: "https://stsvengrav.blob.core.windows.net/stsvengrav/spital/event-3.jpg",
       inner: (
         <div>
-          Vier Wochen nach Kriegsbeginn entstand ein Notlager. Erdhütten und Zelte auf feuchtem Untergrund dienten als provisorische 
+          Vier Wochen nach Kriegsbeginn entstand ein Notlager. Erdhütten und Zelte auf feuchtem Untergrund dienten als provisorische
           Unterkünfte. Insgesamt war das Lager 500 m lang, 500 m breit und wurde von einem doppelten Stacheldraht umgeben. Die Gefangenen waren
           nach Nationalitäten getrennt untergebracht. In den folgenden Wochen wurden mithilfe der Kriegsgefangenen neben dem Notlager Baracken errichtet: Das Lager Haus Spital.
         </div>
@@ -195,7 +191,7 @@ export const spital: SpitalArtwork = {
       category: SpitalCategory.Camp,
       inner: (
         <p>
-          Die medizinische Versorgung des Lagers war nach Berichten der Gefangenen und Protokollen des Roten Kreuzes mangelhaft. 
+          Die medizinische Versorgung des Lagers war nach Berichten der Gefangenen und Protokollen des Roten Kreuzes mangelhaft.
           Gestellte Fotos sollten der Öffentlichkeit das Gegenteil suggerieren.
         </p>
       ),
@@ -208,12 +204,12 @@ export const spital: SpitalArtwork = {
       inner: (
         <>
           <p>
-            Im September 1914, nur einen Monat nach Ausbruch des Krieges, wird süd-westlich des Gutes Haus Spital das erste 
-            Kriegsgefangenenlager in Münster eingerichtet. Mehr als 20.000 Kriegsgefangene, 
+            Im September 1914, nur einen Monat nach Ausbruch des Krieges, wird süd-westlich des Gutes Haus Spital das erste
+            Kriegsgefangenenlager in Münster eingerichtet. Mehr als 20.000 Kriegsgefangene,
             vor allem aus Russland, Frankreich, Großbritannien und Italien, werden hier interniert.
           </p>
           <p className="mt-4">
-            Am damaligen Schauplatz sind nur noch wenige Spuren zu erkennen. Da, wo heute gelebt, 
+            Am damaligen Schauplatz sind nur noch wenige Spuren zu erkennen. Da, wo heute gelebt,
             gewandert oder gearbeitet wird, stand ein großes Kriegsgefangenenlager.
           </p>
         </>
@@ -226,13 +222,13 @@ export const spital: SpitalArtwork = {
       image: "https://stsvengrav.blob.core.windows.net/stsvengrav/spital/prinzipalmarkt-1.png",
       inner: (
         <>
-        <h1 className="text-2xl font-semibold mb-4" >
-        Es war einmal <span> 2014</span>...
-        </h1>
-        <img src="https://stsvengrav.blob.core.windows.net/stsvengrav/spital/event-info.jpg" className="rounded-md mb-4" />
+          <h1 className="text-2xl font-semibold mb-4" >
+            Es war einmal <span> 2014</span>...
+          </h1>
+          <img src="https://stsvengrav.blob.core.windows.net/stsvengrav/spital/event-info.jpg" className="rounded-md mb-4" />
           <p>
             Studenten der Fachhochschule Münster und der Universität Münster liefern anhand von Fotos, Berichten und Archivunterlagen
-            Einblicke in die Geschichte des Lagers. Das Studienprojekt ist Teil der 
+            Einblicke in die Geschichte des Lagers. Das Studienprojekt ist Teil der
             <TextLink href="http://www.expedition-muensterland.de/" className="font-mono hover:text-spital-primary text-spital-secondary" label={"Expedition Münsterland"} />
             und wird in einer Kooperationdes Historischen Seminars, des Fachbereichs Geowissenschaften der Universität Münster und des Fachbereichs Design der
             Fachhochschule Münster durchgeführt.
@@ -280,26 +276,26 @@ export const spital: SpitalArtwork = {
       ),
     },
   ],
-};
+}
 
-export const getChapterById = (artwork: SpitalArtwork, id: string) => artwork.chapters.find((chapter) => chapter.id === id);
+export const getChapterById = (artwork: SpitalArtwork, id: string) => artwork.chapters.find((chapter) => chapter.id === id)
 
 export const getSpitalChapters = (artwork: SpitalArtwork): SpitalChapter[] =>
-  artwork.chapters.filter((chapter) => chapter.category === SpitalCategory.Event);
+  artwork.chapters.filter((chapter) => chapter.category === SpitalCategory.Event)
 
 export const getCampChapters = (artwork: SpitalArtwork): SpitalChapter[] =>
-  artwork.chapters.filter((chapter) => chapter.category === SpitalCategory.Camp);
+  artwork.chapters.filter((chapter) => chapter.category === SpitalCategory.Camp)
 
 
 interface SpitalChapters {
-  chapters: SpitalChapter[];
+  chapters: SpitalChapter[]
 }
 
 export interface SpitalChapter {
-  id: string;
-  index?: number;
-  label: string;
-  category?: SpitalCategory;
-  image?: string;
-  inner: ReactNode;
+  id: string
+  index?: number
+  label: string
+  category?: SpitalCategory
+  image?: string
+  inner: ReactNode
 }
