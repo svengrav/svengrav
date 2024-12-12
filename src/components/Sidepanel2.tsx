@@ -135,7 +135,7 @@ export const Sidepanel2 = forwardRef<Sidepanel2Controller, SidepanelProps>((prop
       >
         <div className='flex flex-col h-full'>
           {closable && (
-            <div className={classNames('flex justify-start items-center px-4 py-1 text-gray-400', {
+            <div className={classNames('flex justify-start items-center px-4 py-1 text-gray-400 mt-2 ', {
               'ml-8': position === 'left'
             })} >
               {label}
@@ -159,7 +159,7 @@ Sidepanel2.displayName = 'Sidepanel2'
 const SidepanelControl = ({ position, closable, active, zindex, onClick}: { zindex: number, position: 'left' | 'right', active: boolean, closable?: boolean, onClick: () => void}) => {
   return (
     <div className={
-      classNames('absolute',
+      classNames('absolute top-2',
         {
           'hidden': !closable,
           'right-2': closable && position === 'right',
@@ -168,7 +168,7 @@ const SidepanelControl = ({ position, closable, active, zindex, onClick}: { zind
       )} style={{
         zIndex: zindex
       }}>
-      <Icon onIconOpen={position === 'left' ? ChevronRightIcon : ChevronLeftIcon} onIconClose={XMarkIcon} active={active} onClick={() => onClick()}  />
+      <Icon onIconOpen={position === 'left' ? ChevronRightIcon : ChevronLeftIcon} className=' bg-gray-950 text-white' onIconClose={XMarkIcon} active={active} onClick={() => onClick()}  />
     </div>
   )
 

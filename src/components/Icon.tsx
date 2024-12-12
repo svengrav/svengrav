@@ -10,7 +10,7 @@ const ACTIVE_STYLE = {
 }
 
 const BASE_STYLE = {
-  className: "text-white rounded-md",
+  className: "text-white",
 };
 
 interface IconStyle {

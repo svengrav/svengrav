@@ -24,7 +24,7 @@ export function Navigator ({ className }: NavigatorProps) {
     <div className={className}>
       <div className='z-20 absolute right-0 text-white py-2 px-1'>
         <div className='z-[21] absolute right-3'>
-          <Icon onIconOpen={ChevronLeftIcon} onIconClose={XMarkIcon} active={visible} onClick={() => setVisible(!visible)} />
+          <Icon onIconOpen={ChevronLeftIcon} onIconClose={XMarkIcon} active={visible} onClick={() => setVisible(!visible)} className='bg-gray-950 text-white' />
         </div>
         <Sidepanel show={visible} full={window.screen.width < 500}>
           <div className='bg-gray-950'>
