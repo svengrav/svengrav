@@ -6,5 +6,10 @@
     "build": true,
     ".github": true,
     "yarn.lock": true
-  }
+  },
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": "./../docs/copilot-instructions.md"
+    }
+  ]
 }

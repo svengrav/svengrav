@@ -13,7 +13,6 @@ yarn add -D vite @vitejs/plugin-react
 
 yarn add -D postcss@latest autoprefixer@latest
 
-
 yarn add -D @types/mime@3
 yarn add -D @heroicons/reacty
 yarn add -D react-zoom-pan-pinch

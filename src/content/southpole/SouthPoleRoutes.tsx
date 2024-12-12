@@ -37,9 +37,9 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 
   const pathOptions = {
 
-    pathStyle: { 
-      stroke: '#000285', 
-      strokeWidth: 4,  
+    pathStyle: {
+      stroke: '#000285',
+      strokeWidth: 4,
     },
     tipStyle: {
       fill: '#000285'
