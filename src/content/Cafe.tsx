@@ -50,7 +50,7 @@ export const cafePage: PageDescription = {
     title: 'Cafe',
     id: 'cafe',
     description: cafe.description,
-    date: date(5, 5, 2024),
+    date: date(10, 10, 2024),
     tags: ['art'],
     hidden: false,
     thumbnail: (

@@ -12,7 +12,7 @@ import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon, PaperAirplaneIco
 import Icon from "../../components/Icon"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { SouthpoleMap } from "./SouthPole"
-import { description } from "./SouthPoleData"
+import { description, SouthPoleSummary } from "./SouthPoleData"
 import { fetchSVG } from "../Spital/svgUtils"
 
 interface SouthPoleViewProps {
@@ -149,7 +149,6 @@ function ProjectTitle() {
 
 const ProjectInformation = () => {
   const overlay = useOverlay()
-
   const showOverlay = () => {
     overlay?.showOverlay({
       backdropClassName: "bg-gray-950",
@@ -160,42 +159,7 @@ const ProjectInformation = () => {
         <>
           <div className="flex flex-col w-full">
             <ProjectTitle />
-            <div className="w-full mt-4">
-              <img
-                src="https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-tablet.jpg"
-                className="object-contain"
-              />
-            </div>
-            <div className="mt-8 tracking-wide leading-relaxed text-gray-200 ">
-
-              <p className="mb-4 max-w-lg">
-                This map illustrates the "Race to the South Pole," chronicling a series of expeditions that attempted to
-                conquer the frigid and uncharted frontier of Antarctica from 1772 to 1913.
-                I researched the seven most significant expeditions to the South Pole and painted the base map using Procreate on an iPad. Then, I added text and landmarks in Illustrator and converted the final design to SVG.
-              </p>
-              <p className="mb-4 max-w-lg">
-                Starting from the early explorations led by James Cook (1772-1775), who reached 71°10' South, this timeline covers notable expeditions,
-                including the Belgian Antarctic Expedition (1897-1899) at 70°5' South and the Southern Cross Expedition (1898-1900), inching closer at 78°5' South.
-              </p>
-              <p className="mb-4 max-w-lg">
-                Later, British-led missions such as the Discovery Expedition (1901-1904) and the Nimrod Expedition (1907-1909) reached 82°17' South and 88°23' South, respectively,
-                showing incremental advancements toward the elusive pole.
-              </p>
-              <img
-                src="https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott.jpg"
-                className="object-contain my-4"
-              />
-              <p className="text-gray-300 text-sm mb-4">
-                The photo shows Scott's expedition to the South Pole
-              </p>
-              <p className="mb-4 max-w-lg">
-                It culminates with the famed rivalry between Roald Amundsen’s Norwegian team and Robert Falcon Scott’s British Terra Nova Expedition.
-                Amundsen’s Fram Expedition reached the South Pole first on December 14, 1911,
-                achieving a historic victory by navigating to the heart of Antarctica at 90° South.
-                Tragically, Scott and his team followed, reaching the pole on January 17, 1912, but perished on the return journey due to extreme conditions and limited supplies.
-              </p>
-
-            </div>
+            <SouthPoleSummary />
           </div>
         </>
       ),

@@ -1,10 +1,12 @@
 import { assert } from '../utils/helper'
 
+
 /**
- * Rundet eine Zahl auf die gewünschte Anzahl von Dezimalstellen.
- * @param {number} value - Die zu rundende Zahl.
- * @param {number} decimals - Anzahl der Dezimalstellen.
- * @returns {number} - Gerundete Zahl.
+ * Rounds a number to a specified number of decimal places.
+ *
+ * @param value - The number to be rounded.
+ * @param decimals - The number of decimal places to round to. Defaults to 2.
+ * @returns The rounded number.
  */
 const roundTo = (value: number, decimals = 2) => {
   const factor = Math.pow(10, decimals);

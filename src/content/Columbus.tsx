@@ -46,8 +46,7 @@ export const columbusPage: PageDescription = {
           {columbus.description}
         </p>
       </div>
-  }
-           />
+  }/>
 }
 
 export default columbusPage

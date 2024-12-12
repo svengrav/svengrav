@@ -101,6 +101,9 @@ export const southPole: SouthpoleMap = {
   points: []
 }
 
+/**
+ * Represents the page description for the South Pole page.
+ */
 export const southPolePage: PageDescription = {
   title: 'The Race to the South Pole',
   id: 'southpole',

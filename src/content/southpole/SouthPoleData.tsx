@@ -21,6 +21,9 @@ export interface MapPosition {
   r?: number // Optional rotation
 }
 
+/**
+ * An object representing the title of the content. 
+ */
 export const title = {
   label: <>
     <p>
@@ -37,6 +40,27 @@ export const title = {
 
 export const description = "The South Pole was first reached by Norwegian explorer Roald Amundsen and his team on December 14, 1911, during the Fram Expedition. Amundsen’s team arrived ahead of British explorer Robert Falcon Scott, who reached the pole on January 17, 1912. Tragically, Scott and his entire team perished on the return journey due to harsh conditions and a lack of supplies."
 
+/**
+ * A list of historical Antarctic expeditions with detailed information.
+ * 
+ * Each expedition object contains the following properties:
+ * 
+ * @property {string} id - A unique identifier for the expedition.
+ * @property {string} name - The name of the expedition.
+ * @property {string} year - The years during which the expedition took place.
+ * @property {Object} position - The geographical coordinates of the expedition's notable position.
+ * @property {string} position.latitude - The latitude of the position.
+ * @property {string} position.longitude - The longitude of the position.
+ * @property {Object} route - The start and end coordinates of the expedition's route.
+ * @property {number[]} route.start - The starting coordinates of the route.
+ * @property {number[]} route.end - The ending coordinates of the route.
+ * @property {Object} display - Display properties for visual representation on a map.
+ * @property {number} display.x - The x-coordinate for display.
+ * @property {number} display.y - The y-coordinate for display.
+ * @property {number} display.r - The rotation angle for display.
+ * @property {number} distance - The distance covered by the expedition in kilometers.
+ * @property {string} description - A brief description of the expedition and its significance.
+ */
 export const expeditions: Expedition[] = [
   {
     id: 'scott',
@@ -178,4 +202,42 @@ export const expeditions: Expedition[] = [
     distance: 2121.42,
     description: "James Cook's second voyage is often credited as the first to cross the Antarctic Circle, although he never sighted the continent. His voyages laid the foundation for future explorations of the southern latitudes."
   }
-];
+]
+
+
+export const SouthPoleSummary = () => <div className="flex flex-col w-full">
+  <div className="w-full mt-4">
+    <img
+      src="https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-tablet.jpg"
+      className="object-contain"
+    />
+  </div>
+  <div className="mt-8 tracking-wide leading-relaxed text-gray-200 ">
+    <p className="mb-4 max-w-lg">
+      This map illustrates the "Race to the South Pole," chronicling a series of expeditions that attempted to
+      conquer the frigid and uncharted frontier of Antarctica from 1772 to 1913.
+      I researched the seven most significant expeditions to the South Pole and painted the base map using Procreate on an iPad. Then, I added text and landmarks in Illustrator and converted the final design to SVG.
+    </p>
+    <p className="mb-4 max-w-lg">
+      Starting from the early explorations led by James Cook (1772-1775), who reached 71°10' South, this timeline covers notable expeditions,
+      including the Belgian Antarctic Expedition (1897-1899) at 70°5' South and the Southern Cross Expedition (1898-1900), inching closer at 78°5' South.
+    </p>
+    <p className="mb-4 max-w-lg">
+      Later, British-led missions such as the Discovery Expedition (1901-1904) and the Nimrod Expedition (1907-1909) reached 82°17' South and 88°23' South, respectively,
+      showing incremental advancements toward the elusive pole.
+    </p>
+    <img
+      src="https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott.jpg"
+      className="object-contain my-4"
+    />
+    <p className="text-gray-300 text-sm mb-4">
+      The photo shows Scott's expedition to the South Pole
+    </p>
+    <p className="mb-4 max-w-lg">
+      It culminates with the famed rivalry between Roald Amundsen’s Norwegian team and Robert Falcon Scott’s British Terra Nova Expedition.
+      Amundsen’s Fram Expedition reached the South Pole first on December 14, 1911,
+      achieving a historic victory by navigating to the heart of Antarctica at 90° South.
+      Tragically, Scott and his team followed, reaching the pole on January 17, 1912, but perished on the return journey due to extreme conditions and limited supplies.
+    </p>
+  </div>
+</div>

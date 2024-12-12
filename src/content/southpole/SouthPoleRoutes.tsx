@@ -15,7 +15,6 @@ export interface SouthPoleMapController {
   onClick?: (id: string) => void
 }
 
-
 /**
  * SouthPoleRoutes component renders a scalable SVG map with animated expedition routes.
  *
@@ -23,11 +22,6 @@ export interface SouthPoleMapController {
  * @param {Expedition[]} props.expedition - An array of expedition objects containing route information.
  *
  * @returns {JSX.Element} A scalable SVG map with animated expedition routes.
- *
- * @example
- * <SouthPoleRoutes expedition={expeditionData} />
- *
- * @component
  */
 export const SouthPoleMap = ({ expedition, controller }: { expedition: Expedition[], controller: SouthPoleMapController }) => {
 
@@ -36,7 +30,6 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   const pathAnimations: any[] = []
 
   const pathOptions = {
-
     pathStyle: {
       stroke: '#000285',
       strokeWidth: 4,
@@ -56,7 +49,12 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
     pathAnimations.push(usePathAnimation(SVG_ID, `${expedition.id}_route`, pathOptions))
   })
 
-  //controllers
+  /**
+   * Controller: Sets the visibility of the specified route elements.
+   *
+   * @param {string} id - The ID of the route.
+   * @param {boolean} visible - Whether the route should be visible.
+   */
   controller.setVisibility = (id: string, visible: boolean) => {
     const circle = getSVGElement(getBaseSVG(), routeCircle(id))
     const label = getSVGElement(getBaseSVG(), routeLabel(id))
@@ -135,7 +133,7 @@ const getSouthPoleSVG = async () => {
         getSVGElement(svgMap, `outer_circle`).style.strokeWidth = '5'
         getSVGElement(svgMap, `frame`).style.fill = 'none'
       } catch {
-
+        console.log(`Could not find element a svg element.`)
       }
       return svgMap
     }).catch((error) => {
