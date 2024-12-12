@@ -14,6 +14,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react
 import { SouthpoleMap } from "./SouthPole"
 import { description, SouthPoleSummary } from "./SouthPoleData"
 import { fetchSVG } from "../Spital/svgUtils"
+import { i } from "vite/dist/node/types.d-aGj9QkWt"
 
 interface SouthPoleViewProps {
   map: SouthpoleMap
@@ -24,8 +25,8 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   const { windowSize } = useWindowResize()
   const leftSidepanel = useRef<Sidepanel2Controller>(null)
   const controller = map.controller
-  const [section, setSection] = useState({
-    active: ''
+  const [activeExpedition , setActiveExpedition] = useState({
+    id: ''
   })
 
   //#region controller and active setup
@@ -34,18 +35,23 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   }
 
   const setActiveSection = (id: string) => {
-    if (controller && controller.setVisibility) {
-      map.expeditions.forEach((expedition) => {
-        controller.setVisibility!(expedition.id, false)
-      })
+    if (!controller || !controller.setVisibility) {
+      console.log("no controller or setVisibility")
+      return
+    }
 
-      if (section.active === id) {
-        controller.setVisibility(id, false)
-        setSection({ active: '' })
-      } else {
-        controller.setVisibility(id, true)
-        setSection({ active: id })
-      }
+
+    map.expeditions.forEach((expedition) => {
+      controller.setVisibility!(expedition.id, false)
+    })
+
+    if (activeExpedition.id === id) {
+      controller.setVisibility(id, false)
+      setActiveExpedition({ id: '' })
+    } else {
+      controller.setVisibility(id, true)
+      setActiveExpedition({ id: id })
+      console.log("active", id)
     }
   }
   //#endregion
@@ -62,24 +68,22 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
           label="The Project"
           ref={leftSidepanel}
           full={windowSize.width < 600}
-          className="bg-gray-950 border-r-white/20 border-r text-gray-400"
+          className="bg-gray-950/90 border-r-white/20 border-r text-gray-400"
           scrollbar={{
             className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900",
           }}
         >
           <ProjectTitle />
-          <ProjectInformation />
+          <ProjectInformationOverlay />
           <p className="py-4">
             {description}
           </p>
           {
             map.expeditions.map((expedition) => (
               <InformationSection
-                key={expedition.id}
-                title={
-                  <InformationTitle title={expedition.name} year={expedition.year} />
-                }
-                open={section.active === expedition.id}
+                key={expedition.id + activeExpedition.id} 
+                title={<InformationTitle title={expedition.name} year={expedition.year} />}
+                open={activeExpedition.id === expedition.id}
                 onClick={() => setActiveSection(expedition.id)}
               >
                 {expedition.description}
@@ -112,7 +116,7 @@ type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: b
 const InformationSection = ({title, children, open = false, onClick }: InformationSectionProps) => {
   return (
     <>
-      <Disclosure key={"" + open} defaultOpen={open}>
+      <Disclosure key={title?.toString()} defaultOpen={open}>
         <DisclosureButton className="flex w-full justify-between py-2 text-white hover:text-blue-300" onClick={onClick}>
           {title}
           <Icon onIconOpen={ChevronDownIcon} onIconClose={ChevronUpIcon} active={open} />
@@ -140,7 +144,11 @@ function ProjectTitle() {
 }
 
 
-const ProjectInformation = () => {
+/**
+ * Component that renders an icon which, when clicked, displays an overlay with project information.
+ * The overlay contains the project title and a summary of the South Pole project.
+ */
+const ProjectInformationOverlay = () => {
   const overlay = useOverlay()
 
   const showOverlay = () => {
@@ -159,6 +167,5 @@ const ProjectInformation = () => {
       ),
     })
   }
-  return     <Icon onClick={showOverlay} onIconOpen={InformationCircleIcon} label="Projekt" className="text-gray-200" />
-
+  return <Icon onClick={showOverlay} onIconOpen={InformationCircleIcon} label="Projekt" className="text-gray-200" />
 }

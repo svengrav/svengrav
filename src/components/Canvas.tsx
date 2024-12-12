@@ -15,7 +15,6 @@ export const Canvas = ({ className }: { className?: string }) => {
             {
                 layer.values.map((v, i) => {
                   const state = calculateSingleLayerState(layer.length, i, layer.percentage)
-                  console.log(state)
                   return <CanvasLayer key={'l' + i} opacity={state.transition.progress}>{v.inner}</CanvasLayer>
                 })
               }
