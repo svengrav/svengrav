@@ -4,10 +4,24 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import Icon from "./Icon";
 
+/**
+ * Interface representing the properties required to show an overlay.
+ *
+ * @property showOverlay - A function that takes `ShowOverlayProps` as an argument and displays the overlay.
+ */
 interface ShowOverlay {
   showOverlay: (props: ShowOverlayProps) => void;
 }
 
+/**
+ * Props for the ShowOverlay component.
+ *
+ * @property {string} [label] - Optional label for the overlay.
+ * @property {ReactNode} children - The content to be displayed inside the overlay.
+ * @property {boolean} [full] - If true, the overlay will cover the full screen.
+ * @property {string} [contentClassName] - Optional class name for the content container.
+ * @property {string} [backdropClassName] - Optional class name for the backdrop.
+ */
 interface ShowOverlayProps {
   label?: string;
   children: ReactNode;
@@ -16,6 +30,16 @@ interface ShowOverlayProps {
   backdropClassName?: string;
 }
 
+/**
+ * Represents the state of the Overlay component.
+ *
+ * @property {boolean} visible - Indicates whether the overlay is visible.
+ * @property {ReactNode} children - The content to be displayed within the overlay.
+ * @property {string} [label] - An optional label for the overlay.
+ * @property {boolean} [full] - An optional flag to indicate if the overlay should take up the full screen.
+ * @property {string} [contentClassName] - An optional class name for the content within the overlay.
+ * @property {string} [backdropClassName] - An optional class name for the backdrop of the overlay.
+ */
 interface OverlayState {
   visible: boolean;
   children: ReactNode;
@@ -32,9 +56,15 @@ const OverlayContext = createContext<ShowOverlay | undefined>(undefined);
  */
 export const useOverlay = () => useContext(OverlayContext);
 
+/**
+ * Props for the OverlayProvider component.
+ *
+ * @property {ReactNode} children - The child components to be rendered within the provider.
+ * @property {boolean} [initialVisible] - Optional prop to control the initial visibility of the overlay.
+ */
 interface OverlayProviderProps {
   children: ReactNode;
-  initialVisible?: boolean; // Add a prop to control initial visibility
+  initialVisible?: boolean;
 }
 
 export const OverlayProvider = ({ children, initialVisible = false }: OverlayProviderProps) => {
@@ -64,12 +94,24 @@ export const OverlayProvider = ({ children, initialVisible = false }: OverlayPro
 
   return (
     <OverlayContext.Provider value={{ showOverlay }}>
-      <Overlay {...overlayState} onClose={() => setOverlayState({ ...overlayState, visible: false })} />
+      <Overlay key={overlayState.visible ? "visible" : "hidden"} {...overlayState} onClose={() => setOverlayState({ ...overlayState, visible: false })} />
       {children}
     </OverlayContext.Provider>
   );
 };
 
+/**
+ * Props for the Overlay component.
+ *
+ * @property {string} [label] - Optional label for the overlay.
+ * @property {boolean} [visible] - Determines if the overlay is visible.
+ * @property {ReactNode} [children] - Content to be rendered inside the overlay.
+ * @property {() => void} [onClose] - Callback function to be called when the overlay is closed.
+ * @property {CSSProperties} [style] - Custom styles for the overlay.
+ * @property {boolean} [full] - If true, the overlay will take up the full screen.
+ * @property {string} [contentClassName] - Additional class name for the content of the overlay.
+ * @property {string} [backdropClassName] - Additional class name for the backdrop of the overlay.
+ */
 interface OverlayProps {
   label?: string;
   visible?: boolean;
@@ -83,11 +125,21 @@ interface OverlayProps {
 
 /**
  * Overlay component to display modal content
+ * 
  * @param {OverlayProps} props - Properties to customize the overlay
  * @returns {JSX.Element}
  */
 export default function Overlay(props: OverlayProps) {
-  const { children, style, label, visible = false, onClose = () => {}, full, contentClassName, backdropClassName } = props;
+  const {
+    children,
+    style,
+    label,
+    visible = false,
+    onClose = () => {},
+    full,
+    contentClassName,
+    backdropClassName,
+  } = props;
   return (
     <OverlayContainer show={visible}>
       <div className={classNames("h-full w-full flex")}>
@@ -113,7 +165,7 @@ export default function Overlay(props: OverlayProps) {
             {children}
           </div>
         </div>
-        <div className={classNames("w-full h-full absolute top-0 left-0", backdropClassName, "bg-gray-950/50")} onClick={onClose} />
+        <div className={classNames("w-full h-full absolute top-0 left-0", backdropClassName, "bg-gray-950/50")} onClick={() => onClose()} />
       </div>
     </OverlayContainer>
   );
@@ -121,6 +173,7 @@ export default function Overlay(props: OverlayProps) {
 
 /**
  * OverlayContainer component to handle transition effects
+ * 
  * @param {show: boolean, children: ReactNode} props - Properties to customize the container
  * @returns {JSX.Element}
  */
