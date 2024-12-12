@@ -1,6 +1,7 @@
 // tailwind.config.ts
 import type { Config } from 'tailwindcss';
 import spitalTheme from './src/content/Spital/SpitalTheme.ts';
+import baseTheme from './src/assets/baseTheme.ts';
 import tailwindScrollbar from 'tailwind-scrollbar';
 
 const config: Config = {
@@ -8,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       ...spitalTheme,
+      ...baseTheme
     },
   },
   plugins: [tailwindScrollbar],

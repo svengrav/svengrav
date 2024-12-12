@@ -7,6 +7,9 @@
     ".github": true,
     "yarn.lock": true
   },
+  "editor.colorDecorators": true,
+  "editor.colorDecoratorsLimit": 5000,
+  "editor.defaultColorDecorators": true,
   "github.copilot.chat.codeGeneration.instructions": [
     {
       "file": "./../docs/copilot-instructions.md"
