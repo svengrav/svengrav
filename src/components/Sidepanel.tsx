@@ -16,7 +16,7 @@ export default function Sidepanel ({
   width,
   full
 }: SidepanelProps) {
-  const actualWidth = full ? window.screen.width : width || 400
+  const actualWidth = full ? window.innerWidth : width || 400
 
   return (
     <div className='w-min'>

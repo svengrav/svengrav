@@ -35,80 +35,100 @@ interface CanvasNavigatorProps {
  */
 export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20" }: CanvasNavigatorProps) {
   const [visible, setVisible] = useState(false)
-  const { layer, transformed, artwork } = useCanvasContext()?.state || { layer: {}, transformed: {}, artwork: {} }
+  const canvasContext = useCanvasContext()
+  const { layer, transformed, artwork } = canvasContext?.state || { layer: {}, transformed: {}, artwork: {} }
   const propertyStyles = 'text-sm font-medium flex text-gray-200'
+  const windowWidth = window.innerWidth
+  const isFullScreen = windowWidth < 600
+  const toggleVisibility = () => setVisible(!visible)
 
   useEffect(() => {
-    setVisible(window.innerWidth > 1000)
+    setVisible(windowWidth > 1000)
   }, [])
+
 
   return (
     <div className={className}>
-      <div className='z-20 absolute right-0 text-white py-2 px-1'>
-        <div className='z-[21] absolute right-3'>
-          <Icon primary={ChevronLeftIcon} secondary={XMarkIcon} active={visible} onClick={() => setVisible(!visible)} className='bg-gray-950 text-white' />
-        </div>
-        <Sidepanel show={visible} full={window.screen.width < 500}>
-          <div className='bg-gray-950'>
-
-            {/** header */}
-            <div onClick={() => setVisible(!visible)} className='w-full p-2 flex items-center justify-between text-white cursor-pointer'>
-              <Square3Stack3DIcon className='h-5 w-5 mr-2' />Navigator
-              <div className='h-5 w-5' />
-            </div>
-
-            {/** content */}
-            <div className={classNames(
-              'w-full max-h-screen relative p-2 bg-gray-950/95 text-white items-center',
-              'overflow-y-auto scrollbar-thin scrollbar-track-rounded-full',
-              'scrollbar-thumb-gray-600 scrollbar-track-gray-800'
-            )}
-            >
-              <NavigatorSection title='Properties' open>
-                <div className='grid grid-cols-3 gap-2 py-2 text-gray-300/80'>
-                  <dt className={propertyStyles}><ArrowRightIcon className='h-5 w-5 mr-2' />Width</dt>
-                  <dd className='col-span-2'> {transformed.size.width.toFixed(0)} / {artwork.size.width}</dd>
-
-                  <dt className={propertyStyles}><ArrowUpIcon className='h-5 w-5 mr-2' />Height</dt>
-                  <dd className='col-span-2'>{transformed.size.height.toFixed(0)} / {artwork.size.height}</dd>
-
-                  <dt className={propertyStyles}><ArrowsPointingInIcon className='h-5 w-5 mr-2' />Position</dt>
-                  <dd className='col-span-2'>{transformed.position.x.toFixed(0)}x / {transformed.position.y.toFixed(0)}y</dd>
-
-                  <dt className={propertyStyles}><MagnifyingGlassPlusIcon className='h-5 w-5 mr-2' />Scale</dt>
-                  <dd className='col-span-2'>{transformed.scale.current?.toFixed(2)} / {transformed.scale.maxScale.toFixed(2)}</dd>
-
-                  <dt className={propertyStyles}><ArrowsPointingInIcon className='h-5 w-5 mr-2' />Shrink</dt>
-                  <dd className='col-span-2'>{(transformed.scale.minScale * 100).toFixed(0)} %</dd>
-
-                  <dt className={propertyStyles}><EyeIcon className='h-5 w-5 mr-2' />Visiblity</dt>
-                  <dd className='col-span-2'>{(layer.percentage).toFixed(0)} %</dd>
-
-                  <dt className={propertyStyles}><Bars3Icon className='h-5 w-5 mr-2' />Layer</dt>
-                  <dd className='col-span-2'>{layer.index} / {layer.length}</dd>
-                </div>
-              </NavigatorSection>
-              {
-                layer.values.map((v, i) => {
-                  return <NavigatorSection key={i} title={v.name} open={layer.index === i + 1}>{v.description}</NavigatorSection>
-                })
-              }
-            </div>
-          </div>
-        </Sidepanel>
+      <div className='z-40 absolute right-0 text-white py-2 px-1'>
+        <Icon primary={ChevronLeftIcon} secondary={XMarkIcon} active={visible} onClick={toggleVisibility} className='bg-gray-950 text-white ' />
       </div>
+      <Sidepanel show={visible} full={isFullScreen}>
+        <div className='bg-gray-950'>
 
+          {/** header */}
+          <div className='w-full p-2 flex items-center justify-between text-white cursor-pointer'>
+            <Square3Stack3DIcon className='h-5 w-5 mr-2' />Navigator
+            <div className='h-5 w-5' />
+          </div>
+
+          {/** content */}
+          <div className={classNames(
+            'w-full max-h-screen relative p-2 bg-gray-950/95 text-white items-center',
+            'overflow-y-auto scrollbar-thin scrollbar-track-rounded-full',
+            'scrollbar-thumb-gray-600 scrollbar-track-gray-800'
+          )}
+          >
+            <NavigatorSection title='Properties' open>
+              <div className='grid grid-cols-3 gap-2 py-2 text-gray-300/80'>
+                <dt className={propertyStyles}><ArrowRightIcon className='h-5 w-5 mr-2' />Width</dt>
+                <dd className='col-span-2'> {transformed.size.width.toFixed(0)} / {artwork.size.width}</dd>
+
+                <dt className={propertyStyles}><ArrowUpIcon className='h-5 w-5 mr-2' />Height</dt>
+                <dd className='col-span-2'>{transformed.size.height.toFixed(0)} / {artwork.size.height}</dd>
+
+                <dt className={propertyStyles}><ArrowsPointingInIcon className='h-5 w-5 mr-2' />Position</dt>
+                <dd className='col-span-2'>{transformed.position.x.toFixed(0)}x / {transformed.position.y.toFixed(0)}y</dd>
+
+                <dt className={propertyStyles}><MagnifyingGlassPlusIcon className='h-5 w-5 mr-2' />Scale</dt>
+                <dd className='col-span-2'>{transformed.scale.current?.toFixed(2)} / {transformed.scale.maxScale.toFixed(2)}</dd>
+
+                <dt className={propertyStyles}><ArrowsPointingInIcon className='h-5 w-5 mr-2' />Shrink</dt>
+                <dd className='col-span-2'>{(transformed.scale.minScale * 100).toFixed(0)} %</dd>
+
+                <dt className={propertyStyles}><EyeIcon className='h-5 w-5 mr-2' />Visiblity</dt>
+                <dd className='col-span-2'>{(layer.percentage).toFixed(0)} %</dd>
+
+                <dt className={propertyStyles}><Bars3Icon className='h-5 w-5 mr-2' />Layer</dt>
+                <dd className='col-span-2'>{layer.index} / {layer.length}</dd>
+              </div>
+            </NavigatorSection>
+            {
+              layer.values.map((v, i) => {
+                return <NavigatorSection key={i} title={v.name} open={layer.index === i + 1}>{v.description}</NavigatorSection>
+              })
+            }
+          </div>
+        </div>
+      </Sidepanel>
     </div>
   )
 };
 
+/**
+ * Props for the NavigatorSection component.
+ * 
+ * @interface NavigatorSectionProps
+ * 
+ * @property {string} [title] - The title of the section.
+ * @property {React.ReactNode} children - The content to be rendered within the section.
+ * @property {boolean} [open] - Indicates whether the section is open or closed.
+ */
 interface NavigatorSectionProps {
   title?: string
   children: any
   open?: boolean
 }
 
-function NavigatorSection({ title, children, open = false }: NavigatorSectionProps) {
+/**
+ * A component that renders a section within a navigator with a collapsible panel.
+ *
+ * @param {Object} props - The properties object.
+ * @param {string} props.title - The title of the section.
+ * @param {React.ReactNode} props.children - The content to be displayed within the collapsible panel.
+ * @param {boolean} [props.open=false] - A flag indicating whether the panel should be open by default.
+ *
+ */
+const NavigatorSection = ({ title, children, open = false }: NavigatorSectionProps) => {
   return (
     <div className='p-1 border-b border-b-gray-900'>
       <Disclosure defaultOpen={open} key={'' + open}>
