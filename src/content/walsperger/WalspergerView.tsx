@@ -7,7 +7,7 @@ import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl";
 import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl";
 import { CanvasNavigator } from "@components/canvas/CanvasNavigator";
 import { PagePanel, PagePanelController } from "@components/page/PagePanel";
-import { OverlayProvider, useOverlay } from "@components/base/Overlay";
+import { useOverlay } from "@components/base/Overlay";
 import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
 import Icon from "@components/base/Icon";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
@@ -36,7 +36,6 @@ export default function WalspergerView({ map, inner }: WalspergerViewProps) {
 
   return (
     <Page>
-      <OverlayProvider>
         {inner}
         <PagePanel
           position="left"
@@ -94,7 +93,6 @@ export default function WalspergerView({ map, inner }: WalspergerViewProps) {
           <CanvasZoomControl />
           <CanvasLayerControl />
         </CanvasWrapper>
-      </OverlayProvider>
     </Page>
   );
 }

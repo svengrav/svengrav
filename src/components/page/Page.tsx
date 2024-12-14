@@ -5,8 +5,15 @@ import {
   LogoIcon 
 } from "@assets/icons";
 import Icon from "@components/base/Icon";
+import { OverlayProvider } from "@components/base/Overlay"
 import { useWindowResize } from "@hooks/useWindowResize";
 
+/**
+ * Props for the Page component.
+ *
+ * @interface PageProps
+ * @property {React.ReactNode} children - The content to be displayed within the Page component.
+ */
 interface PageProps {
   children: React.ReactNode;
 }
@@ -48,7 +55,9 @@ export const Page = ({ children }: PageProps) => {
             </span>
           </div>
         ) : (
-          children
+          <OverlayProvider>
+          {children}
+          </OverlayProvider>
         )}
       </div>
     </div>

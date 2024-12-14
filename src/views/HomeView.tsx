@@ -10,7 +10,7 @@ interface HomeProps {
   panels: PageDescription[]
 }
 
-export default function Home ({ panels }: HomeProps) {
+export default function HomeView ({ panels }: HomeProps) {
   const [animateLogo, setAnimateLogo] = useState(false)
 
   useEffect(() => {
