@@ -4,7 +4,7 @@
  * @param condition
  * @param msg
  */
-export function assert (condition: unknown, msg?: string): asserts condition {
+export const assert = (condition: unknown, msg?: string) => {
     if (!condition) {
       throw new Error(msg)
     }

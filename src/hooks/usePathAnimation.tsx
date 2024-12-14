@@ -1,5 +1,5 @@
-import { CSSProperties, useEffect, useRef } from 'react'
-import { assert } from '@core/date'
+import { CSSProperties, useRef } from 'react'
+import { assert } from '@core/assert'
 import {
   PathEvent,
   PathEventTrigger,
