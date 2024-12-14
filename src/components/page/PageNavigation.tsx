@@ -2,10 +2,10 @@ import { Bars3Icon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/soli
 import { useLocation, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { Transition, TransitionChild } from '@headlessui/react'
-import Icon from './Icon'
+import Icon from '../Icon'
 import { PageDescription } from './PageDescription'
 import classNames from 'classnames'
-import { router } from '../App'
+import { router } from '../../App'
 
 /**
  * Navigation component that displays a toggleable sidebar menu.
@@ -16,12 +16,12 @@ import { router } from '../App'
  *
  * @returns {JSX.Element} The rendered Navigation component.
  */
-interface NavigationProps {
+interface PageNavigationProps {
   showSubtitle?: boolean
   isOpen?: boolean
 }
 
-const Navigation = ({ showSubtitle = false, isOpen = false }: NavigationProps) => {
+const PageNavigation = ({ showSubtitle = false, isOpen = false }: PageNavigationProps) => {
   const location = useLocation()
   const [showNavigation, setShowNavigation] = useState(isOpen)
   const [isVisible, setIsVisible] = useState(false)
@@ -52,7 +52,7 @@ const Navigation = ({ showSubtitle = false, isOpen = false }: NavigationProps) =
             beforeEnter={() => { setIsVisible(true) }}
           >
             <div className='md:max-w-96 w-full bg-base-background text-base-content h-full -translate-x-0 z-50'>
-                <h1 className='mb-4 uppercase'>Menu</h1>
+                <h1 className='mb-4 uppercase'>Navigation</h1>
               {
                 router.routes?.map((route, i) => {
                   const page = route.handle as PageDescription
@@ -111,4 +111,4 @@ const normalizePath = (path: string | undefined) => {
   return path?.startsWith('/') ? path : '/' + path
 }
 
-export default Navigation
+export default PageNavigation

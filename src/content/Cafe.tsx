@@ -1,9 +1,9 @@
 import { MapIcon, MapPinIcon } from '@heroicons/react/24/solid'
 import { ImageLoader } from '@components/ImageLoader'
-import PageThumbnail from '@components/PageThumbnail'
-import { Sidepanel2 } from '@components/Sidepanel2'
+import PageThumbnail from '@components/page/PageThumbnail'
+import { PagePanel } from '@components/page/PagePanel'
 import { Artwork } from '../core/Artwork'
-import { PageDescription } from '@components/PageDescription'
+import { PageDescription } from '@components/page/PageDescription'
 import { date } from '../utils/helper'
 import ArtworkView from '../views/ArtworkView'
 import Icon from '@components/Icon'
@@ -63,7 +63,7 @@ export const cafePage: PageDescription = {
         <ArtworkView
             navigator={false}
             inner={
-                <Sidepanel2
+                <PagePanel
                     position="left"
                     width={400}
                     closable
@@ -85,7 +85,7 @@ export const cafePage: PageDescription = {
                         I illustrated this beautiful little Cafe Balthazar located near Rue Arcisse de Caumont in Caen in July 2024.
                     </p>
 
-                </Sidepanel2>
+                </PagePanel>
             }
             artwork={cafe}
         />

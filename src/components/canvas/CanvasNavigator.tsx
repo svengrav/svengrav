@@ -15,7 +15,6 @@ import {
 import { EyeIcon } from '@heroicons/react/24/outline'
 import Icon from '../Icon'
 import classNames from 'classnames'
-import Sidepanel from '../Sidepanel'
 import { useCanvasContext } from './CanvasWrapper'
 
 interface CanvasNavigatorProps {
@@ -144,6 +143,42 @@ const NavigatorSection = ({ title, children, open = false }: NavigatorSectionPro
           </>
         )}
       </Disclosure>
+    </div>
+  )
+}
+
+interface SidepanelProps {
+  show?: boolean
+  children?: any
+  width?: number
+  full?: boolean
+}
+
+/**
+ * Navigation
+ * @param Navigation props
+ * @returns
+ */
+export default function Sidepanel ({
+  children,
+  show = false,
+  width,
+  full
+}: SidepanelProps) {
+  const actualWidth = full ? window.innerWidth : width || 400
+
+  return (
+    <div className='w-min'>
+      <div
+        className='absolute transition-all top-0 right-0 h-full z-20 '
+        style={{
+          transformOrigin: 'top right',
+          transform: `translate(${show ? 0 : actualWidth}px)`,
+          width: actualWidth
+        }}
+      >
+        {children}
+      </div>
     </div>
   )
 }

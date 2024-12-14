@@ -1,5 +1,5 @@
-import PageThumbnail from "@components/PageThumbnail";
-import { PageDescription } from "@components/PageDescription";
+import PageThumbnail from "@components/page/PageThumbnail";
+import { PageDescription } from "@components/page/PageDescription";
 import { date } from "../../utils/helper";
 import { spital } from "./Spital";
 import SpitalView from "./SpitalView";

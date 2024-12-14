@@ -13,7 +13,7 @@ import southPolePage from "./content/southpole/SouthPole";
 import spitalPage from "./content/Spital/SpitalPage";
 import { threePage } from "./content/Three";
 import walspergerPage from "./content/walsperger/WalspergMap";
-import { PageDescription } from "./components/PageDescription";
+import { PageDescription } from "./components/page/PageDescription";
 import Home from "./views/HomeView";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);

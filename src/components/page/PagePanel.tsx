@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import classNames from 'classnames'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import Icon from './Icon'
+import Icon from '../Icon'
 
 interface SidepanelProps {
   visible?: boolean
@@ -33,7 +33,7 @@ interface SidepanelState {
   scrollTo?: string
 }
 
-export const Sidepanel2 = forwardRef<Sidepanel2Controller, SidepanelProps>((props: SidepanelProps, ref) => {
+export const PagePanel = forwardRef<Sidepanel2Controller, SidepanelProps>((props: SidepanelProps, ref) => {
   const { 
     children, 
     zIndex = 5, 
@@ -154,7 +154,7 @@ export const Sidepanel2 = forwardRef<Sidepanel2Controller, SidepanelProps>((prop
     </div>
   )
 })
-Sidepanel2.displayName = 'Sidepanel2'
+PagePanel.displayName = 'Sidepanel2'
 
 const SidepanelControl = ({ position, closable, active, zindex, onClick}: { zindex: number, position: 'left' | 'right', active: boolean, closable?: boolean, onClick: () => void}) => {
   return (

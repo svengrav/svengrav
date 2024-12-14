@@ -1,5 +1,5 @@
 import { Artwork } from '../core/Artwork'
-import Page from '@components/Page'
+import Page from '@components/page/Page'
 import { CanvasNavigator } from '@components/canvas/CanvasNavigator'
 import { Canvas } from '@components/canvas/Canvas'
 import { CanvasWrapper } from '@components/canvas/CanvasWrapper'

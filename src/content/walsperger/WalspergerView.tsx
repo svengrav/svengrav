@@ -1,12 +1,12 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useWindowResize } from "../../hooks/useWindowResize";
-import Page from "@components/Page";
+import Page from "@components/page/Page";
 import { CanvasWrapper } from "@components/canvas/CanvasWrapper";
 import { Canvas } from "@components/canvas/Canvas";
 import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl";
 import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl";
 import { CanvasNavigator } from "@components/canvas/CanvasNavigator";
-import { Sidepanel2, Sidepanel2Controller } from "@components/Sidepanel2";
+import { PagePanel, Sidepanel2Controller } from "@components/page/PagePanel";
 import { OverlayProvider, useOverlay } from "@components/Overlay";
 import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
 import Icon from "@components/Icon";
@@ -38,7 +38,7 @@ export default function WalspergerView({ map, inner }: WalspergerViewProps) {
     <Page>
       <OverlayProvider>
         {inner}
-        <Sidepanel2
+        <PagePanel
           position="left"
           visible
           width={400}
@@ -86,7 +86,7 @@ export default function WalspergerView({ map, inner }: WalspergerViewProps) {
             Die Karte enthält lateinische Inschriften, die geografische und religiöse Informationen bieten. Diese Texte erläutern oft die
             abgebildeten Orte und sind eine wichtige Quelle für das Verständnis der mittelalterlichen Weltansicht.
           </InformationSection>
-        </Sidepanel2>
+        </PagePanel>
 
         <CanvasWrapper artwork={map} size={{ height: window.height - 150, width: window.width }}>
           <CanvasNavigator />

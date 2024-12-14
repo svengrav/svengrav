@@ -1,7 +1,7 @@
-import Navigation from "./Navigation";
-import { GithubIcon, LinkedInIcon, Logo, LogoIcon } from "../assets/icons";
-import Icon from "./Icon";
-import { useWindowResize } from "../hooks/useWindowResize";
+import PageNavigation from "./PageNavigation";
+import { GithubIcon, LinkedInIcon, Logo, LogoIcon } from "../../assets/icons";
+import Icon from "../Icon";
+import { useWindowResize } from "../../hooks/useWindowResize";
 
 interface PageProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export default function Page({ children }: PageProps) {
     <div className="min-h-dvh bg-gray-950">
       {/** Header  */}
       <div className="bg-gray-950 text-white text-center p-2 grid grid-cols-3 h-12">
-        <Navigation />
+        <PageNavigation />
 
         <div className="w-min m-auto">
           <a href="/">

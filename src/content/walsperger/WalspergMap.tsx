@@ -1,6 +1,6 @@
-import PageThumbnail from "@components/PageThumbnail"
+import PageThumbnail from "@components/page/PageThumbnail"
 import { Artwork } from "../../core/Artwork"
-import { PageDescription } from "@components/PageDescription"
+import { PageDescription } from "@components/page/PageDescription"
 import { date } from "../../utils/helper"
 import { ImageLoader } from "@components/ImageLoader"
 import { MapElementController, MapElements, MapElementsController } from "./WalspergerData"

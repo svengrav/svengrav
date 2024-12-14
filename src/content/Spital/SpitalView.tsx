@@ -1,11 +1,11 @@
-import Page from "@components/Page";
+import Page from "@components/page/Page";
 import { Canvas } from "@components/canvas/Canvas";
 import { CanvasWrapper } from "@components/canvas/CanvasWrapper";
 import { useWindowResize } from "../../hooks/useWindowResize";
 import { SpitalMap, SpitalMapController } from "./SpitalMap";
 import { ReactNode, useRef, useState } from "react";
 import Scalable from "@components/Scalable";
-import { Sidepanel2, Sidepanel2Controller } from "@components/Sidepanel2";
+import { PagePanel, Sidepanel2Controller } from "@components/page/PagePanel";
 import SpitalLogo from "./SpitalLogo";
 import {
   SpitalArtwork,
@@ -175,7 +175,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
     <Page>
       <OverlayProvider>
         {/* Left side overview panel */}
-        <Sidepanel2
+        <PagePanel
           position="left"
           visible
           width={SIDEPANEL_WIDTH}
@@ -209,9 +209,9 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
               </>
             }
           />
-        </Sidepanel2>
+        </PagePanel>
         {/* Right side panel for chapters */}
-        <Sidepanel2
+        <PagePanel
           ref={rightSidepanel}
           position="right"
           closable
@@ -246,7 +246,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
               </SpitalPanel>
             ))}
           </div>
-        </Sidepanel2>
+        </PagePanel>
 
         {/* Main content area */}
         <div className="flex w-full h-full bg-spital-background" style={{ height: window.height - 50 }}>
