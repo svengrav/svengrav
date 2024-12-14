@@ -7,6 +7,7 @@
     ".github": true,
     "yarn.lock": true
   },
+  "editor.hover.enabled": true,
   "editor.colorDecorators": true,
   "editor.colorDecoratorsLimit": 5000,
   "editor.defaultColorDecorators": true,

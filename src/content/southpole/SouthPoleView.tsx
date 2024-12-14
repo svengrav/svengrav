@@ -119,7 +119,7 @@ const InformationSection = ({title, children, open = false, onClick }: Informati
       <Disclosure key={title?.toString()} defaultOpen={open}>
         <DisclosureButton className="flex w-full justify-between py-2 text-white hover:text-blue-300" onClick={onClick}>
           {title}
-          <Icon onIconOpen={ChevronDownIcon} onIconClose={ChevronUpIcon} active={open} />
+          <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
         </DisclosureButton>
         <DisclosurePanel className="text-gray-300/80">{children}</DisclosurePanel>
       </Disclosure>
@@ -167,5 +167,5 @@ const ProjectInformationOverlay = () => {
       ),
     })
   }
-  return <Icon onClick={showOverlay} onIconOpen={InformationCircleIcon} label="Projekt" className="text-gray-200" />
+  return <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Projekt" className="text-gray-200" />
 }

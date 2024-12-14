@@ -10,7 +10,7 @@ import React from 'react'
  * @property {string} [className] - Optional CSS class name to apply to the link.
  * @property {React.CSSProperties} [style] - Optional inline styles to apply to the link.
  */
-interface TextLinkProps {
+interface Link {
   href: string
   label: string
   className?: string
@@ -20,12 +20,12 @@ interface TextLinkProps {
 /**
  * A functional component that renders a styled anchor (`<a>`) element.
  */
-export const TextLink = ({
+export const Link = ({
   href,
   className,
   style,
   label,
-}: TextLinkProps) => {
+}: Link) => {
   const linkClassNames = "mx-2 text-nowrap hover:underline hover:underline-offset-[6px]"
 
   return (

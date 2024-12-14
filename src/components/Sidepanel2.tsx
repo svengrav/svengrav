@@ -168,7 +168,7 @@ const SidepanelControl = ({ position, closable, active, zindex, onClick}: { zind
       )} style={{
         zIndex: zindex
       }}>
-      <Icon onIconOpen={position === 'left' ? ChevronRightIcon : ChevronLeftIcon} className=' bg-gray-950 text-white' onIconClose={XMarkIcon} active={active} onClick={() => onClick()}  />
+      <Icon primary={position === 'left' ? ChevronRightIcon : ChevronLeftIcon} className=' bg-gray-950 text-white' secondary={XMarkIcon} active={active} onClick={() => onClick()}  />
     </div>
   )
 

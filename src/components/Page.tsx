@@ -28,8 +28,8 @@ export default function Page({ children }: PageProps) {
         </div>
 
         <div className="flex justify-end">
-          <Icon onIconOpen={GithubIcon} label="" href="https://github.com/svengrav" />
-          <Icon onIconOpen={LinkedInIcon} label="" href="https://www.linkedin.com/in/svengrav/" className="ml-4 mr-2" />
+          <Icon primary={GithubIcon} label="" href="https://github.com/svengrav" />
+          <Icon primary={LinkedInIcon} label="" href="https://www.linkedin.com/in/svengrav/" className="ml-4 mr-2" />
         </div>
       </div>
 

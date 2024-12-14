@@ -157,7 +157,7 @@ export default function Overlay(props: OverlayProps) {
             })}
           >
             {label}
-            <Icon onIconOpen={XMarkIcon} onClick={onClose} />
+            <Icon primary={XMarkIcon} onClick={onClose} />
           </div>
           <div
             className={classNames("pr-2 grow overflow-y-auto", "scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800  w-full ")}

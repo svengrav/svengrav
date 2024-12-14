@@ -19,8 +19,8 @@ interface IconStyle {
 }
 
 interface IconProps {
-  onIconOpen?: IconType;
-  onIconClose?: IconType;
+  primary?: IconType;
+  secondary?: IconType;
   active?: boolean;
   state?: IconState;
   label?: string;
@@ -37,8 +37,8 @@ interface IconProps {
  * Returns an icon element.
  */
 export default function Icon({
-  onIconOpen: Primary,
-  onIconClose: Secondary,
+  primary: Primary,
+  secondary: Secondary,
   label,
   onClick,
   href,

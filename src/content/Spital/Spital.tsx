@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { TextLink } from "../../components/Link"
+import { Link } from "../../components/Link"
 import { Artwork } from "../../core/Artwork"
 import spitalTheme from "./SpitalTheme"
 
@@ -229,7 +229,7 @@ export const spital: SpitalArtwork = {
           <p>
             Studenten der Fachhochschule Münster und der Universität Münster liefern anhand von Fotos, Berichten und Archivunterlagen
             Einblicke in die Geschichte des Lagers. Das Studienprojekt ist Teil der
-            <TextLink href="http://www.expedition-muensterland.de/" className="font-mono hover:text-spital-primary text-spital-secondary" label={"Expedition Münsterland"} />
+            <Link href="http://www.expedition-muensterland.de/" className="font-mono hover:text-spital-primary text-spital-secondary" label={"Expedition Münsterland"} />
             und wird in einer Kooperationdes Historischen Seminars, des Fachbereichs Geowissenschaften der Universität Münster und des Fachbereichs Design der
             Fachhochschule Münster durchgeführt.
           </p>

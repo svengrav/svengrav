@@ -315,7 +315,7 @@ const SpitalMapControl = ({
   return (
     <div className="flex w-full justify-center py-4">
       <Icon
-        onIconOpen={ArrowUpLeftIcon}
+        primary={ArrowUpLeftIcon}
         label="Haus Spital"
         onClick={goToEvent}
         className={classNames(
@@ -324,7 +324,7 @@ const SpitalMapControl = ({
         )}
       />
       <Icon
-        onIconOpen={ArrowDownRightIcon}
+        primary={ArrowDownRightIcon}
         label="Lager"
         onClick={goToCamp}
         className={classNames(

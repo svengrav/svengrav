@@ -24,7 +24,7 @@ export function Navigator ({ className = "md:w-96 md:absolute right-0 z-20" }: N
     <div className={className}>
       <div className='z-20 absolute right-0 text-white py-2 px-1'>
         <div className='z-[21] absolute right-3'>
-          <Icon onIconOpen={ChevronLeftIcon} onIconClose={XMarkIcon} active={visible} onClick={() => setVisible(!visible)} className='bg-gray-950 text-white' />
+          <Icon primary={ChevronLeftIcon} secondary={XMarkIcon} active={visible} onClick={() => setVisible(!visible)} className='bg-gray-950 text-white' />
         </div>
         <Sidepanel show={visible} full={window.screen.width < 500}>
           <div className='bg-gray-950'>
@@ -94,7 +94,7 @@ function NavigatorSection ({ title, children, open = false }: NavigatorSectionPr
           <>
             <DisclosureButton className='flex w-full justify-between py-2'>
               <span>{title}</span>
-              <Icon onIconOpen={ChevronDownIcon} onIconClose={ChevronUpIcon} active={open} />
+              <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
             </DisclosureButton>
             <DisclosurePanel className='text-gray-300/80'>
               {children}

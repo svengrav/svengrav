@@ -1,5 +1,5 @@
 import { Bars3Icon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { Transition, TransitionChild } from '@headlessui/react'
 import Icon from './Icon'
@@ -7,29 +7,37 @@ import { PageDescription } from './PageDescription'
 import classNames from 'classnames'
 import { router } from '../App'
 
+/**
+ * Navigation component that displays a toggleable sidebar menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} [props.showSubtitle=false] - Flag to show or hide the subtitle in the navigation items.
+ * @param {boolean} [props.isOpen=false] - Initial state of the navigation menu (open or closed).
+ *
+ * @returns {JSX.Element} The rendered Navigation component.
+ */
 interface NavigationProps {
-  isOpen?: boolean
   showSubtitle?: boolean
+  isOpen?: boolean
 }
 
-/**
- * Navigation
- * @param Navigation props
- * @returns
- */
-export default function Navigation ({ showSubtitle = false, isOpen = false }: NavigationProps) {
-  const currentRouter = router
+const Navigation = ({ showSubtitle = false, isOpen = false }: NavigationProps) => {
   const location = useLocation()
   const [showNavigation, setShowNavigation] = useState(isOpen)
-  const [hiddenAttribute, setHiddenAttribute] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
 
   return (
     <div className='w-min'>
 
-      {/** toggle */}
-      <Icon onIconOpen={Bars3Icon} onIconClose={XMarkIcon} active={showNavigation} onClick={() => setShowNavigation(!showNavigation)} />
+      {/** Toggle navigation icon */}
+      <Icon primary={Bars3Icon} secondary={XMarkIcon} active={showNavigation} onClick={() => setShowNavigation(!showNavigation)} />
 
-      <div className={`absolute left-0 w-full h-[calc(100%-_48px)] z-50 top-12 ${hiddenAttribute ? 'hidden' : 'visible'}`}>
+      <div
+        className={classNames(
+          'absolute left-0 w-full h-[calc(100%-_48px)] z-50 top-12',
+          isVisible ? 'visible' : 'hidden'
+        )}
+      >
         <Transition show={showNavigation}>
 
           {/** navigation */}
@@ -40,30 +48,34 @@ export default function Navigation ({ showSubtitle = false, isOpen = false }: Na
             leave=' ease duration-500 transform'
             leaveFrom='translate-x-0'
             leaveTo='-translate-x-96'
-            afterLeave={() => { setHiddenAttribute(true) }}
-            beforeEnter={() => { setHiddenAttribute(false) }}
+            afterLeave={() => { setIsVisible(false) }}
+            beforeEnter={() => { setIsVisible(true) }}
           >
-            <div className='md:max-w-96 w-full bg-gray-950 text-white h-full -translate-x-0 z-50'>
-              <h1 className='mb-4'>Navigation</h1>
+            <div className='md:max-w-96 w-full bg-base-background text-base-content h-full -translate-x-0 z-50'>
+                <h1 className='mb-4 uppercase'>Menu</h1>
               {
-                currentRouter.routes.map(route => {
-                  const panel = route.handle as PageDescription
-                  const linkStyle = classNames('border-white/20 hover:bg-gray-700 border-b text-base flex p-2 items-center ', {
-                    'bg-white text-black hover:bg-gray-200': pathIsActive(location.pathname, route.path)
+                router.routes?.map((route, i) => {
+                  const page = route.handle as PageDescription
+                  const linkClassName = classNames('border-white/20 hover:bg-base-onSurface hover:text-base-surface border-b text-base flex p-2 items-center ', {
+                    'bg-base-onSurface text-base-surface hover:bg-gray-200': isPathActive(location.pathname, route.path)
                   })
 
-                  if (panel.hidden) { return <div key={route.id} /> }
+                  if (page.hidden || !route.path) {
+                    return null
+                  }
+
+                  const pageRoutePath = normalizePath(route.path)
 
                   return (
-                    <a key={route.id} href={route.path} className={linkStyle}>
+                    <Link key={i} to={pageRoutePath} className={linkClassName} relative='route'>
                       <ChevronRightIcon className='h-4 w-4 mx-2' />
                       <div className='ml-2'>
-                        <h1 className='flex w-full items-center'>{panel.title}</h1>
+                        <h1 className='flex w-full items-center'>{page.title}</h1>
                         {
-                          show(showSubtitle, <p className='text-xs text-left text-gray-500 mt-1 truncate'>{panel.description}</p>)
+                          showSubtitle && <p className='text-xs text-left text-gray-500 mt-1 truncate'>{page.description}</p>
                         }
                       </div>
-                    </a>
+                    </Link>
                   )
                 })
               }
@@ -91,12 +103,12 @@ export default function Navigation ({ showSubtitle = false, isOpen = false }: Na
   )
 }
 
-const show = (condition: boolean | undefined, a: any, b?: any) => condition ? a : b || <></>
-
-const pathIsActive = (path: string | undefined, location: string | undefined): boolean => {
-  return handlePath(location) === handlePath(path)
+const isPathActive = (path: string | undefined, location: string | undefined): boolean => {
+  return normalizePath(location) === normalizePath(path)
 }
 
-const handlePath = (path: string | undefined) => {
+const normalizePath = (path: string | undefined) => {
   return path?.startsWith('/') ? path : '/' + path
 }
+
+export default Navigation

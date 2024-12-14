@@ -35,13 +35,13 @@ export default function Home ({ panels }: HomeProps) {
 
         <div className='text-white m-auto flex flex-initialflex-wrap w-full max-w-screen-xl justify-center py-4 text-sm'>
           <Icon
-            onIconOpen={GithubIcon}
+            primary={GithubIcon}
             label='Github'
             href='https://github.com/svengrav'
             className='hover:text-blue-400'
             />
           <Icon
-            onIconOpen={LinkedInIcon}
+            primary={LinkedInIcon}
             label='LinkedIn'
             href='https://www.linkedin.com/in/svengrav/'
             className='ml-4 hover:text-blue-400'
