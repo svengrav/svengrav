@@ -21,7 +21,6 @@ type CanvasProps = {
  * @param {CanvasProps} props - The properties for the Canvas component.
  * @param {string} props.className - The CSS class name to apply to the canvas container.
  *
- * @returns {JSX.Element} The rendered Canvas component.
  */
 export const Canvas = ({ className }: CanvasProps) => {
   const { state } = useCanvasContext()

@@ -20,7 +20,7 @@ interface ScalableProps {
 export default function Scalable({ children, width, height, className = 'h-full w-full' }: ScalableProps): ReactElement {
   const [scale, setScale] = useState({ x: 1, y: 1 })
   const ref = useRef<HTMLDivElement>(null)
-  const [, size] = useContainerSize(ref)
+  const { size }= useContainerSize(ref)
 
   useEffect(() => {
     if (size !== undefined) {
