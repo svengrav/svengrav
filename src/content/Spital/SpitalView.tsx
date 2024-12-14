@@ -1,11 +1,11 @@
-import Page from "../../components/Page";
-import { Canvas } from "../../components/Canvas";
-import { CanvasWrapper } from "../../components/CanvasWrapper";
+import Page from "@components/Page";
+import { Canvas } from "@components/canvas/Canvas";
+import { CanvasWrapper } from "@components/canvas/CanvasWrapper";
 import { useWindowResize } from "../../hooks/useWindowResize";
 import { SpitalMap, SpitalMapController } from "./SpitalMap";
 import { ReactNode, useRef, useState } from "react";
-import Scalable from "../../components/Scalable";
-import { Sidepanel2, Sidepanel2Controller } from "../../components/Sidepanel2";
+import Scalable from "@components/Scalable";
+import { Sidepanel2, Sidepanel2Controller } from "@components/Sidepanel2";
 import SpitalLogo from "./SpitalLogo";
 import {
   SpitalArtwork,
@@ -15,14 +15,14 @@ import {
   getChapterById,
   getSpitalChapters,
 } from "./Spital";
-import { OverlayProvider, useOverlay } from "../../components/Overlay";
+import { OverlayProvider, useOverlay } from "@components/Overlay";
 import classNames from "classnames";
 import {
   ArrowDownRightIcon,
   ArrowsPointingOutIcon,
   ArrowUpLeftIcon,
 } from "@heroicons/react/24/solid";
-import Icon from "../../components/Icon";
+import Icon from "@components/Icon";
 
 const BASE_BUTTON_STYLE =
   "text-spital-primary hover:bg-spital-surface border-spital-primary tracking-widest rounded-md px-1 uppercase";

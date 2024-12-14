@@ -1,15 +1,15 @@
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { useWindowResize } from "../../hooks/useWindowResize"
-import Page from "../../components/Page"
-import { CanvasWrapper } from "../../components/CanvasWrapper"
-import { Canvas } from "../../components/Canvas"
-import { CanvasZoomControl } from "../../components/CanvasZoomControl"
-import { CanvasLayerControl } from "../../components/CanvasLayerControl"
-import { Navigator } from "../../components/Navigator"
-import { Sidepanel2, Sidepanel2Controller } from "../../components/Sidepanel2"
-import { OverlayProvider, useOverlay } from "../../components/Overlay"
+import Page from "@components/Page"
+import { CanvasWrapper } from "@components/canvas/CanvasWrapper"
+import { Canvas } from "@components/canvas/Canvas"
+import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl"
+import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl"
+import { CanvasNavigator } from "@components/canvas/CanvasNavigator"
+import { Sidepanel2, Sidepanel2Controller } from "@components/Sidepanel2"
+import { OverlayProvider, useOverlay } from "@components/Overlay"
 import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid"
-import Icon from "../../components/Icon"
+import Icon from "@components/Icon"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { SouthpoleMap } from "./SouthPole"
 import { description, SouthPoleSummary } from "./SouthPoleData"
@@ -93,7 +93,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
         </Sidepanel2>
 
         <CanvasWrapper artwork={map} size={{ height: windowSize.height - 150, width: windowSize.width }}>
-          <Navigator />
+          <CanvasNavigator />
           <Canvas className="m-auto" />
           <CanvasZoomControl />
           <CanvasLayerControl />

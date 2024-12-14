@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { campSecond } from "./SpitalMapData";
 import { fetchSVG } from "./svgUtils";
 import spitalTheme from "./SpitalTheme";
-import { MapLabel } from "../../components/map/MapComponents";
+import { MapLabel } from "@components/map/MapComponents";
 
 // spital elements
 const SPITAL_MAP_CAMP_ID = "spital-camp-map";

@@ -1,25 +1,47 @@
+import { useEffect, useState } from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { ArrowRightIcon, ArrowUpIcon, ArrowsPointingInIcon, Bars3Icon, ChevronDownIcon, ChevronLeftIcon, ChevronUpIcon, FlagIcon, MagnifyingGlassPlusIcon, Square3Stack3DIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import {
+  ArrowRightIcon,
+  ArrowUpIcon,
+  ArrowsPointingInIcon,
+  Bars3Icon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronUpIcon,
+  MagnifyingGlassPlusIcon,
+  Square3Stack3DIcon,
+  XMarkIcon
+} from '@heroicons/react/24/solid'
 import { EyeIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
-import Icon from './Icon'
+import Icon from '../Icon'
 import classNames from 'classnames'
-import Sidepanel from './Sidepanel'
+import Sidepanel from '../Sidepanel'
 import { useCanvasContext } from './CanvasWrapper'
 
-interface NavigatorProps {
+interface CanvasNavigatorProps {
   className?: string
 }
 
 /**
- * Navigator displays the artwork properties.
- * @param Context
- * @returns
+ * CanvasNavigator component provides a side panel navigator for canvas properties and layers.
+ * 
+ * @param {Object} props - The component props.
+ * @param {string} [props.className="md:w-96 md:absolute right-0 z-20"] - Optional class names for the component.
+ *
+ * @remarks
+ * This component uses the `useCanvasContext` hook to access canvas state, including layer, transformed, and artwork properties.
+ * It displays various properties such as width, height, position, scale, shrink, visibility, and layer information.
+ * The visibility of the side panel can be toggled by clicking an icon.
  */
-export function Navigator ({ className = "md:w-96 md:absolute right-0 z-20" }: NavigatorProps) {
-  const [visible, setVisible] = useState(window.innerWidth > 1000)
-  const { layer, transformed, artwork } = useCanvasContext().state
+export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20" }: CanvasNavigatorProps) {
+  const [visible, setVisible] = useState(false)
+  const { layer, transformed, artwork } = useCanvasContext()?.state || { layer: {}, transformed: {}, artwork: {} }
   const propertyStyles = 'text-sm font-medium flex text-gray-200'
+
+  useEffect(() => {
+    setVisible(window.innerWidth > 1000)
+  }, [])
+
   return (
     <div className={className}>
       <div className='z-20 absolute right-0 text-white py-2 px-1'>
@@ -86,7 +108,7 @@ interface NavigatorSectionProps {
   open?: boolean
 }
 
-function NavigatorSection ({ title, children, open = false }: NavigatorSectionProps) {
+function NavigatorSection({ title, children, open = false }: NavigatorSectionProps) {
   return (
     <div className='p-1 border-b border-b-gray-900'>
       <Disclosure defaultOpen={open} key={'' + open}>

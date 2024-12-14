@@ -1,10 +1,10 @@
 import { Artwork } from '../core/Artwork'
-import Page from '../components/Page'
-import { Navigator } from '../components/Navigator'
-import { Canvas } from '../components/Canvas'
-import { CanvasWrapper } from '../components/CanvasWrapper'
-import { CanvasZoomControl } from '../components/CanvasZoomControl'
-import { CanvasLayerControl } from '../components/CanvasLayerControl'
+import Page from '@components/Page'
+import { CanvasNavigator } from '@components/canvas/CanvasNavigator'
+import { Canvas } from '@components/canvas/Canvas'
+import { CanvasWrapper } from '@components/canvas/CanvasWrapper'
+import { CanvasZoomControl } from '@components/canvas/CanvasZoomControl'
+import { CanvasLayerControl } from '@components/canvas/CanvasLayerControl'
 import { useWindowResize } from '../hooks/useWindowResize'
 import { ReactNode } from 'react'
 
@@ -21,7 +21,7 @@ export default function ArtworkView ({ artwork, inner, navigator = true }: Artwo
       {inner}
 
       <CanvasWrapper artwork={artwork} size={{ height: window.height - 150, width: window.width }}>
-        { navigator && <Navigator />}
+        { navigator && <CanvasNavigator />}
         <Canvas className='m-auto' />
         <CanvasZoomControl />
         <CanvasLayerControl />

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Logo } from '../assets/icons'
-import Scalable from '../components/Scalable'
+import Scalable from '@components/Scalable'
 
 interface LayerPath {
   dimension: string

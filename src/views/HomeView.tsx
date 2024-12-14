@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { GithubIcon, LinkedInIcon, Logo } from '../assets/icons'
-import Page from '../components/Page'
+import Page from '@components/Page'
 import { Transition } from '@headlessui/react'
-import Icon from '../components/Icon'
-import { PageDescription, PageTag, getPageTagColor } from '../components/PageDescription'
+import Icon from '@components/Icon'
+import { PageDescription, PageTag, getPageTagColor } from '@components/PageDescription'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
 interface HomeProps {

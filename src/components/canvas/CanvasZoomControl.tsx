@@ -22,7 +22,6 @@ export const CanvasZoomControl = () => {
     })
   })
 
-  console.log(canvasContext.state.transformed.position.x, canvasContext.state.transformed.position.y)
   return (
     <div className='mt-2 m-auto w-full flex justify-center text-white'>
       <button onClick={() => zoomOut()}>

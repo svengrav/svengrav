@@ -1,5 +1,26 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@core/*": [
+        "core/*"
+      ],
+      "@content/*": [
+        "content/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ]
+    },
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",

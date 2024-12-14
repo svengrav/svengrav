@@ -4,7 +4,7 @@ import { campLabel, MapElement, mapViews, Position, spitalLabel, spitalEventPoin
 import { SpitalMapCamp } from "./SpitalCampMap";
 import spitalTheme from "./SpitalTheme";
 import { SpitalCategory } from "./Spital";
-import { createMapConnection, MapLabel, MapPoint, MapTitle } from "../../components/map/MapComponents";
+import { createMapConnection, MapLabel, MapPoint, MapTitle } from "@components/map/MapComponents";
 import classNames from "classnames"
 
 export interface SpitalMapController {

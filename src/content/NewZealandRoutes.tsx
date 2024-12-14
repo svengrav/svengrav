@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Scalable from '../components/Scalable'
+import Scalable from '@components/Scalable'
 
 const NewZealandRoutes = (props: any) => {
   const [modernActive, setModernActive] = useState(false)
