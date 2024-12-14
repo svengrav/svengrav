@@ -15,7 +15,7 @@ import {
   getChapterById,
   getSpitalChapters,
 } from "./Spital"
-import { useOverlay } from "@components/base/Overlay"
+import { usePageOverlay } from "@components/page/PageOverlay"
 import classNames from "classnames"
 import {
   ArrowDownRightIcon,
@@ -353,7 +353,7 @@ const SpitalPanel = ({
   active?: string
   onClick?: (id: string) => void
 }) => {
-  const overlay = useOverlay()
+  const overlay = usePageOverlay()
 
   const showOverlay = () => {
     overlay?.showOverlay({
@@ -406,7 +406,7 @@ const SpitalPanel = ({
 
 // Component for displaying the story with a "show more" button
 const SpitalStory = ({ summary, details }: { summary: ReactNode; details: ReactNode }) => {
-  const overlay = useOverlay()
+  const overlay = usePageOverlay()
 
   const showMore = () => {
     overlay?.showOverlay({

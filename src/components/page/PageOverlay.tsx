@@ -2,7 +2,7 @@ import { CSSProperties, Fragment, ReactNode, createContext, useContext, useState
 import { Transition, TransitionChild } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
-import Icon from "./Icon";
+import Icon from "../base/Icon";
 
 /**
  * Interface representing the properties required to show an overlay.
@@ -54,7 +54,7 @@ const OverlayContext = createContext<ShowOverlay | undefined>(undefined);
 /**
  * Custom hook to use the overlay context
  */
-export const useOverlay = () => useContext(OverlayContext);
+export const usePageOverlay = () => useContext(OverlayContext);
 
 /**
  * Props for the OverlayProvider component.
@@ -62,12 +62,12 @@ export const useOverlay = () => useContext(OverlayContext);
  * @property {ReactNode} children - The child components to be rendered within the provider.
  * @property {boolean} [initialVisible] - Optional prop to control the initial visibility of the overlay.
  */
-interface OverlayProviderProps {
+interface PageOverlayProviderProps {
   children: ReactNode;
   initialVisible?: boolean;
 }
 
-export const OverlayProvider = ({ children, initialVisible = false }: OverlayProviderProps) => {
+export const PageOverlayProvider = ({ children, initialVisible = false }: PageOverlayProviderProps) => {
   const [overlayState, setOverlayState] = useState<OverlayState>({
     visible: initialVisible, // Use the initialVisible prop here
     children: null,
@@ -94,7 +94,7 @@ export const OverlayProvider = ({ children, initialVisible = false }: OverlayPro
 
   return (
     <OverlayContext.Provider value={{ showOverlay }}>
-      <Overlay key={overlayState.visible ? "visible" : "hidden"} {...overlayState} onClose={() => setOverlayState({ ...overlayState, visible: false })} />
+      <PageOverlay key={overlayState.visible ? "visible" : "hidden"} {...overlayState} onClose={() => setOverlayState({ ...overlayState, visible: false })} />
       {children}
     </OverlayContext.Provider>
   );
@@ -112,7 +112,7 @@ export const OverlayProvider = ({ children, initialVisible = false }: OverlayPro
  * @property {string} [contentClassName] - Additional class name for the content of the overlay.
  * @property {string} [backdropClassName] - Additional class name for the backdrop of the overlay.
  */
-interface OverlayProps {
+interface PageOverlayProps {
   label?: string;
   visible?: boolean;
   children?: ReactNode;
@@ -126,10 +126,10 @@ interface OverlayProps {
 /**
  * Overlay component to display modal content
  * 
- * @param {OverlayProps} props - Properties to customize the overlay
+ * @param {PageOverlayProps} props - Properties to customize the overlay
  * @returns {JSX.Element}
  */
-export default function Overlay(props: OverlayProps) {
+export default function PageOverlay(props: PageOverlayProps) {
   const {
     children,
     style,
@@ -141,7 +141,7 @@ export default function Overlay(props: OverlayProps) {
     backdropClassName,
   } = props;
   return (
-    <OverlayContainer show={visible}>
+    <PageOverlayContainer show={visible}>
       <div className={classNames("h-full w-full flex")}>
         {/* scrollable content */}
         <div
@@ -167,7 +167,7 @@ export default function Overlay(props: OverlayProps) {
         </div>
         <div className={classNames("w-full h-full absolute top-0 left-0", backdropClassName, "bg-gray-950/50")} onClick={() => onClose()} />
       </div>
-    </OverlayContainer>
+    </PageOverlayContainer>
   );
 }
 
@@ -177,7 +177,7 @@ export default function Overlay(props: OverlayProps) {
  * @param {show: boolean, children: ReactNode} props - Properties to customize the container
  * @returns {JSX.Element}
  */
-const OverlayContainer = ({ show, children }: { show: boolean; children: ReactNode }) => {
+const PageOverlayContainer = ({ show, children }: { show: boolean; children: ReactNode }) => {
   return (
     <Transition appear show={show} as={Fragment}>
       <div className="w-full h-[calc(100vh_-_48px)] fixed top-12 z-50 flex">

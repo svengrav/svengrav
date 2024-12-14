@@ -7,7 +7,7 @@ import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl";
 import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl";
 import { CanvasNavigator } from "@components/canvas/CanvasNavigator";
 import { PagePanel, PagePanelController } from "@components/page/PagePanel";
-import { useOverlay } from "@components/base/Overlay";
+import { usePageOverlay } from "@components/page/PageOverlay";
 import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
 import Icon from "@components/base/Icon";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
@@ -122,7 +122,7 @@ const InformationSection = ({
 };
 
 const Information = () => {
-  const overlay = useOverlay();
+  const overlay = usePageOverlay();
 
   const showOverlay = () => {
     overlay?.showOverlay({

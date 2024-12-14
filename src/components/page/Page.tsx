@@ -5,7 +5,7 @@ import {
   LogoIcon 
 } from "@assets/icons";
 import Icon from "@components/base/Icon";
-import { OverlayProvider } from "@components/base/Overlay"
+import { PageOverlayProvider } from "@components/page/PageOverlay"
 import { useWindowResize } from "@hooks/useWindowResize";
 
 /**
@@ -55,9 +55,9 @@ export const Page = ({ children }: PageProps) => {
             </span>
           </div>
         ) : (
-          <OverlayProvider>
+          <PageOverlayProvider>
           {children}
-          </OverlayProvider>
+          </PageOverlayProvider>
         )}
       </div>
     </div>
