@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Link } from "@components/Link"
+import { Link } from "@components/base/Link"
 import { Artwork } from "@components/Artwork"
 import spitalTheme from "./SpitalTheme"
 

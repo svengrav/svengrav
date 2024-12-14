@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useRef, useState } from 'react'
-import { useContainerSize } from '../hooks/useContainerSize'
+import { useContainerSize } from '@hooks/useContainerSize'
 
 interface ScalableProps {
   children: React.ReactNode

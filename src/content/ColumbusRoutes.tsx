@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { useState } from 'react'
-import Scalable from '@components/Scalable'
+import Scalable from '@components/base/Scalable'
 
 const ColumbusRoutes = () => {
   const [firstActive, setFirstActive] = useState(false)

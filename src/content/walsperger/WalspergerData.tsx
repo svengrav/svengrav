@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import Scalable from "@components/Scalable"
+import Scalable from "@components/base/Scalable"
 import { mapPoints, mapPoints2, mapText } from "./WalspergMap"
 import { MutableRefObject, useEffect, useRef, useState } from "react"
 

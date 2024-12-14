@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { GithubIcon, LinkedInIcon, Logo } from '../assets/icons'
 import Page from '@components/page/Page'
 import { Transition } from '@headlessui/react'
-import Icon from '@components/Icon'
+import Icon from '@components/base/Icon'
 import { PageDescription, PageTag, getPageTagColor } from '@components/page/PageDescription'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 

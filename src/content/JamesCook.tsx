@@ -1,4 +1,4 @@
-import { ImageLoader } from '@components/ImageLoader'
+import { ImageLoader } from '@components/base/ImageLoader'
 import PageThumbnail from '@components/page/PageThumbnail'
 import { Artwork } from '../core/Artwork'
 import { PageDescription } from '@components/page/PageDescription'

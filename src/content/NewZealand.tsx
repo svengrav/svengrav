@@ -1,5 +1,5 @@
 import NewZealandRoutes from './NewZealandRoutes'
-import { ImageLoader } from '@components/ImageLoader'
+import { ImageLoader } from '@components/base/ImageLoader'
 import PageThumbnail from '@components/page/PageThumbnail'
 import { Artwork } from '../core/Artwork'
 import { date } from '../utils/helper'

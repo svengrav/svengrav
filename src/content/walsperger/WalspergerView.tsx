@@ -6,10 +6,10 @@ import { Canvas } from "@components/canvas/Canvas";
 import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl";
 import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl";
 import { CanvasNavigator } from "@components/canvas/CanvasNavigator";
-import { PagePanel, Sidepanel2Controller } from "@components/page/PagePanel";
-import { OverlayProvider, useOverlay } from "@components/Overlay";
+import { PagePanel, PagePanelController } from "@components/page/PagePanel";
+import { OverlayProvider, useOverlay } from "@components/base/Overlay";
 import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
-import Icon from "@components/Icon";
+import Icon from "@components/base/Icon";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { WalspergerMap } from "./WalspergMap";
 
@@ -20,7 +20,7 @@ interface WalspergerViewProps {
 
 export default function WalspergerView({ map, inner }: WalspergerViewProps) {
   const { windowSize: window } = useWindowResize();
-  const leftSidepanel = useRef<Sidepanel2Controller>(null);
+  const leftSidepanel = useRef<PagePanelController>(null);
   const [section, setSection] = useState({
     1: false,
     2: false,

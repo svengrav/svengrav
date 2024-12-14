@@ -6,10 +6,10 @@ import { Canvas } from "@components/canvas/Canvas"
 import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl"
 import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl"
 import { CanvasNavigator } from "@components/canvas/CanvasNavigator"
-import { PagePanel, Sidepanel2Controller } from "@components/page/PagePanel"
-import { OverlayProvider, useOverlay } from "@components/Overlay"
+import { PagePanel, PagePanelController } from "@components/page/PagePanel"
+import { OverlayProvider, useOverlay } from "@components/base/Overlay"
 import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid"
-import Icon from "@components/Icon"
+import Icon from "@components/base/Icon"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { SouthpoleMap } from "./SouthPole"
 import { description, SouthPoleSummary } from "./SouthPoleData"
@@ -23,7 +23,7 @@ interface SouthPoleViewProps {
 
 export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   const { windowSize } = useWindowResize()
-  const leftSidepanel = useRef<Sidepanel2Controller>(null)
+  const leftSidepanel = useRef<PagePanelController>(null)
   const controller = map.controller
   const [activeExpedition , setActiveExpedition] = useState({
     id: ''

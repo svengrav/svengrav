@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react'
 import { useState } from 'react'
-import { Logo } from '../assets/icons'
+import { Logo } from '@assets/icons'
 
 interface ImageProps {
   src: string

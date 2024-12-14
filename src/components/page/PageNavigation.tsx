@@ -2,7 +2,7 @@ import { Bars3Icon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/soli
 import { useLocation, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { Transition, TransitionChild } from '@headlessui/react'
-import Icon from '../Icon'
+import Icon from '@components/base/Icon'
 import { PageDescription } from './PageDescription'
 import classNames from 'classnames'
 import { router } from '../../App'
@@ -21,6 +21,13 @@ interface PageNavigationProps {
   isOpen?: boolean
 }
 
+/**
+ * Component for rendering a page navigation menu with a toggleable sidebar.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} [props.showSubtitle=false] - Determines whether to show subtitles for navigation items.
+ * @param {boolean} [props.isOpen=false] - Determines whether the navigation menu is initially open.
+ */
 const PageNavigation = ({ showSubtitle = false, isOpen = false }: PageNavigationProps) => {
   const location = useLocation()
   const [showNavigation, setShowNavigation] = useState(isOpen)

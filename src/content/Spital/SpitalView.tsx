@@ -4,8 +4,8 @@ import { CanvasWrapper } from "@components/canvas/CanvasWrapper";
 import { useWindowResize } from "../../hooks/useWindowResize";
 import { SpitalMap, SpitalMapController } from "./SpitalMap";
 import { ReactNode, useRef, useState } from "react";
-import Scalable from "@components/Scalable";
-import { PagePanel, Sidepanel2Controller } from "@components/page/PagePanel";
+import Scalable from "@components/base/Scalable";
+import { PagePanel, PagePanelController } from "@components/page/PagePanel";
 import SpitalLogo from "./SpitalLogo";
 import {
   SpitalArtwork,
@@ -15,14 +15,14 @@ import {
   getChapterById,
   getSpitalChapters,
 } from "./Spital";
-import { OverlayProvider, useOverlay } from "@components/Overlay";
+import { OverlayProvider, useOverlay } from "@components/base/Overlay";
 import classNames from "classnames";
 import {
   ArrowDownRightIcon,
   ArrowsPointingOutIcon,
   ArrowUpLeftIcon,
 } from "@heroicons/react/24/solid";
-import Icon from "@components/Icon";
+import Icon from "@components/base/Icon";
 
 const BASE_BUTTON_STYLE =
   "text-spital-primary hover:bg-spital-surface border-spital-primary tracking-widest rounded-md px-1 uppercase";
@@ -81,8 +81,8 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
 
   // Use refs for the container and side panels
   const containerRef = useRef<HTMLDivElement>(null);
-  const rightSidepanel = useRef<Sidepanel2Controller>(null);
-  const leftSidepanel = useRef<Sidepanel2Controller>(null);
+  const rightSidepanel = useRef<PagePanelController>(null);
+  const leftSidepanel = useRef<PagePanelController>(null);
 
   // Define the map controller
   const mapController: SpitalMapController = {

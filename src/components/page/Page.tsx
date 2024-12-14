@@ -1,18 +1,24 @@
 import PageNavigation from "./PageNavigation";
-import { GithubIcon, LinkedInIcon, Logo, LogoIcon } from "../../assets/icons";
-import Icon from "../Icon";
-import { useWindowResize } from "../../hooks/useWindowResize";
+import { 
+  GithubIcon, 
+  LinkedInIcon, 
+  LogoIcon 
+} from "@assets/icons";
+import Icon from "@components/base/Icon";
+import { useWindowResize } from "@hooks/useWindowResize";
 
 interface PageProps {
   children: React.ReactNode;
 }
 
 /**
- * Page wrapper.
- * @param children
- * @returns Page
+ * The `Page` component serves as a layout wrapper for the entire page content.
+ * It includes a header with navigation, logo, and social media icons, and a main content area.
+ * 
+ * @param {PageProps} props - The properties object.
+ * @param {React.ReactNode} props.children - The content to be displayed within the page.
  */
-export default function Page({ children }: PageProps) {
+export const Page = ({ children }: PageProps) => {
   const { isResizing } = useWindowResize();
 
   return (
@@ -28,8 +34,8 @@ export default function Page({ children }: PageProps) {
         </div>
 
         <div className="flex justify-end">
-          <Icon primary={GithubIcon} label="" href="https://github.com/svengrav" />
-          <Icon primary={LinkedInIcon} label="" href="https://www.linkedin.com/in/svengrav/" className="ml-4 mr-2" />
+          <Icon primary={GithubIcon} href="https://github.com/svengrav" />
+          <Icon primary={LinkedInIcon} href="https://www.linkedin.com/in/svengrav/" className="ml-4 mr-2" />
         </div>
       </div>
 
@@ -40,7 +46,6 @@ export default function Page({ children }: PageProps) {
             <span className="text-white w-full uppercase mt-8 border rounded-md p-4">
               Resizing window...
             </span>
-            
           </div>
         ) : (
           children
@@ -49,3 +54,5 @@ export default function Page({ children }: PageProps) {
     </div>
   );
 }
+
+export default Page;

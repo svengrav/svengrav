@@ -13,23 +13,34 @@ const panelColorVariants = {
 
 const backgroundPattern = ''
 
+/**
+ * Props for the PanelThumbnail component.
+ *
+ * @interface PanelThumbnailProps
+ * @property {string} [src] - The source URL for the thumbnail image.
+ * @property {string} [label] - The label text for the thumbnail.
+ * @property {PanelColor} [color] - The color theme for the panel.
+ */
 interface PanelThumbnailProps {
   src?: string
   label?: string
   color?: PanelColor
 }
 
+
 /**
- * Renders a preview thumbnail for a panel.
- * @param src
- * @param color
- * @returns
+ * Component to render a thumbnail with an optional background image, color, and label.
+ *
+ * @param {Object} props - The properties object.
+ * @param {string} props.src - The source URL of the background image.
+ * @param {string} [props.color='emerald'] - The color variant for the background gradient.
+ * @param {string} [props.label=''] - The label text to display in the center of the thumbnail.
  */
-export default function PageThumbnail ({
+export const PageThumbnail = ({
   src,
   color = 'emerald',
   label = ''
-}: PanelThumbnailProps) {
+}: PanelThumbnailProps) => {
   return (
     <div
       className={classNames(
@@ -46,3 +57,5 @@ export default function PageThumbnail ({
     </div>
   )
 }
+
+export default PageThumbnail

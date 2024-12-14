@@ -13,7 +13,7 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/solid'
 import { EyeIcon } from '@heroicons/react/24/outline'
-import Icon from '../Icon'
+import Icon from '@components/base/Icon'
 import classNames from 'classnames'
 import { useCanvasContext } from './CanvasWrapper'
 

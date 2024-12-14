@@ -1,9 +1,9 @@
 import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import classNames from 'classnames'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import Icon from '../Icon'
+import Icon from '@components/base/Icon'
 
-interface SidepanelProps {
+interface PagePanelProps {
   visible?: boolean
   position?: 'left' | 'right'
   closable?: boolean
@@ -20,20 +20,20 @@ interface SidepanelProps {
   onClose?: () => void
 }
 
-export interface Sidepanel2Controller {
+export interface PagePanelController {
   open: () => void
   close: () => void
   toggle: () => void
   scrollTo: (id: string) => void
 }
 
-interface SidepanelState {
+interface PagePanelState {
   width: number
   visible: boolean
   scrollTo?: string
 }
 
-export const PagePanel = forwardRef<Sidepanel2Controller, SidepanelProps>((props: SidepanelProps, ref) => {
+export const PagePanel = forwardRef<PagePanelController, PagePanelProps>((props: PagePanelProps, ref) => {
   const { 
     children, 
     zIndex = 5, 
@@ -50,7 +50,7 @@ export const PagePanel = forwardRef<Sidepanel2Controller, SidepanelProps>((props
   } = props
 
   const scrollableContainer = useRef<HTMLDivElement>(null)
-  const [state, setState] = useState<SidepanelState>({
+  const [state, setState] = useState<PagePanelState>({
     visible: visible,
     width: full ? window.innerWidth : width
   })

@@ -1,5 +1,5 @@
 import NorthSouth from './NorthSouthRoutes'
-import { ImageLoader } from '@components/ImageLoader'
+import { ImageLoader } from '@components/base/ImageLoader'
 import { Artwork } from '../core/Artwork'
 import { date } from '../utils/helper'
 import ArtworkView from '../views/ArtworkView'

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import Scalable from '@components/Scalable'
+import Scalable from '@components/base/Scalable'
 import { usePathAnimation } from '../../hooks/usePathAnimation'
 import { Expedition } from './SouthPoleData'
 import { fetchSVG } from '../Spital/svgUtils'

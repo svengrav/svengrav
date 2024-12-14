@@ -1,12 +1,12 @@
 import { MapIcon, MapPinIcon } from '@heroicons/react/24/solid'
-import { ImageLoader } from '@components/ImageLoader'
+import { ImageLoader } from '@components/base/ImageLoader'
 import PageThumbnail from '@components/page/PageThumbnail'
 import { PagePanel } from '@components/page/PagePanel'
 import { Artwork } from '../core/Artwork'
 import { PageDescription } from '@components/page/PageDescription'
 import { date } from '../utils/helper'
 import ArtworkView from '../views/ArtworkView'
-import Icon from '@components/Icon'
+import Icon from '@components/base/Icon'
 
 const cafeMapPosition = 'https://maps.app.goo.gl/HSzLgr2AYfKJWa6u9'
 
