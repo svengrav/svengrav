@@ -51,7 +51,7 @@ export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20"
       <div className='z-40 absolute right-0 text-white py-2 px-1'>
         <Icon primary={ChevronLeftIcon} secondary={XMarkIcon} active={visible} onClick={toggleVisibility} className='bg-gray-950 text-white ' />
       </div>
-      <Sidepanel show={visible} full={isFullScreen}>
+      <CanavasNavigatorPanel show={visible} full={isFullScreen}>
         <div className='bg-gray-950'>
 
           {/** header */}
@@ -98,7 +98,7 @@ export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20"
             }
           </div>
         </div>
-      </Sidepanel>
+      </CanavasNavigatorPanel>
     </div>
   )
 };
@@ -147,25 +147,19 @@ const NavigatorSection = ({ title, children, open = false }: NavigatorSectionPro
   )
 }
 
-interface SidepanelProps {
+interface CanavasNavigatorPanelProps {
   show?: boolean
   children?: any
-  width?: number
   full?: boolean
 }
 
-/**
- * Navigation
- * @param Navigation props
- * @returns
- */
-export default function Sidepanel ({
+const CanavasNavigatorPanel = ({
   children,
   show = false,
-  width,
   full
-}: SidepanelProps) {
-  const actualWidth = full ? window.innerWidth : width || 400
+}: CanavasNavigatorPanelProps) => {
+  const PANEL_WIDTH = 400
+  const actualWidth = full ? window.innerWidth : PANEL_WIDTH
 
   return (
     <div className='w-min'>
