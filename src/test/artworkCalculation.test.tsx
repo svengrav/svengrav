@@ -3,8 +3,8 @@ import {
   calcArtworkSize,
   calcArtworkRatio,
   calcCanvasPosition,
-} from "../core/artworkCalculation";
-import { calculateAllLayerStates, calculateLayerStateByIndex } from "../core/artworkLayerCalculation";
+} from "../components/artwork/artworkCalculation";
+import { calculateAllLayerStates, calculateLayerStateByIndex } from "../components/artwork/artworkLayerCalculation";
 
 describe("calculate full layer state", () => {
   test("layer index for 2 layers is 2", () => {

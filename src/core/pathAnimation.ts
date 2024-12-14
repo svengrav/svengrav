@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react'
-import { assert } from '../utils/helper'
+import { assert } from '@core/assert'
 
 // #region
 export interface PathState {
@@ -308,16 +308,3 @@ export const setPathPosition = (state: PathState, distance: number): PathState =
     parts: calcPathPartSize({ parts: state.parts, points: state.points, offset: state.offset }, nextPosition)
   }
 }
-
-const newEventSVG = (id: string, point: PathPoint) => {
-  const scale = 1
-
-  const calc = (value: number) => value / Number(scale)
-  const transform = `translate(${calc(point.x)}, ${calc(point.y)}) `
-  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-  circle.setAttribute('transform', transform)
-  circle.setAttribute('id', id)
-  return circle
-}
-
-const getPathPoint = ({ position, points }: { position: number, points: PathPoint[] }) => points.find(p => p.i === position)!

@@ -1,5 +1,5 @@
-import { Artwork } from '../../core/Artwork'
-import { date } from '../../utils/helper'
+import { Artwork } from '@components/artwork/Artwork'
+import { date } from '@core/date'
 import PageThumbnail from '@components/page/PageThumbnail'
 import { PageDescription } from '@components/page/PageDescription'
 import { ImageLoader } from '@components/base/ImageLoader'

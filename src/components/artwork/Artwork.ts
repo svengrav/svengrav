@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Position, Size } from './Geometry'
+import { Position, Size } from '@core/geometry'
 
 
 /**

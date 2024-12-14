@@ -1,6 +1,6 @@
 import Page from '@components/page/Page'
 import { PageDescription } from '@components/page/PageDescription'
-import { date } from '../utils/helper'
+import { date } from '@core/date'
 import { usePathAnimation } from '../hooks/usePathAnimation'
 import { PathState } from '../core/pathAnimation'
 import { useState } from 'react'

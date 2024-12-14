@@ -1,4 +1,4 @@
-import { Artwork } from '../core/Artwork'
+import { Artwork } from '../components/artwork/Artwork'
 import Page from '@components/page/Page'
 import { CanvasNavigator } from '@components/canvas/CanvasNavigator'
 import { Canvas } from '@components/canvas/Canvas'

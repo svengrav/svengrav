@@ -1,8 +1,8 @@
 import React from 'react'
 import { ThreeLayer } from './ThreeLayers'
 import PageThumbnail from '@components/page/PageThumbnail'
-import { Artwork } from '../core/Artwork'
-import { date } from '../utils/helper'
+import { Artwork } from '../components/artwork/Artwork'
+import { date } from '@core/date'
 import { PageDescription } from '@components/page/PageDescription'
 import ArtworkView from '../views/ArtworkView'
 

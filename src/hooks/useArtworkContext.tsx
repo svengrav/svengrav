@@ -1,9 +1,9 @@
-import { Artwork, ArtworkLayer } from '../core/Artwork';
-import { calcArtworkSize as calcArtworkState, calcCanvasPosition, sizeIsEqual } from '../core/artworkCalculation';
+import { Artwork, ArtworkLayer } from '@components/artwork/Artwork';
+import { calcArtworkSize as calcArtworkState, calcCanvasPosition, sizeIsEqual } from '@components/artwork/artworkCalculation';
 import { useEffect, useState } from 'react';
 import { useWindowResize } from './useWindowResize';
-import { calculateLayerStateByIndex } from '../core/artworkLayerCalculation';
-import { Position, Size } from '../core/Geometry';
+import { calculateLayerStateByIndex } from '@components/artwork/artworkLayerCalculation';
+import { Position, Size } from '@core/geometry';
 
 type OverflowOptions = 'fit' | 'contain';
 

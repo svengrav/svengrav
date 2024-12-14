@@ -1,11 +1,10 @@
 import PageThumbnail from "@components/page/PageThumbnail"
-import { Artwork } from "../../core/Artwork"
+import { Artwork } from "@components/artwork/Artwork"
 import { PageDescription } from "@components/page/PageDescription"
-import { date } from "../../utils/helper"
+import { date } from "@core/date"
 import { ImageLoader } from "@components/base/ImageLoader"
 import { MapElementController, MapElements, MapElementsController } from "./WalspergerData"
 import WalspergerView from "./WalspergerView"
-import { useRef } from "react"
 
 interface WalspergerMapController {
   setVisibility(id: number, show: boolean): void;

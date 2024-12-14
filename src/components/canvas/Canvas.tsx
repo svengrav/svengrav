@@ -1,5 +1,5 @@
 import { TransformComponent } from 'react-zoom-pan-pinch'
-import { calculateSingleLayerState } from '@core/artworkLayerCalculation'
+import { calculateSingleLayerState } from '@components/artwork/artworkLayerCalculation'
 
 import { CanvasLayer } from './CanvasLayer'
 import { useCanvasContext } from './CanvasWrapper'
