@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useWindowResize } from "../../hooks/useWindowResize";
 import Page from "@components/page/Page";
-import { CanvasWrapper } from "@components/canvas/CanvasWrapper";
+import { CanvasStateProvider } from "@components/canvas/CanvasStateProvider"
 import { Canvas } from "@components/canvas/Canvas";
 import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl";
 import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl";
@@ -87,12 +87,12 @@ export default function WalspergerView({ map, inner }: WalspergerViewProps) {
           </InformationSection>
         </PagePanel>
 
-        <CanvasWrapper artwork={map} size={{ height: window.height - 150, width: window.width }}>
+        <CanvasStateProvider artwork={map} size={{ height: window.height - 150, width: window.width }}>
           <CanvasNavigator />
           <Canvas className="m-auto" />
           <CanvasZoomControl />
           <CanvasLayerControl />
-        </CanvasWrapper>
+        </CanvasStateProvider>
     </Page>
   );
 }

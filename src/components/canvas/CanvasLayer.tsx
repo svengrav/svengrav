@@ -7,7 +7,7 @@
  */
 interface CanvasLayerProps {
   opacity: number
-  children: any
+  children: React.ReactNode
 }
 
 /**

@@ -1,56 +1,41 @@
 import { ReactZoomPanPinchContentRef, TransformWrapper } from 'react-zoom-pan-pinch'
-import { ArtworkContext, useArtworkContext } from '@hooks/useArtworkContext'
-import { createContext, useContext, useEffect, useRef } from 'react'
-import { Artwork } from '@components/artwork/Artwork'
-import { Size } from '@core/geometry'
+import { createContext, useEffect, useRef } from 'react'
+import { CanvasContext } from './canvasTransformation'
+import { useCanvasContext } from './CanvasStateProvider'
 
-const CanvasContext = createContext<ArtworkContext | undefined>(undefined)
+const Canvas= createContext<CanvasContext | undefined>(undefined)
 
-interface CanwasWrapperProps {
+interface CanvasWrapperProps {
   children: React.ReactNode
-  artwork: Artwork
-  size: Size
 }
 
 export const CanvasWrapper = ({
   children,
-  artwork,
-  size
-}: CanwasWrapperProps) => {
-  const artwokContext = useArtworkContext(artwork, { canvasSize: size })
+}: CanvasWrapperProps) => {
 
-  const { state } = artwokContext
+  const context = useCanvasContext()
+  
   const transformRef = useRef<ReactZoomPanPinchContentRef>(null)
-  const transformed = state.transformed
+  const transformed = context.getTransformation()
 
   // Reset transform if wrapper rerenders (ex: window size changed)
   useEffect(() => {
     transformRef.current?.resetTransform();
-  }, [size])
+  }, [])
 
   return (
-    <CanvasContext.Provider value={artwokContext}>
-      <TransformWrapper
-        doubleClick={{ disabled: true }}
-        limitToBounds={true}
-        centerOnInit
-        maxScale={transformed.scale.maxScale}
-        minScale={transformed.scale.minScale}
-        initialScale={transformed.scale.current}
-        initialPositionX={transformed.position.x}
-        initialPositionY={transformed.position.y}
-        ref={transformRef}
-      >
-        {children}
-      </TransformWrapper>
-    </CanvasContext.Provider>
+    <TransformWrapper
+      doubleClick={{ disabled: true }}
+      limitToBounds={true}
+      centerOnInit
+      maxScale={transformed.scale.max}
+      minScale={transformed.scale.min}
+      initialScale={transformed.scale.current}
+      initialPositionX={transformed.position.x}
+      initialPositionY={transformed.position.y}
+      ref={transformRef}
+    >
+      {children}
+    </TransformWrapper>
   )
-}
-
-export const useCanvasContext = () => {
-  const context = useContext(CanvasContext)
-  if (context == null) {
-    throw new Error('useCanvasContext must be used within a CanvasProvider')
-  }
-  return context
 }

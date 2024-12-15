@@ -1,7 +1,9 @@
 import { Size } from "@core/geometry"
 import canvasTransformation, { CanvasContext, sizeIsEqual, CanvasState } from "./canvasTransformation"
 import { Artwork } from "@components/artwork/Artwork"
-import { useState } from "react"
+import { createContext, useContext, useEffect, useRef, useState } from "react"
+import { ReactZoomPanPinchContentRef, TransformWrapper } from "react-zoom-pan-pinch"
+import { CanvasWrapper } from "./CanvasWrapper"
 
 
 /**
@@ -32,13 +34,9 @@ import { useState } from "react"
  * @property {function(Size): void} setSize - Sets the size of the canvas.
  * @property {function({ progress?: number, index?: number }): void} setLayer - Sets the layer of the canvas.
  */
-export const useCanvasContext = (): CanvasContext => {
-  const [context, setContextState] = useState<CanvasState | null>(null)
+const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext => {
+  const [context, setContextState] = useState<CanvasState>(canvasTransformation.initialize(artwork, canvasSize))
   const CONTEXT_NOT_INITIALIZED = 'Canvas context is not initialized'
-
-  const initialize = (canvasSize: Size, artwork: Artwork) => {
-    setContextState(canvasTransformation.initialize(artwork, canvasSize))
-  }
 
   /**
    * Sets the size of the canvas context.
@@ -68,23 +66,23 @@ export const useCanvasContext = (): CanvasContext => {
 
   const setLayer = ({ progress, index }: { progress?: number, index?: number }) => {
     if (context == null) {
-      throw new Error(CONTEXT_NOT_INITIALIZED);
+      throw new Error(CONTEXT_NOT_INITIALIZED)
     }
-  
+
     if (progress === undefined && index === undefined) {
-      throw new Error('Either progress or index must be provided');
+      throw new Error('Either progress or index must be provided')
     }
-  
+
     if (progress !== undefined) {
-      setContextState(canvasTransformation.setLayer(context, { progress }));
+      setContextState(canvasTransformation.setLayer(context, { progress }))
     } else if (index !== undefined) {
-      setContextState(canvasTransformation.setLayer(context, { index }));
+      setContextState(canvasTransformation.setLayer(context, { index }))
     }
-  };
+  }
 
   const getContext = () => {
     if (context == null) {
-      throw new Error()
+      throw new Error(CONTEXT_NOT_INITIALIZED)
     }
 
     return context
@@ -101,11 +99,39 @@ export const useCanvasContext = (): CanvasContext => {
   return {
     getTransformation,
     getContext,
-    initialize,
     setView,
     resize,
     setLayer
   }
 }
 
+const Canvas = createContext<CanvasContext | undefined>(undefined)
 
+interface CanvasStateProvider {
+  children: React.ReactNode
+  artwork: Artwork
+  size: Size
+}
+
+export const CanvasStateProvider = ({
+  children,
+  artwork,
+  size
+}: CanvasStateProvider) => {
+  const context = useProviderContext(artwork, size)
+  return (
+    <Canvas.Provider value={context}>
+      <CanvasWrapper>
+      {children}
+      </CanvasWrapper>
+    </Canvas.Provider>
+  )
+}
+
+export const useCanvasContext = () => {
+  const context = useContext(Canvas)
+  if (context == null) {
+    throw new Error('useCanvasContext must be used within a CanvasProvider')
+  }
+  return context
+}

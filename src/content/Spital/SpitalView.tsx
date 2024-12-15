@@ -1,6 +1,6 @@
 import Page from "@components/page/Page"
 import { Canvas } from "@components/canvas/Canvas"
-import { CanvasWrapper } from "@components/canvas/CanvasWrapper"
+import { CanvasStateProvider } from "@components/canvas/CanvasStateProvider"
 import { useWindowResize } from "../../hooks/useWindowResize"
 import { SpitalMap, SpitalMapController } from "./SpitalMap"
 import { ReactNode, useRef, useState } from "react"
@@ -263,7 +263,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
                     : "translateX(0%)",
             }}
           >
-            <CanvasWrapper
+            <CanvasStateProvider
               artwork={artwork}
               size={{
                 height: window.height - 140,
@@ -271,7 +271,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
               }}
             >
               <Canvas />
-            </CanvasWrapper>
+            </CanvasStateProvider>
           </div>
           <div className="shrink">
             <SpitalMapControl

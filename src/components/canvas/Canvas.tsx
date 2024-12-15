@@ -1,8 +1,6 @@
 import { TransformComponent } from 'react-zoom-pan-pinch'
-import { calculateSingleLayerState } from '@components/artwork/artworkLayerCalculation'
-
 import { CanvasLayer } from './CanvasLayer'
-import { useCanvasContext } from './CanvasWrapper'
+import { useCanvasContext } from './CanvasStateProvider'
 
 // https://bettertyped.github.io/react-zoom-pan-pinch/?path=/story/docs-props--page
 
@@ -23,18 +21,17 @@ type CanvasProps = {
  *
  */
 export const Canvas = ({ className }: CanvasProps) => {
-  const { state } = useCanvasContext()
-  const { canvas, transformed, layer } = state
+  const context = useCanvasContext()
+  const { transformation, artwork, size } = context.getContext()
 
   return (
-    <div className={className} style={canvas.size}>
+    <div className={className} style={size}>
       <div className='w-full h-full flex'>
         <div className='w-full flex justify-center grow '>
-          <TransformComponent contentStyle={{ ...transformed.size }} wrapperStyle={{ ...canvas.size }}>
+          <TransformComponent contentStyle={{ ...transformation.size }} wrapperStyle={{ ...transformation.size }}>
             {
-              layer.values.map((v, i) => {
-                const state = calculateSingleLayerState(layer.length, i, layer.percentage)
-                return <CanvasLayer key={'l' + i} opacity={state.transition.progress}>{v.inner}</CanvasLayer>
+              transformation.layer.layers.map((v, i) => {
+                return <CanvasLayer key={'l' + i} opacity={v.transition.progress}>{artwork.layer[i].inner}</CanvasLayer>
               })
             }
           </TransformComponent>

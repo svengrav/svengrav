@@ -1,7 +1,7 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import classNames from "classnames"
-import { useCanvasContext } from "./CanvasWrapper"
 import { calculateAllLayerStates, calculateLayerStateByIndex } from "@components/artwork/artworkLayerCalculation"
+import { useCanvasContext } from "./CanvasStateProvider"
 
 /**
  * CanvasLayerControl component provides controls for managing canvas layers.
@@ -13,37 +13,34 @@ import { calculateAllLayerStates, calculateLayerStateByIndex } from "@components
  * - Selecting a layer by index using tick controls.
  */
 export const CanvasLayerControl = () => {
-  const { state, setLayer } = useCanvasContext()
+  const { setLayer, getTransformation  } = useCanvasContext()
+  const transformation = getTransformation()
 
   // Update the layer state based on the input value
   const onInputChangeByValue = (value: number) => {
-    const newState = calculateAllLayerStates(state.layer.length, value)
     setLayer({
-      index: newState.active,
-      percentage: newState.progress,
+      progress: value,
     })
   }
 
   // Update the layer state based on the input layer index
   const onInputChangeByLayer = (layer: number) => {
-    const newState = calculateLayerStateByIndex(state.layer.length, layer)
     setLayer({
-      index: newState.active,
-      percentage: newState.progress,
+      index: layer,
     })
   }
 
   return (
     <div className="mt-3 flex flex-col items-center">
       <ControlSlider
-        percentage={state.layer.percentage}
+        percentage={transformation.layer.progress}
         onChange={onInputChangeByValue}
-        disabled={state.layer.length <= 1}
+        disabled={transformation.layer.layers.length <= 1}
       />
       <ControlTicks
-        index={state.layer.index}
+        index={transformation.layer.index}
         onChange={onInputChangeByLayer}
-        length={state.layer.length}
+        length={transformation.layer.layers.length}
       />
     </div>
   )

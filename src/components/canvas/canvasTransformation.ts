@@ -44,7 +44,6 @@ export interface CanvasState {
 export interface CanvasContext {
   getContext: () => CanvasState
   getTransformation: () => Transformation
-  initialize: (canvasSize: Size, artwork: Artwork) => void
   resize: ({ width, height }: { width: number, height: number }) => void
   setView: ({ position, scale }: { position: { x: number, y: number }, scale: number }) => void
   setLayer: ({ progress, index }: { progress?: number, index?: number }) => void
@@ -175,7 +174,7 @@ const initialize = (artwork: Artwork, canvasSize: Size): CanvasState => {
       size: newSize,
       position: calcCanvasPosition(newSize, canvasSize, 'center'),
       scale: scale,
-      layer: calculateLayerStateByIndex(artwork.layer.length, 1)
+      layer: calculateLayerStateByIndex(artwork.layer.length, artwork.defaultIndex)
     }
   }
 }
