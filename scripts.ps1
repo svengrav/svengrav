@@ -23,7 +23,7 @@ yarn add -D react-router-dom
 yarn add -D classnames
 yarn add -D @headlessui/react
 yarn add -D @babel/plugin-proposal-private-property-in-object # bug?
-
+yarn add jest ts-jest @types/jest ts-node --dev
 yarn add -D @types/google.maps
 
 yarn tailwindcss init

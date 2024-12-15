@@ -22,7 +22,7 @@
       ]
     },
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "lib": [
       "dom",
