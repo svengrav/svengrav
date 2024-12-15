@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 /**
- * Props for the TextLink component.
+ * Props for the Link component.
  * 
  * @property {string} href - The URL that the link points to.
  * @property {string} label - The text to display for the link.
