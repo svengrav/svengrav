@@ -24,7 +24,7 @@
     "dev": "vite",
     "start": "vite",
     "lint": "eslint .",
-    "test": "jest --config jest.config.ts",
+    "test": "jest --config jest.config.ts --watch",
     "build": "tsc -b && vite build"
   },
   "eslintConfig": {
