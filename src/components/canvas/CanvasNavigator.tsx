@@ -82,9 +82,6 @@ export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20"
                 <dt className={propertyStyles}><MagnifyingGlassPlusIcon className='h-5 w-5 mr-2' />Scale</dt>
                 <dd className='col-span-2'>{transformed.scale.current?.toFixed(2)} / {transformed.scale.max.toFixed(2)}</dd>
 
-                <dt className={propertyStyles}><ArrowsPointingInIcon className='h-5 w-5 mr-2' />Shrink</dt>
-                <dd className='col-span-2'>{(transformed.scale.min * 100).toFixed(0)} %</dd>
-
                 <dt className={propertyStyles}><EyeIcon className='h-5 w-5 mr-2' />Visiblity</dt>
                 <dd className='col-span-2'>{(transformed.layer.progress).toFixed(0)} %</dd>
 

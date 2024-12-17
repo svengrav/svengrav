@@ -18,7 +18,7 @@ describe('transformation', () => {
       name: '',
       description: '',
       year: 0,
-      defaultIndex: 0
+      defaultIndex: 1
     }
     const canvasSize: Size = { width: 100, height: 100 }
 

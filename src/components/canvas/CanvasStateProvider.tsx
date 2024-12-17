@@ -1,10 +1,8 @@
 import { Size } from "@core/geometry"
-import canvasTransformation, { CanvasContext, sizeIsEqual, CanvasState } from "./canvasTransformation"
+import canvasTransformation, { CanvasContext, sizeIsEqual, CanvasState, CanvasLayer } from "./canvasTransformation"
 import { Artwork } from "@components/artwork/Artwork"
-import { createContext, useContext, useEffect, useRef, useState } from "react"
-import { ReactZoomPanPinchContentRef, TransformWrapper } from "react-zoom-pan-pinch"
+import { createContext, useContext, useState } from "react"
 import { CanvasWrapper } from "./CanvasWrapper"
-
 
 /**
  * Custom hook to manage the canvas context state.
@@ -96,9 +94,24 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
     return context.transformation
   }
 
+  const getLayer = (index: number): CanvasLayer => {
+    if (context == null) {
+      throw new Error(CONTEXT_NOT_INITIALIZED)
+    }
+
+
+    context.artwork.layer[index]
+    return {
+      ...context.transformation.layer.layers[index],
+      ...context.artwork.layer[index]
+    }
+  }
+
+
   return {
     getTransformation,
     getContext,
+    getLayer,
     setView,
     resize,
     setLayer

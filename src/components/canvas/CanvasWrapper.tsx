@@ -1,9 +1,6 @@
 import { ReactZoomPanPinchContentRef, TransformWrapper } from 'react-zoom-pan-pinch'
-import { createContext, useEffect, useRef } from 'react'
-import { CanvasContext } from './canvasTransformation'
+import { useEffect, useRef } from 'react'
 import { useCanvasContext } from './CanvasStateProvider'
-
-const Canvas= createContext<CanvasContext | undefined>(undefined)
 
 interface CanvasWrapperProps {
   children: React.ReactNode

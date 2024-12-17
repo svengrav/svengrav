@@ -1,6 +1,5 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import classNames from "classnames"
-import { calculateAllLayerStates, calculateLayerStateByIndex } from "@components/artwork/artworkLayerCalculation"
 import { useCanvasContext } from "./CanvasStateProvider"
 
 /**
@@ -85,18 +84,18 @@ const ControlSlider = ({
   disabled?: boolean
   onChange: (value: number) => void
 }) => {
-  const absoluteWidth = 300
-  const relativeWidth = (absoluteWidth / 100) * percentage
+  const ABSOLUTE_WIDTH = 300
+  const relativeWidth = (ABSOLUTE_WIDTH / 100) * percentage
 
   return (
-    <div className="w-min relative flex" style={{ width: absoluteWidth }}>
+    <div className="w-min relative flex" style={{ width: ABSOLUTE_WIDTH }}>
       <div className="absolute h-1 bg-gradient-to-r bg-gray-300" style={{ width: relativeWidth }} />
       <input
         type="range"
         disabled={disabled}
         onChange={(e) => onChange(parseInt(e.currentTarget.value))}
         value={percentage}
-        style={{ width: absoluteWidth }}
+        style={{ width: ABSOLUTE_WIDTH }}
         className={classNames(
           "absolute",
           "bg-none outline-none",

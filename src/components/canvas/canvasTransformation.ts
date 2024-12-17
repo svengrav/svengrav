@@ -4,7 +4,7 @@
  * It handles resizing, layer transformations, positioning, and scaling.
  */
 
-import { Artwork } from '@components/artwork/Artwork'
+import { Artwork, ArtworkLayer } from '@components/artwork/Artwork'
 import { Position, Size } from '@core/geometry'
 
 //#region Types
@@ -12,12 +12,12 @@ interface LayerState {
   progress: number
   index: number
   layers: Array<{
-    index: number
+    index: number;
     transition: {
-      start: number
-      end: number
-      progress: number
-    }
+      start: number;
+      end: number;
+      progress: number;
+    };
   }>
 }
 
@@ -41,9 +41,19 @@ export interface CanvasState {
   transformation: Transformation
 }
 
+export type CanvasLayer = {
+  index: number;
+  transition: {
+    start: number;
+    end: number;
+    progress: number;
+  };
+} & ArtworkLayer
+
 export interface CanvasContext {
   getContext: () => CanvasState
   getTransformation: () => Transformation
+  getLayer: (index: number) => CanvasLayer
   resize: ({ width, height }: { width: number, height: number }) => void
   setView: ({ position, scale }: { position: { x: number, y: number }, scale: number }) => void
   setLayer: ({ progress, index }: { progress?: number, index?: number }) => void
