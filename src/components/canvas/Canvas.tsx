@@ -4,8 +4,12 @@ import { CanvasNavigator } from './CanvasNavigator'
 import { CanvasZoomControl } from './CanvasZoomControl'
 import { CanvasLayerControl } from './CanvasLayerControl'
 import { Artwork } from '@components/artwork/Artwork'
+import { useEffect, useRef } from 'react'
 
 // https://bettertyped.github.io/react-zoom-pan-pinch/?path=/story/docs-props--page
+
+let count = 0;
+
 
 /**
  * Canvas component that provides a context for managing the state of the canvas,
@@ -36,9 +40,10 @@ export const Canvas = ({ artwork }: { artwork: Artwork}) => {
 export const CanvasView = ({ className }: { className?: string }) => {
   const context = useCanvasContext()
   const { transformation, artwork, size } = context.getContext()
+  const canvasRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className={className} style={size}>
+    <div className={className} style={size} ref={canvasRef}>
       <div className='w-full h-full flex'>
         <div className='w-full flex justify-center grow '>
           <TransformComponent contentStyle={{ ...transformation.size }} wrapperStyle={{ ...transformation.size }}>

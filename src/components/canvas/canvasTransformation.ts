@@ -36,6 +36,11 @@ interface Transformation {
 
 type OverflowOptions = 'fit' | 'contain'
 
+export interface CanvasProviderState {
+  size: Size
+  transformation: Transformation
+}
+
 export interface CanvasState {
   artwork: Artwork
   size: Size
@@ -186,26 +191,25 @@ const calcCanvasPosition = (artworkSize: Size, canvasSize: Size, position: 'cent
 //#endregion
 
 //#region Context Functions
-const initialize = (artwork: Artwork, canvasSize: Size): CanvasState => {
+const initialize = (artwork: { size: Size, index: number, noOfLayer: number }, canvasSize: Size): CanvasProviderState => {
   const { size: newSize, scale } = calcArtworkSize(artwork.size, canvasSize)
   return {
-    artwork: artwork,
     size: canvasSize,
     transformation: {
       overflow: 'fit',
       size: newSize,
       position: calcCanvasPosition(newSize, canvasSize, 'center'),
       scale: scale,
-      layer: calculateLayerStateByIndex(artwork.layer.length, artwork.defaultIndex)
+      layer: calculateLayerStateByIndex(artwork.noOfLayer, artwork.index)
     }
   }
 }
 
-const resize = (context: CanvasState, size: Size): CanvasState => {
-  const { size: newSize, scale } = calcArtworkSize(context.artwork.size, size)
+const resize = (context: CanvasProviderState, artworkSize: Size, canvasSize: Size): CanvasProviderState => {
+  const { size: newSize, scale } = calcArtworkSize(artworkSize, canvasSize)
   return {
     ...context,
-    size: size,
+    size: canvasSize,
     transformation: {
       ...context.transformation,
       size: newSize,
@@ -215,15 +219,16 @@ const resize = (context: CanvasState, size: Size): CanvasState => {
 }
 
 const setLayer = (
-  context: CanvasState,
+  context: CanvasProviderState,
+  noOfLayer: number,
   input: { progress: number; index?: never } | { index: number; progress?: never }
-): CanvasState => {
+): CanvasProviderState => {
   let layerState: LayerState;
 
   if ('progress' in input) {
-    layerState = calculateAllLayerStates(context.artwork.layer.length, input.progress!);
+    layerState = calculateAllLayerStates(noOfLayer, input.progress!);
   } else if ('index' in input) {
-    layerState = calculateLayerStateByIndex(context.artwork.layer.length, input.index!);
+    layerState = calculateLayerStateByIndex(noOfLayer, input.index!);
   } else {
     throw new Error('Invalid input: Provide either progress or index.');
   }
@@ -238,7 +243,7 @@ const setLayer = (
 };
 
 
-const setView = (context: CanvasState, currentPosition: Position, currentScale: number): CanvasState => {
+const setView = (context: CanvasProviderState, currentPosition: Position, currentScale: number): CanvasProviderState => {
   return {
     ...context,
     transformation: {

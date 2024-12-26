@@ -1,5 +1,5 @@
 import { Size } from "@core/geometry"
-import canvasTransformation, { CanvasContext, sizeIsEqual, CanvasState, CanvasLayer } from "./canvasTransformation"
+import canvasTransformation, { CanvasContext, sizeIsEqual, CanvasState, CanvasLayer, CanvasProviderState } from "./canvasTransformation"
 import { Artwork } from "@components/artwork/Artwork"
 import { createContext, useContext, useState } from "react"
 import { CanvasWrapper } from "./CanvasWrapper"
@@ -33,8 +33,13 @@ import { CanvasWrapper } from "./CanvasWrapper"
  * @property {function({ progress?: number, index?: number }): void} setLayer - Sets the layer of the canvas.
  */
 const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext => {
-  const [context, setContextState] = useState<CanvasState>(canvasTransformation.initialize(artwork, canvasSize))
+  const [context, setState] = useState<CanvasProviderState>(canvasTransformation.initialize({ index: artwork.defaultIndex, noOfLayer: artwork.layer.length, size: artwork.size}, canvasSize))
   const CONTEXT_NOT_INITIALIZED = 'Canvas context is not initialized'
+
+  const setContextState = (state: CanvasProviderState) => { 
+    if(JSON.stringify(context, null, 1) == JSON.stringify(state,null, 1)) return;
+    setState(state)
+  }
 
   /**
    * Sets the size of the canvas context.
@@ -51,7 +56,7 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
       return
     }
 
-    setContextState(canvasTransformation.resize(context, size))
+    setContextState(canvasTransformation.resize(context, artwork.size, size))
   }
 
   const setView = ({ position, scale }: { position: { x: number, y: number }, scale: number }) => {
@@ -59,7 +64,12 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
       throw new Error(CONTEXT_NOT_INITIALIZED)
     }
 
-    setContextState(canvasTransformation.setView(context, position, scale))
+    const { x, y } = context.transformation.position
+    const positionChanged = Math.abs(position.x - x) > 5 || Math.abs(position.y - y) > 5
+    console.log('positionChanged', positionChanged)
+    if (positionChanged) {
+      setContextState(canvasTransformation.setView(context, position, scale))
+    }
   }
 
   const setLayer = ({ progress, index }: { progress?: number, index?: number }) => {
@@ -72,9 +82,9 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
     }
 
     if (progress !== undefined) {
-      setContextState(canvasTransformation.setLayer(context, { progress }))
+      setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { progress }))
     } else if (index !== undefined) {
-      setContextState(canvasTransformation.setLayer(context, { index }))
+      setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { index }))
     }
   }
 
@@ -83,7 +93,11 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
       throw new Error(CONTEXT_NOT_INITIALIZED)
     }
 
-    return context
+    return {
+      transformation: context.transformation,
+      artwork: artwork,
+      size: context.size
+    }
   }
 
   const getTransformation = () => {
@@ -100,10 +114,10 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
     }
 
 
-    context.artwork.layer[index]
+    artwork.layer[index]
     return {
       ...context.transformation.layer.layers[index],
-      ...context.artwork.layer[index]
+      ...artwork.layer[index]
     }
   }
 
