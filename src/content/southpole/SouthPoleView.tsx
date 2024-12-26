@@ -1,11 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react"
-import { useWindowResize } from "../../hooks/useWindowResize"
 import Page from "@components/page/Page"
-import { CanvasStateProvider } from "@components/canvas/CanvasStateProvider"
-import { Canvas, CanvasView } from "@components/canvas/Canvas"
-import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl"
-import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl"
-import { CanvasNavigator } from "@components/canvas/CanvasNavigator"
+import { Canvas } from "@components/canvas/Canvas"
 import { PagePanel, PagePanelController } from "@components/page/PagePanel"
 import { usePageOverlay } from "@components/page/PageOverlay"
 import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid"
@@ -14,7 +9,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react
 import { SouthpoleMap } from "./SouthPole"
 import { description, SouthPoleSummary } from "./SouthPoleData"
 import { fetchSVG } from "../Spital/svgUtils"
-import { i } from "vite/dist/node/types.d-aGj9QkWt"
+import classNames from "classnames"
 
 interface SouthPoleViewProps {
   map: SouthpoleMap
@@ -22,10 +17,9 @@ interface SouthPoleViewProps {
 }
 
 export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
-  const { windowSize } = useWindowResize()
   const leftSidepanel = useRef<PagePanelController>(null)
   const controller = map.controller
-  const [activeExpedition , setActiveExpedition] = useState({
+  const [activeExpedition, setActiveExpedition] = useState({
     id: ''
   })
 
@@ -36,10 +30,8 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
 
   const setActiveSection = (id: string) => {
     if (!controller || !controller.setVisibility) {
-      console.log("no controller or setVisibility")
       return
     }
-
 
     map.expeditions.forEach((expedition) => {
       controller.setVisibility!(expedition.id, false)
@@ -51,66 +43,70 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
     } else {
       controller.setVisibility(id, true)
       setActiveExpedition({ id: id })
-      console.log("active", id)
     }
   }
   //#endregion
 
   return (
     <Page>
-        {inner}
-        <PagePanel
-          position="left"
-          visible
-          width={400}
-          closable
-          label="The Project"
-          ref={leftSidepanel}
-          full={windowSize.width < 600}
-          className="bg-gray-950/90 border-r-white/20 border-r text-gray-400"
-          scrollbar={{
-            className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900",
-          }}
-        >
-          <ProjectTitle />
-          <ProjectInformationOverlay />
-          <p className="py-4">
-            {description}
-          </p>
-          {
-            map.expeditions.map((expedition) => (
-              <InformationSection
-                key={expedition.id + activeExpedition.id} 
-                title={<InformationTitle title={expedition.name} year={expedition.year} />}
-                open={activeExpedition.id === expedition.id}
-                onClick={() => setActiveSection(expedition.id)}
-              >
-                {expedition.description}
-              </InformationSection>
-            ))
-          }
-        </PagePanel>
-
-        <Canvas artwork={map}/>
+      {inner}
+      <PagePanel
+        position="left"
+        visible
+        closable
+        label="The Project"
+        ref={leftSidepanel}
+        className="bg-gray-950/90 border-r-white/20 border-r text-gray-400"
+        scrollbar={{
+          className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900",
+        }}
+      >
+        <ProjectTitle />
+        <ProjectInformationOverlay />
+        <p className="py-4">
+          {description}
+        </p>
+        {
+          map.expeditions.map((expedition) => (
+            <InformationSection
+              key={expedition.id + activeExpedition.id}
+              title={
+                <InformationTitle title={expedition.name} year={expedition.year} />
+              }
+              open={activeExpedition.id === expedition.id}
+              onClick={() => setActiveSection(expedition.id)}
+            >
+              {expedition.description}
+            </InformationSection>
+          ))
+        }
+      </PagePanel>
+      <Canvas artwork={map} />
     </Page>
   )
 }
 
-
-type InformationTitleProps = { title: string, year: string };
+type InformationTitleProps = { title: string, year: string }
 const InformationTitle = ({ title, year }: InformationTitleProps) => {
-  return <div className="flex w-full justify-between">
-    <h1>{title}</h1>
-    <p className=" text-gray-500 mr-2">{year}</p>
-  </div>
+  return (
+    <div className="flex w-full justify-between">
+      <h1>{title}</h1>
+      <p className=" text-gray-500 mr-2">{year}</p>
+    </div>)
 }
 
-type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void };
-const InformationSection = ({title, children, open = false, onClick }: InformationSectionProps) => {
+type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void }
+const InformationSection = ({ title, children, open = false, onClick }: InformationSectionProps) => {
   return (
     <>
       <Disclosure key={title?.toString()} defaultOpen={open}>
-        <DisclosureButton className="flex w-full justify-between py-2 text-white hover:text-blue-300" onClick={onClick}>
+        <DisclosureButton className={classNames
+          ("flex w-full justify-between py-2 text-white hover:text-rose-400",
+            {
+              "text-rose-400": open
+            }
+          )
+        } onClick={onClick}>
           {title}
           <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
         </DisclosureButton>
@@ -120,7 +116,7 @@ const InformationSection = ({title, children, open = false, onClick }: Informati
   )
 }
 
-function ProjectTitle() {
+const ProjectTitle = () => {
   const baseRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     fetchSVG("https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-title.svg").then((svg) => {

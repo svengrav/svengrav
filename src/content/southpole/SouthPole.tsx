@@ -33,14 +33,14 @@ export interface SouthPoleMapController {
    * @param id - The unique identifier of the map element.
    * @param visible - A boolean indicating whether the element should be visible.
    */
-  setVisibility?: (id: string, visible: boolean) => void;
+  setVisibility?: (id: string, visible: boolean) => void
 
   /**
    * Handles the click event on a map element.
    * 
    * @param id - The unique identifier of the map element.
    */
-  onClick?: (id: string) => void;
+  onClick?: (id: string) => void
 }
 
 const controller: SouthPoleMapController = {}
@@ -49,13 +49,15 @@ const baseMap = <SouthPoleMap expedition={expeditions} controller={controller} /
 
 const SouthPoleQuote = () => {
   return <>
-    <div className="text-slate-700 tracking-widestleading-loose text-3xl flex justify-center items-center absolute w-full h-full bg-white/70">
+    <div className="text-slate-700 tracking-widestleading-loose flex justify-center items-center absolute w-full h-full bg-white/70 text-2xl lg:text-3xl">
       <div>
         <p className='max-w-96 font-serif leading-relaxed'>
-          “The eternal silence of the great white desert. Cloudy columns of snow drift advancing from the south, pale yellow wraiths, heralding the coming storm, blotting out one by one the sharp-cut lines of the land.”
+          “The eternal silence of the great white desert.
+          Cloudy columns of snow drift advancing from the south, pale yellow wraiths,
+          heralding the coming storm, blotting out one by one the sharp-cut lines of the land.”
         </p>
         <p className='text-lg mt-8 text-slate-500'>
-          Robert Falcon Scott, <br/> Scott's Last Expedition: The Journals
+          Robert Falcon Scott, <br /> Scott's Last Expedition: The Journals
         </p>
       </div>
 
