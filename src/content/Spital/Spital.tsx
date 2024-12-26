@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { Link } from "@components/base/Link"
-import { Artwork } from "@components/Artwork"
+import { Artwork } from "@components/artwork/Artwork"
 import spitalTheme from "./SpitalTheme"
 
 const colors = spitalTheme.colors.spital

@@ -1,25 +1,39 @@
 import { TransformComponent } from 'react-zoom-pan-pinch'
-import { useCanvasContext } from './CanvasStateProvider'
+import { CanvasStateProvider, useCanvasContext } from './CanvasStateProvider'
+import { CanvasNavigator } from './CanvasNavigator'
+import { CanvasZoomControl } from './CanvasZoomControl'
+import { CanvasLayerControl } from './CanvasLayerControl'
+import { Artwork } from '@components/artwork/Artwork'
 
 // https://bettertyped.github.io/react-zoom-pan-pinch/?path=/story/docs-props--page
 
 /**
- * Props for the Canvas component.
- * 
- * @property {string} [className] - Optional CSS class name to apply to the canvas.
+ * Canvas component that provides a context for managing the state of the canvas,
+ * including navigation, view, zoom control, and layer control.
+ *
+ * @param {Object} props - The properties object.
+ * @param {Artwork} props.artwork - The artwork object to be displayed on the canvas.
+ *
  */
-type CanvasProps = {
-  className?: string
+export const Canvas = ({ artwork }: { artwork: Artwork}) => { 
+  return (
+    <CanvasStateProvider artwork={artwork} size={{ height: window.innerHeight - 150, width: window.innerWidth }}>
+      <CanvasNavigator />
+      <CanvasView className="m-auto" />
+      <CanvasZoomControl />
+      <CanvasLayerControl />
+    </CanvasStateProvider>
+  )
 }
 
 /**
  * Canvas component that renders a canvas with layers and transformations.
  *
- * @param {CanvasProps} props - The properties for the Canvas component.
+ * @param {CanvasViewProps} props - The properties for the Canvas component.
  * @param {string} props.className - The CSS class name to apply to the canvas container.
  *
  */
-export const Canvas = ({ className }: CanvasProps) => {
+export const CanvasView = ({ className }: { className?: string }) => {
   const context = useCanvasContext()
   const { transformation, artwork, size } = context.getContext()
 

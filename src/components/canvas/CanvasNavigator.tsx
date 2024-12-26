@@ -48,25 +48,27 @@ export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20"
 
 
   return (
-    <div className={className}>
+    <div className={className} >
+
+      {/** Toggle button */}
       <div className='z-40 absolute right-0 text-white py-2 px-1'>
         <Icon primary={ChevronLeftIcon} secondary={XMarkIcon} active={visible} onClick={toggleVisibility} className='bg-gray-950 text-white ' />
       </div>
-      <CanavasNavigatorPanel show={visible} full={isFullScreen}>
-        <div className='bg-gray-950'>
 
+      {/** Navigator panel */}
+      <CanavasNavigatorPanel show={visible} full={isFullScreen}>
           {/** header */}
-          <div className='w-full p-2 flex items-center justify-between text-white cursor-pointer'>
+          <div className='w-full p-2 flex items-center justify-between text-white cursor-pointer bg-gray-950/95'>
             <Square3Stack3DIcon className='h-5 w-5 mr-2' />Navigator
             <div className='h-5 w-5' />
           </div>
 
           {/** content */}
           <div className={classNames(
-            'w-full max-h-screen relative p-2 bg-gray-950/95 text-white items-center',
+            'w-full relative p-2 bg-gray-950/95 text-white items-center',
             'overflow-y-auto scrollbar-thin scrollbar-track-rounded-full',
             'scrollbar-thumb-gray-600 scrollbar-track-gray-800'
-          )}
+          )} style={{ maxHeight: 'calc(100vh - 88px)' }}
           >
             <NavigatorSection title='Properties' open>
               <div className='grid grid-cols-3 gap-2 py-2 text-gray-300/80'>
@@ -96,7 +98,6 @@ export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20"
               })
             }
           </div>
-        </div>
       </CanavasNavigatorPanel>
     </div>
   )
@@ -161,7 +162,7 @@ const CanavasNavigatorPanel = ({
   const actualWidth = full ? window.innerWidth : PANEL_WIDTH
 
   return (
-    <div className='w-min'>
+    <div className='w-min max-h-10'>
       <div
         className='absolute transition-all top-0 right-0 h-full z-20 '
         style={{

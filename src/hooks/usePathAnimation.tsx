@@ -1,5 +1,5 @@
 import { CSSProperties, useRef } from 'react'
-import { assert } from '@core/assert'
+import { guard } from '@core/assert'
 import {
   PathEvent,
   PathEventTrigger,
@@ -102,7 +102,7 @@ export const usePathAnimation = (
     gaps = []
   } = options
 
-  assert(!pathId.startsWith('#'), 'Remove the # from pathId')
+  guard(!pathId.startsWith('#'), 'Remove the # from pathId')
 
   const pathStateRef = useRef<PathState>({
     id: `${pathId}-path`,

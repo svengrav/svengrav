@@ -1,5 +1,5 @@
 import Page from "@components/page/Page"
-import { Canvas } from "@components/canvas/Canvas"
+import { CanvasView } from "@components/canvas/Canvas"
 import { CanvasStateProvider } from "@components/canvas/CanvasStateProvider"
 import { useWindowResize } from "../../hooks/useWindowResize"
 import { SpitalMap, SpitalMapController } from "./SpitalMap"
@@ -270,7 +270,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
                 width: viewState.canvasWidth - SIDEPANEL_WIDTH,
               }}
             >
-              <Canvas />
+              <CanvasView />
             </CanvasStateProvider>
           </div>
           <div className="shrink">
