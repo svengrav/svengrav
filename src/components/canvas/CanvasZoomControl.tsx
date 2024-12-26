@@ -4,7 +4,7 @@ import {
   MagnifyingGlassPlusIcon
 } from '@heroicons/react/24/solid'
 import { useControls, useTransformContext } from 'react-zoom-pan-pinch'
-import { useCanvasContext } from './CanvasWrapper'
+import { useCanvasContext } from './CanvasStateProvider'
 
 export const CanvasZoomControl = () => {
   const { zoomIn, zoomOut } = useControls()
@@ -13,7 +13,7 @@ export const CanvasZoomControl = () => {
 
   transformationContext.onChange(() => {
     const transformation = transformationContext.getContext().state
-    canvasContext.setPosition({
+    canvasContext.setView({
       position: {
         x: transformation.positionX,
         y: transformation.positionY
@@ -23,7 +23,7 @@ export const CanvasZoomControl = () => {
   })
 
   return (
-    <div className='mt-2 m-auto w-full flex justify-center text-white'>
+    <div className='mt-2 m-auto w-full flex justify-center text-white' id='canvas-zoom-control'>
       <button onClick={() => zoomOut()}>
         <MagnifyingGlassMinusIcon className='h-6 w-6 m-1 hover:fill-gray-300' />
       </button>

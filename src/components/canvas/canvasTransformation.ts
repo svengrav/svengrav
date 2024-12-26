@@ -4,7 +4,8 @@
  * It handles resizing, layer transformations, positioning, and scaling.
  */
 
-import { Artwork } from '@components/artwork/Artwork'
+import { Artwork, ArtworkLayer } from '@components/artwork/Artwork'
+import { guard } from '@core/assert'
 import { Position, Size } from '@core/geometry'
 
 //#region Types
@@ -12,12 +13,12 @@ interface LayerState {
   progress: number
   index: number
   layers: Array<{
-    index: number
+    index: number;
     transition: {
-      start: number
-      end: number
-      progress: number
-    }
+      start: number;
+      end: number;
+      progress: number;
+    };
   }>
 }
 
@@ -41,10 +42,19 @@ export interface CanvasState {
   transformation: Transformation
 }
 
+export type CanvasLayer = {
+  index: number;
+  transition: {
+    start: number;
+    end: number;
+    progress: number;
+  };
+} & ArtworkLayer
+
 export interface CanvasContext {
   getContext: () => CanvasState
   getTransformation: () => Transformation
-  initialize: (canvasSize: Size, artwork: Artwork) => void
+  getLayer: (index: number) => CanvasLayer
   resize: ({ width, height }: { width: number, height: number }) => void
   setView: ({ position, scale }: { position: { x: number, y: number }, scale: number }) => void
   setLayer: ({ progress, index }: { progress?: number, index?: number }) => void
@@ -68,6 +78,24 @@ function isLandscape({ width, height }: Size): boolean {
 
 //#region Calculation Functions
 const calculateAllLayerStates = (totalLayers: number, currentState: number): LayerState => {
+
+  if(totalLayers === 1) {
+    return {
+      progress: 100,
+      index: 1,
+      layers: [
+        {
+          index: 1,
+          transition: {
+            start: 0,
+            end: 100,
+            progress: 100
+          }
+        }
+      ]
+    }
+  }
+
   const layerState: LayerState = {
     progress: currentState,
     index: 0,
@@ -81,7 +109,7 @@ const calculateAllLayerStates = (totalLayers: number, currentState: number): Lay
     const isLayerZeroAndCurrent = currentState === 0 && i === 0
     const isCurrentLayer = (currentState > start && currentState <= end) || isLayerZeroAndCurrent
     const isLayerVisible = (currentState > end) || isLayerZeroAndCurrent
-    const relativeState = isLayerVisible ? 1 : isCurrentLayer ? roundTo((currentState - start) / (end - start), 2) : 0
+    const progress = isLayerVisible ? 1 : isCurrentLayer ? roundTo((currentState - start) / (end - start), 2) : 0
 
     if (isCurrentLayer) {
       layerState.index = i + 1
@@ -92,25 +120,18 @@ const calculateAllLayerStates = (totalLayers: number, currentState: number): Lay
       transition: {
         start,
         end,
-        progress: relativeState
+        progress: progress
       }
     })
   }
 
+  guard(!isNaN(layerState.progress), 'Progress has to be a number')
   return layerState
 }
 
 const calculateLayerStateByIndex = (totalLayers: number, activeLayer: number): LayerState => {
   const currentState = 100 / (totalLayers - 1) * (activeLayer - 1)
   return calculateAllLayerStates(totalLayers, currentState)
-}
-
-function calcArtworkShrinkBySize(artworkSize: Size, canvasSize: Size): number {
-  return isLandscape(artworkSize) ? canvasSize.width / artworkSize.width : canvasSize.height / artworkSize.height
-}
-
-function calcArtworkShrinkByScale(scale: number): number {
-  return scale ** -1
 }
 
 function calcArtworkRatio(artworkSize: Size, canvasSize: Size): { widthRatio: number, heightRatio: number } {
@@ -175,7 +196,7 @@ const initialize = (artwork: Artwork, canvasSize: Size): CanvasState => {
       size: newSize,
       position: calcCanvasPosition(newSize, canvasSize, 'center'),
       scale: scale,
-      layer: calculateLayerStateByIndex(artwork.layer.length, 1)
+      layer: calculateLayerStateByIndex(artwork.layer.length, artwork.defaultIndex)
     }
   }
 }

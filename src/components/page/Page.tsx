@@ -28,10 +28,14 @@ interface PageProps {
 export const Page = ({ children }: PageProps) => {
   const { isResizing } = useWindowResize();
 
+  const HEADER_SIZE = 48;
+
+  const contentSize = { minHeight: `calc(100vh - ${HEADER_SIZE}px)`}
+
   return (
     <div className="min-h-dvh bg-gray-950">
       {/** Header  */}
-      <div className="bg-gray-950 text-white text-center p-2 grid grid-cols-3 h-12">
+      <div className="bg-gray-950 text-white text-center p-2 grid grid-cols-3" style={{ height: HEADER_SIZE }}>
         <PageNavigation />
 
         <div className="w-min m-auto">
@@ -47,12 +51,12 @@ export const Page = ({ children }: PageProps) => {
       </div>
 
       {/** Page Content  */}
-      <div className="relative min-h-[calc(100vh_-_48px)] overflow-x-hidden">
+      <div className="relative overflow-x-hidden " style={contentSize}>
         {isResizing ? (
-          <div className="w-full p-6 text-center">
-            <span className="text-white w-full uppercase mt-8 border rounded-md p-4">
+          <div className="w-full p-6 text-center justify-center items-center flex" style={contentSize}>
+            <p className="text-white uppercase">
               Resizing window...
-            </span>
+            </p>
           </div>
         ) : (
           <PageOverlayProvider>

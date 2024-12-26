@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { useWindowResize } from "../../hooks/useWindowResize"
 import Page from "@components/page/Page"
-import { CanvasWrapper } from "@components/canvas/CanvasWrapper"
-import { Canvas } from "@components/canvas/Canvas"
+import { CanvasStateProvider } from "@components/canvas/CanvasStateProvider"
+import { Canvas, CanvasView } from "@components/canvas/Canvas"
 import { CanvasZoomControl } from "@components/canvas/CanvasZoomControl"
 import { CanvasLayerControl } from "@components/canvas/CanvasLayerControl"
 import { CanvasNavigator } from "@components/canvas/CanvasNavigator"
@@ -91,12 +91,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
           }
         </PagePanel>
 
-        <CanvasWrapper artwork={map} size={{ height: windowSize.height - 150, width: windowSize.width }}>
-          <CanvasNavigator />
-          <Canvas className="m-auto" />
-          <CanvasZoomControl />
-          <CanvasLayerControl />
-        </CanvasWrapper>
+        <Canvas artwork={map}/>
     </Page>
   )
 }

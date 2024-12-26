@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react'
-import { assert } from '@core/assert'
+import { guard } from '@core/assert'
 
 // #region
 export interface PathState {
@@ -141,7 +141,7 @@ interface PathPartsProps { parts: PathPart[], points: PathPoint[], offset: 1.0 |
  * @returns
  */
 export const calcPathPartSize = ({ parts, points, offset }: PathPartsProps, position: number): PathPart[] => {
-  assert(position >= 1 && position <= points.length, `Position has to be between 1 - ${points.length}, position is: ${position}`)
+  guard(position >= 1 && position <= points.length, `Position has to be between 1 - ${points.length}, position is: ${position}`)
 
   const newParts = parts.map(part => {
     let endOfPart = part.end
