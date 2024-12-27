@@ -32,7 +32,7 @@ export const jamesCookPage: PageDescription = {
   date: date(5, 5, 2024),
   tags: ['art', 'map'],
   thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/jamescook/panel.jpg' color='rose' />,
-  element: <ArtworkView artwork={jamesCook} />
+  element: <ArtworkView artwork={jamesCook} key={jamesCook.id} />
 }
 
 export default jamesCookPage

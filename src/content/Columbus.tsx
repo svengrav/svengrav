@@ -37,6 +37,7 @@ export const columbusPage: PageDescription = {
   date: date(5, 5, 2024),
   thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/columbus/columbus-panel.png' color='rose' />,
   element: <ArtworkView
+    key={columbus.id}
     artwork={columbus} inner={
       <div className='absolute hidden lg:flex flex-col text-white font-light left-10 top-10 font-serif w-40 '>
         <h1 className='text-2xl border-b pb-4 mb-4 leading-loose'>

@@ -67,6 +67,7 @@ export const northSouthPage: PageDescription = {
   ),
   element: (
     <ArtworkView
+      key={northSouth.id}
       artwork={northSouth}
       inner={
         <div className='hidden xl:flex'>
