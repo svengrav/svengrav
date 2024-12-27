@@ -17,14 +17,23 @@ export const CanvasWrapper = ({
   // Reset transform if wrapper rerenders (ex: window size changed)
   useEffect(() => {
     transformRef.current?.resetTransform()
-    transformRef.current?.instance.onChange(() => {
-      const transformation = transformRef.current!.instance.getContext().state
+    transformRef.current?.instance.onChange((zoomPan) => {
+
+      const { positionX, positionY, scale } = zoomPan.state;
+      const { x, y } = transformed.position
+      
+      // Check if position or scale has changed by more than 5 units
+      const positionChanged = Math.abs(positionX - x) > 5 || Math.abs(positionY - y) > 5
+      const scaleChanged = Math.abs(scale - transformed.scale.current) > 0.05
+
+      if(!positionChanged && !scaleChanged) return;
+
       context.setView({
         position: {
-          x: transformation.positionX,
-          y: transformation.positionY
+          x: zoomPan.state.positionX,
+          y: zoomPan.state.positionY
         },
-        scale: transformation.scale
+        scale: zoomPan.state.scale
       })
     })
   }, [])

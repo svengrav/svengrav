@@ -64,12 +64,7 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
       throw new Error(CONTEXT_NOT_INITIALIZED)
     }
 
-    const { x, y } = context.transformation.position
-    const positionChanged = Math.abs(position.x - x) > 5 || Math.abs(position.y - y) > 5
-    console.log('positionChanged', positionChanged)
-    if (positionChanged) {
-      setContextState(canvasTransformation.setView(context, position, scale))
-    }
+    setContextState(canvasTransformation.setView(context, position, scale))
   }
 
   const setLayer = ({ progress, index }: { progress?: number, index?: number }) => {
