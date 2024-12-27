@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Logo } from '@assets/icons'
 import { read } from 'fs'
 
@@ -15,13 +15,27 @@ interface ImageProps {
  * @returns image element
  */
 export const ImagePreloader = ({ sources = [], children }: ImageProps) => {
-  const [ready, setReady] = useState(false)
-  console.log("ImagePreloader: Loading images", ready)
-  imagePreload(sources).then(() => {
-    setReady(true)
-  })
+  const [ready, setReady] = useState(sources.length == 0)
 
-  if (!ready) {
+  useEffect(() => {
+    let isMounted = true;
+  
+    imagePreload(sources)
+      .then(() => {
+        if (isMounted) {
+          setReady(true);
+        }
+      })
+      .catch((err) => {
+        console.error('Error loading images:', err);
+      });
+  
+    return () => {
+      isMounted = false;
+    };
+  }, [sources]);
+
+  if (!ready && sources.length != 0) {
     return <div className=" text-white h-full w-full bg-gray-950 items-center justify-center flex">
       <div>
         <Logo className="bg-transparent animate-[spin_5s_ease-in-out_infinite] duration-100 fill-gray-100 h-24 m-auto " />
@@ -59,6 +73,9 @@ const imagePreload = (imageSources: string[]): Promise<void> => {
         img.onload = () => resolve()
         img.onerror = () => reject(new Error(`Failed to load image: ${src}`))
 
+        if(img.complete) {
+          resolve()
+        }
       })
     }
 
