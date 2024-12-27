@@ -80,6 +80,16 @@ export const southPole: SouthpoleMap = {
   defaultIndex: 2,
   expeditions: expeditions,
   controller: controller,
+  resources: [
+    {
+      id: 'base',
+      src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg'
+    },
+    {
+      id: 'thumbnail',
+      src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg'
+    }
+  ],
   layer: [
     {
       id: 'map',

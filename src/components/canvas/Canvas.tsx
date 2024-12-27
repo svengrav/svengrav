@@ -4,11 +4,11 @@ import { CanvasNavigator } from './CanvasNavigator'
 import { CanvasZoomControl } from './CanvasZoomControl'
 import { CanvasLayerControl } from './CanvasLayerControl'
 import { Artwork } from '@components/artwork/Artwork'
-import { useEffect, useRef } from 'react'
+import { ImagePreloader } from '@components/base/ImagePreloader'
 
 // https://bettertyped.github.io/react-zoom-pan-pinch/?path=/story/docs-props--page
 
-let count = 0;
+let count = 0
 
 
 /**
@@ -19,7 +19,7 @@ let count = 0;
  * @param {Artwork} props.artwork - The artwork object to be displayed on the canvas.
  *
  */
-export const Canvas = ({ artwork }: { artwork: Artwork}) => { 
+export const Canvas = ({ artwork }: { artwork: Artwork }) => {
   return (
     <CanvasStateProvider artwork={artwork} size={{ height: window.innerHeight - 150, width: window.innerWidth }}>
       <CanvasNavigator />
@@ -40,18 +40,20 @@ export const Canvas = ({ artwork }: { artwork: Artwork}) => {
 export const CanvasView = ({ className }: { className?: string }) => {
   const context = useCanvasContext()
   const { transformation, artwork, size } = context.getContext()
-  const canvasRef = useRef<HTMLDivElement>(null)
+
 
   return (
-    <div className={className} style={size} ref={canvasRef}>
+    <div className={className} style={size} >
       <div className='w-full h-full flex'>
-        <div className='w-full flex justify-center grow '>
+        <div className='w-full flex justify-center grow'>
           <TransformComponent contentStyle={{ ...transformation.size }} wrapperStyle={{ ...transformation.size }}>
-            {
-              transformation.layer.layers.map((layer, i) => {
-                return <CanvasLayer key={'l' + i} opacity={layer.transition.progress}>{artwork.layer[i].inner}</CanvasLayer>
-              })
-            }
+            <ImagePreloader sources={artwork.resources?.map(r => r.src)}>
+              {
+                transformation.layer.layers.map((layer, i) => {
+                  return <CanvasLayer key={'l' + i} opacity={layer.transition.progress}>{artwork.layer[i].inner}</CanvasLayer>
+                })
+              }
+            </ImagePreloader>
           </TransformComponent>
         </div>
       </div>

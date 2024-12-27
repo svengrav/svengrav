@@ -21,6 +21,7 @@ export interface Artwork {
   year: number;
   size: Size;
   defaultIndex: number;
+  resources?: ArtworkResource[];
   layer: ArtworkLayer[];
   points?: ArtworkPoint[];
 }
@@ -58,4 +59,14 @@ export interface ArtworkPoint {
   description?: string | undefined
   inner: ReactNode
   layers?: number[]
+}
+
+
+export interface ArtworkResource {
+  id: string;
+  src: string;
+}
+
+export const getArtworkResourceById = (artwork: Artwork, id: string) => {
+  return artwork.resources?.find(resource => resource.id === id)
 }
