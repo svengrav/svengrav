@@ -8,9 +8,6 @@ import { ImagePreloader } from '@components/base/ImagePreloader'
 
 // https://bettertyped.github.io/react-zoom-pan-pinch/?path=/story/docs-props--page
 
-let count = 0
-
-
 /**
  * Canvas component that provides a context for managing the state of the canvas,
  * including navigation, view, zoom control, and layer control.
@@ -40,7 +37,6 @@ export const Canvas = ({ artwork }: { artwork: Artwork }) => {
 export const CanvasView = ({ className }: { className?: string }) => {
   const context = useCanvasContext()
   const { transformation, artwork, size } = context.getContext()
-
 
   return (
     <div className={className} style={size} >
