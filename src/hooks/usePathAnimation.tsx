@@ -61,7 +61,8 @@ interface RoutePathOptions {
   onRouteStateChange?: (state: PathState) => void
 }
 
-interface RoutePathActions {
+interface RouteAnimationContext {
+  id: string,
   stopAnimation: () => void
   startAnimation: (reverse?: boolean) => void
 }
@@ -73,6 +74,7 @@ interface PathAnimation {
 }
 
 export const usePathAnimation = (
+  id: string,
   svgId: string,
   pathId: string,
   options: RoutePathOptions = {
@@ -81,7 +83,7 @@ export const usePathAnimation = (
     events: [],
     gaps: []
   }
-): RoutePathActions => {
+): RouteAnimationContext => {
   const {
     tip,
     reverse: startReverse,
@@ -198,7 +200,7 @@ export const usePathAnimation = (
     setAnimationState(animationStateRef.current, 'finished')
   }
 
-  return { stopAnimation, startAnimation }
+  return { id, stopAnimation, startAnimation }
 }
 
 const applyPathState = (

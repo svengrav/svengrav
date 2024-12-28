@@ -13,6 +13,7 @@ const routeIds: SouthPoleRouteId[] = ['cook', 'belgica', 'cross', 'amundsen', 's
 export interface SouthPoleMapController {
   setVisibility?: (id: string, visible: boolean) => void
   onClick?: (id: string) => void
+  startAnimation?: (id: SouthPoleRouteId) => void
 }
 
 /**
@@ -46,7 +47,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   const getBaseSVG = () => baseRef.current?.querySelector(`#${SVG_ID}`) as SVGSVGElement
 
   expedition.forEach((expedition) => {
-    pathAnimations.push(usePathAnimation(SVG_ID, `${expedition.id}_route`, pathOptions))
+    pathAnimations.push(usePathAnimation(expedition.id, SVG_ID, `${expedition.id}_route`, pathOptions))
   })
 
   /**
@@ -76,6 +77,13 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
     }
   }
 
+  controller.startAnimation = (id: SouthPoleRouteId) => {    
+    console.log('start animation', id)
+    const expedition = pathAnimations.find((expedition) => expedition.id === id)
+    console.log(expedition)
+    expedition.startAnimation()
+  }
+
   useEffect(() => {
     getSouthPoleSVG().then((svg) => {
       if (!getBaseSVG()) {
@@ -101,7 +109,6 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   )
 }
 export default SouthPoleMap
-
 //#region privates
 
 const getSouthPoleSVG = async () => {

@@ -7,7 +7,7 @@ import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon, PaperAirplaneIco
 import Icon from "@components/base/Icon"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { SouthpoleMap } from "./SouthPole"
-import { description, SouthPoleSummary } from "./SouthPoleData"
+import { description, expeditions, SouthPoleSummary } from "./SouthPoleData"
 import { fetchSVG } from "../Spital/svgUtils"
 import classNames from "classnames"
 
@@ -18,30 +18,31 @@ interface SouthPoleViewProps {
 
 export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   const leftSidepanel = useRef<PagePanelController>(null)
-  const controller = map.controller
+  const mapController = map.controller
   const [activeExpedition, setActiveExpedition] = useState({
     id: ''
   })
 
   //#region controller and active setup
-  if (controller) {
-    controller.onClick = (id: string) => { setActiveSection(id) }
+  if (mapController) {
+    mapController.onClick = (id: string) => { setActiveSection(id) }
   }
 
   const setActiveSection = (id: string) => {
-    if (!controller || !controller.setVisibility) {
+    if (!mapController || !mapController.setVisibility) {
       return
     }
 
     map.expeditions.forEach((expedition) => {
-      controller.setVisibility!(expedition.id, false)
+      mapController.setVisibility!(expedition.id, false)
     })
 
     if (activeExpedition.id === id) {
-      controller.setVisibility(id, false)
+      mapController.setVisibility(id, false)
       setActiveExpedition({ id: '' })
     } else {
-      controller.setVisibility(id, true)
+      mapController.setVisibility(id, true)
+      mapController.startAnimation(id)
       setActiveExpedition({ id: id })
     }
   }

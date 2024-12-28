@@ -1,6 +1,19 @@
 import { ReactNode } from 'react'
 import { Position, Size } from '@core/geometry'
 
+/**
+ * Represents a map of artwork resources.
+ * Each key is a string that identifies the artwork resource,
+ * and the value is an object containing the source URL of the artwork.
+ *
+ * @interface ArtworkResourceMap
+ * @property {string} src - The source URL of the artwork.
+ */
+interface ArtworkResourceMap {
+  [key: string]: {
+    src: string;
+  }
+}
 
 /**
  * Represents an artwork with various properties such as id, name, description, year, size, default index, layers, and optional points.
@@ -21,7 +34,7 @@ export interface Artwork {
   year: number;
   size: Size;
   defaultIndex: number;
-  resources?: ArtworkResource[];
+  resources?: ArtworkResourceMap;
   layer: ArtworkLayer[];
   points?: ArtworkPoint[];
 }
@@ -43,7 +56,6 @@ export interface ArtworkLayer {
   inner: ReactNode;
 }
 
-
 /**
  * Represents a point in an artwork.
  *
@@ -59,14 +71,4 @@ export interface ArtworkPoint {
   description?: string | undefined
   inner: ReactNode
   layers?: number[]
-}
-
-
-export interface ArtworkResource {
-  id: string;
-  src: string;
-}
-
-export const getArtworkResourceById = (artwork: Artwork, id: string) => {
-  return artwork.resources?.find(resource => resource.id === id)
 }

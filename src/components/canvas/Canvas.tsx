@@ -38,12 +38,18 @@ export const CanvasView = ({ className }: { className?: string }) => {
   const context = useCanvasContext()
   const { transformation, artwork, size } = context.getContext()
 
+  const resourcesToList = () => {
+    if(artwork.resources) {
+      return Object.entries(artwork.resources).map(([_, res]) => res.src)
+    } else return []
+  }
+
   return (
     <div className={className} style={size} >
       <div className='w-full h-full flex'>
         <div className='w-full flex justify-center grow'>
           <TransformComponent contentStyle={{ ...transformation.size }} wrapperStyle={{ ...transformation.size }}>
-            <ImagePreloader sources={artwork.resources?.map(r => r.src)}>
+            <ImagePreloader sources={resourcesToList()}>
               {
                 transformation.layer.layers.map((layer, i) => {
                   return <CanvasLayer key={'l' + i} opacity={layer.transition.progress}>{artwork.layer[i].inner}</CanvasLayer>

@@ -7,7 +7,6 @@ import SouthPoleMap from './SouthPoleRoutes'
 import { Expedition, expeditions } from './SouthPoleData'
 import SouthPoleView from './SouthPoleView'
 
-
 /**
  * Represents a map of the South Pole, extending the Artwork type.
  * 
@@ -22,7 +21,6 @@ export type SouthpoleMap = Artwork & {
   controller?: SouthPoleMapController
 }
 
-
 /**
  * Interface representing a controller for the South Pole map.
  */
@@ -33,19 +31,34 @@ export interface SouthPoleMapController {
    * @param id - The unique identifier of the map element.
    * @param visible - A boolean indicating whether the element should be visible.
    */
-  setVisibility?: (id: string, visible: boolean) => void
+  setVisibility: (id: string, visible: boolean) => void
 
   /**
    * Handles the click event on a map element.
    * 
    * @param id - The unique identifier of the map element.
    */
-  onClick?: (id: string) => void
+  onClick: (id: string) => void
+
+  startAnimation: (id: string) => void
 }
 
-const controller: SouthPoleMapController = {}
+const controller: SouthPoleMapController = {
+  setVisibility: () => { console.warn('SouthPoleMapController: setVisibility method is not implemented.') },
+  onClick: () => { console.warn('SouthPoleMapController: onClick method is not implemented.')  },
+  startAnimation: () => { console.warn('SouthPoleMapController: startAnimation method is not implemented.')  }
+}
 
 const baseMap = <SouthPoleMap expedition={expeditions} controller={controller} />
+
+const resources = {
+  'base': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg'
+  },
+  'thumbnail':{
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg'
+  }
+}
 
 const SouthPoleQuote = () => {
   return <>
@@ -62,10 +75,9 @@ const SouthPoleQuote = () => {
       </div>
 
     </div>
-    <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg' />
+    <ImageLoader src={resources.base.src} />
   </>
 }
-
 
 /**
  * Represents the South Pole map configuration.
@@ -80,22 +92,13 @@ export const southPole: SouthpoleMap = {
   defaultIndex: 2,
   expeditions: expeditions,
   controller: controller,
-  resources: [
-    {
-      id: 'base',
-      src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg'
-    },
-    {
-      id: 'thumbnail',
-      src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg'
-    }
-  ],
+  resources: resources,
   layer: [
     {
       id: 'map',
       name: 'South Pole',
       description: 'The seven most important voyages of discovery to the South Pole.',
-      inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg' />
+      inner: <ImageLoader src={resources.base.src} />
     },
     {
       id: 'base',
@@ -122,7 +125,7 @@ export const southPolePage: PageDescription = {
   description: 'The seven most important voyages of discovery to the South Pole.',
   tags: ['map'],
   date: date(12, 10, 2024),
-  thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg' />,
+  thumbnail: <PageThumbnail src={resources.thumbnail.src} />,
   element: <SouthPoleView map={southPole} />
 }
 
