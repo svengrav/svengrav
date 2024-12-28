@@ -1,3 +1,5 @@
+import { ImageLoader } from "@components/base/ImageLoader"
+
 export interface Expedition {
   id: string
   name: string
@@ -19,6 +21,21 @@ export interface MapPosition {
   x: number
   y: number
   r?: number // Optional rotation
+}
+
+export const resources = {
+  'base': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg'
+  },
+  'thumbnail':{
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg'
+  },
+  'tablet': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-tablet.jpg'
+  },
+  'scott': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott.jpg'
+  }
 }
 
 /**
@@ -204,13 +221,9 @@ export const expeditions: Expedition[] = [
   }
 ]
 
-
 export const SouthPoleSummary = () => <div className="flex flex-col w-full">
   <div className="w-full mt-4">
-    <img
-      src="https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-tablet.jpg"
-      className="object-contain"
-    />
+    <ImageLoader src={resources.tablet.src} />
   </div>
   <div className="mt-8 tracking-wide leading-relaxed text-gray-200 ">
     <p className="mb-4 max-w-lg">
@@ -226,10 +239,7 @@ export const SouthPoleSummary = () => <div className="flex flex-col w-full">
       Later, British-led missions such as the Discovery Expedition (1901-1904) and the Nimrod Expedition (1907-1909) reached 82°17' South and 88°23' South, respectively,
       showing incremental advancements toward the elusive pole.
     </p>
-    <img
-      src="https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott.jpg"
-      className="object-contain my-4"
-    />
+    <ImageLoader src={resources.scott.src} />
     <p className="text-gray-300 text-sm mb-4">
       The photo shows Scott's expedition to the South Pole
     </p>
@@ -241,3 +251,22 @@ export const SouthPoleSummary = () => <div className="flex flex-col w-full">
     </p>
   </div>
 </div>
+
+export const SouthPoleQuote = () => {
+  return <>
+    <div className="text-slate-700 tracking-widestleading-loose flex justify-center items-center absolute w-full h-full bg-white/70 text-2xl lg:text-3xl">
+      <div>
+        <p className='max-w-96 font-serif leading-relaxed'>
+          “The eternal silence of the great white desert.
+          Cloudy columns of snow drift advancing from the south, pale yellow wraiths,
+          heralding the coming storm, blotting out one by one the sharp-cut lines of the land.”
+        </p>
+        <p className='text-lg mt-8 text-slate-500'>
+          Robert Falcon Scott, <br /> Scott's Last Expedition: The Journals
+        </p>
+      </div>
+
+    </div>
+    <ImageLoader src={resources.base.src} />
+  </>
+}

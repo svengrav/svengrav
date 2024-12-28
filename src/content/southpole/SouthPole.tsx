@@ -3,8 +3,8 @@ import { date } from '@core/date'
 import PageThumbnail from '@components/page/PageThumbnail'
 import { PageDescription } from '@components/page/PageDescription'
 import { ImageLoader } from '@components/base/ImageLoader'
-import SouthPoleMap from './SouthPoleRoutes'
-import { Expedition, expeditions } from './SouthPoleData'
+import SouthPoleMap from './SouthPoleMap'
+import { Expedition, expeditions, resources, SouthPoleQuote } from './SouthPoleData'
 import SouthPoleView from './SouthPoleView'
 
 /**
@@ -31,16 +31,21 @@ export interface SouthPoleMapController {
    * @param id - The unique identifier of the map element.
    * @param visible - A boolean indicating whether the element should be visible.
    */
-  setVisibility: (id: string, visible: boolean) => void
+  setVisibility: (id: string, visible: boolean) => void;
 
   /**
    * Handles the click event on a map element.
    * 
    * @param id - The unique identifier of the map element.
    */
-  onClick: (id: string) => void
+  onClick: (id: string) => void;
 
-  startAnimation: (id: string) => void
+  /**
+   * Starts an animation for a map element.
+   * 
+   * @param id - The unique identifier of the map element.
+   */
+  startAnimation: (id: string) => void;
 }
 
 const controller: SouthPoleMapController = {
@@ -49,42 +54,12 @@ const controller: SouthPoleMapController = {
   startAnimation: () => { console.warn('SouthPoleMapController: startAnimation method is not implemented.')  }
 }
 
-const baseMap = <SouthPoleMap expedition={expeditions} controller={controller} />
-
-const resources = {
-  'base': {
-    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg'
-  },
-  'thumbnail':{
-    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg'
-  }
-}
-
-const SouthPoleQuote = () => {
-  return <>
-    <div className="text-slate-700 tracking-widestleading-loose flex justify-center items-center absolute w-full h-full bg-white/70 text-2xl lg:text-3xl">
-      <div>
-        <p className='max-w-96 font-serif leading-relaxed'>
-          “The eternal silence of the great white desert.
-          Cloudy columns of snow drift advancing from the south, pale yellow wraiths,
-          heralding the coming storm, blotting out one by one the sharp-cut lines of the land.”
-        </p>
-        <p className='text-lg mt-8 text-slate-500'>
-          Robert Falcon Scott, <br /> Scott's Last Expedition: The Journals
-        </p>
-      </div>
-
-    </div>
-    <ImageLoader src={resources.base.src} />
-  </>
-}
-
 /**
  * Represents the South Pole map configuration.
  */
 export const southPole: SouthpoleMap = {
   id: 'southpole',
-  name: 'South Pole',
+  name: 'The Race to the South Pole',
   description:
     'The seven most important voyages of discovery to the South Pole.',
   year: 2024,
@@ -104,7 +79,7 @@ export const southPole: SouthpoleMap = {
       id: 'base',
       name: 'Watercolor Basemap',
       description: 'The watercolor-style basemap of Antarctica.',
-      inner: baseMap
+      inner: <SouthPoleMap expedition={expeditions} controller={controller} />
     },
     {
       id: 'quote',

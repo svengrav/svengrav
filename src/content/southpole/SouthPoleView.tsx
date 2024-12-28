@@ -72,7 +72,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
             <InformationSection
               key={expedition.id + activeExpedition.id}
               title={
-                <InformationTitle title={expedition.name} year={expedition.year} />
+                <InformationTitle label={expedition.name} year={expedition.year} />
               }
               open={activeExpedition.id === expedition.id}
               onClick={() => setActiveSection(expedition.id)}
@@ -87,13 +87,14 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   )
 }
 
-type InformationTitleProps = { title: string, year: string }
-const InformationTitle = ({ title, year }: InformationTitleProps) => {
+type InformationTitleProps = { label: string, year: string }
+const InformationTitle = ({ label, year }: InformationTitleProps) => {
   return (
     <div className="flex w-full justify-between">
-      <h1>{title}</h1>
+      <h1>{label}</h1>
       <p className=" text-gray-500 mr-2">{year}</p>
-    </div>)
+    </div>
+  )
 }
 
 type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void }
@@ -101,13 +102,9 @@ const InformationSection = ({ title, children, open = false, onClick }: Informat
   return (
     <>
       <Disclosure key={title?.toString()} defaultOpen={open}>
-        <DisclosureButton className={classNames
-          ("flex w-full justify-between py-2 text-white hover:text-rose-400",
-            {
-              "text-rose-400": open
-            }
-          )
-        } onClick={onClick}>
+        <DisclosureButton className={classNames("flex w-full justify-between py-2 text-white hover:text-rose-400", {
+              "!text-rose-400": open
+          })} onClick={onClick}>
           {title}
           <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
         </DisclosureButton>

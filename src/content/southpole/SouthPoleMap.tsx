@@ -73,14 +73,11 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       circle.style.strokeWidth = '3'
       route.style.stroke = '#000285'
       routeTip.style.fill = '#000285'
-
     }
   }
 
   controller.startAnimation = (id: SouthPoleRouteId) => {    
-    console.log('start animation', id)
     const expedition = pathAnimations.find((expedition) => expedition.id === id)
-    console.log(expedition)
     expedition.startAnimation()
   }
 
@@ -100,7 +97,6 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       })
     })
   }, [])
-
 
   return (
     <Scalable width={3400} height={2600}>
@@ -127,7 +123,7 @@ const getSouthPoleSVG = async () => {
           getSVGElement(svgMap, `${id}_box`).style.fill = 'rgba(255, 0, 0, 0.001)'
           getSVGElement(svgMap, `${id}_box`).style.cursor = 'pointer'
         } catch {
-          console.log(`Could not find element ${id}`)
+          console.warn(`Could not find element ${id}`)
         }
       })
       try {
@@ -140,7 +136,7 @@ const getSouthPoleSVG = async () => {
         getSVGElement(svgMap, `outer_circle`).style.strokeWidth = '5'
         getSVGElement(svgMap, `frame`).style.fill = 'none'
       } catch {
-        console.log(`Could not find element a svg element.`)
+        console.warn(`Could not find element a svg element.`)
       }
       return svgMap
     }).catch((error) => {
