@@ -18,7 +18,8 @@ import classNames from 'classnames'
 import { useCanvasContext } from './CanvasStateProvider'
 
 interface CanvasNavigatorProps {
-  className?: string
+  className?: string,
+  visible?: boolean
 }
 
 /**
@@ -32,20 +33,17 @@ interface CanvasNavigatorProps {
  * It displays various properties such as width, height, position, scale, shrink, visibility, and layer information.
  * The visibility of the side panel can be toggled by clicking an icon.
  */
-export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20" }: CanvasNavigatorProps) {
-  const [visible, setVisible] = useState(false)
+export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20", visible }: CanvasNavigatorProps) {
+  const [isVisible, setVisible] = useState(visible)
   const canvasContext = useCanvasContext()
   const transformed = canvasContext.getTransformation()
   const context = canvasContext.getContext()
   const propertyStyles = 'text-sm font-medium flex text-gray-200'
   const windowWidth = window.innerWidth
   const isFullScreen = windowWidth < 600
-  const toggleVisibility = () => setVisible(!visible)
 
-  useEffect(() => {
-    setVisible(windowWidth > 1000)
-  }, [])
-
+  // Toggle visibility of the navigator panel
+  const toggleVisibility = () => setVisible(!isVisible)
 
   return (
     <div className={className} >
@@ -56,7 +54,7 @@ export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20"
       </div>
 
       {/** Navigator panel */}
-      <CanavasNavigatorPanel show={visible} full={isFullScreen}>
+      <CanavasNavigatorPanel show={isVisible} full={isFullScreen}>
           {/** header */}
           <div className='w-full p-2 flex items-center justify-between text-white cursor-pointer bg-gray-950/95'>
             <Square3Stack3DIcon className='h-5 w-5 mr-2' />Navigator

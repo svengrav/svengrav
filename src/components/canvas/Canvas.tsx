@@ -16,10 +16,10 @@ import { ImagePreloader } from '@components/base/ImagePreloader'
  * @param {Artwork} props.artwork - The artwork object to be displayed on the canvas.
  *
  */
-export const Canvas = ({ artwork }: { artwork: Artwork }) => {
+export const Canvas = ({ artwork, navigator }: { artwork: Artwork, navigator?: boolean }) => {
   return (
     <CanvasStateProvider artwork={artwork} size={{ height: window.innerHeight - 150, width: window.innerWidth }}>
-      <CanvasNavigator />
+      <CanvasNavigator visible={navigator} />
       <CanvasView className="m-auto" />
       <CanvasZoomControl />
       <CanvasLayerControl />
