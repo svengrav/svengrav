@@ -1,8 +1,9 @@
-import { Size } from "@core/geometry"
-import canvasTransformation, { CanvasContext, sizeIsEqual, CanvasState, CanvasLayer, CanvasProviderState } from "./canvasTransformation"
-import { Artwork } from "@components/artwork/Artwork"
-import { createContext, useContext, useState } from "react"
-import { CanvasWrapper } from "./CanvasWrapper"
+import { Size } from "@core/geometry";
+import canvasTransformation, { CanvasContext, sizeIsEqual, CanvasLayer, CanvasProviderState } from "./canvasTransformation";
+import { Artwork } from "@components/artwork/Artwork";
+import { createContext, useContext, useState } from "react";
+import { CanvasWrapper } from "./CanvasWrapper";
+import { animateProgress } from "@core/progressAnimation";
 
 /**
  * Custom hook to manage the canvas context state.
@@ -33,13 +34,26 @@ import { CanvasWrapper } from "./CanvasWrapper"
  * @property {function({ progress?: number, index?: number }): void} setLayer - Sets the layer of the canvas.
  */
 const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext => {
-  const [context, setState] = useState<CanvasProviderState>(canvasTransformation.initialize({ index: artwork.defaultIndex, noOfLayer: artwork.layer.length, size: artwork.size}, canvasSize))
-  const CONTEXT_NOT_INITIALIZED = 'Canvas context is not initialized'
+  const CONTEXT_NOT_INITIALIZED = "Canvas context is not initialized";
 
-  const setContextState = (state: CanvasProviderState) => { 
-    if(JSON.stringify(context, null, 1) == JSON.stringify(state,null, 1)) return;
-    setState(state)
-  }
+  const [context, setState] = useState<CanvasProviderState & {i: number}>(
+    () => {
+      return{ ...canvasTransformation.initialize(
+        { index: artwork.defaultIndex, noOfLayer: artwork.layer.length, size: artwork.size },
+        canvasSize
+      ), i: 0 }
+    }
+  );
+
+  const setContextState = (state: CanvasProviderState) => {
+    setState(prevState => {
+      const newIndex = prevState.i + 1;
+      return {
+        ...state,
+        i: newIndex
+      };
+    });
+  };
 
   /**
    * Sets the size of the canvas context.
@@ -49,73 +63,98 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
    */
   const resize = (size: Size) => {
     if (context == null) {
-      throw new Error(CONTEXT_NOT_INITIALIZED)
+      throw new Error(CONTEXT_NOT_INITIALIZED);
     }
 
     if (sizeIsEqual(size, context.size)) {
-      return
+      return;
     }
 
-    setContextState(canvasTransformation.resize(context, artwork.size, size))
-  }
+    setContextState(canvasTransformation.resize(context, artwork.size, size));
+  };
 
-  const setView = ({ position, scale }: { position: { x: number, y: number }, scale: number }) => {
+  /**
+   * Sets the view of the canvas by updating the position and scale.
+   */
+  const setView = ({ position, scale }: { position: { x: number; y: number }; scale: number }) => {
     if (context == null) {
-      throw new Error(CONTEXT_NOT_INITIALIZED)
+      throw new Error(CONTEXT_NOT_INITIALIZED);
     }
 
-    setContextState(canvasTransformation.setView(context, position, scale))
-  }
+    setContextState(canvasTransformation.setView(context, position, scale));
+  };
 
-  const setLayer = ({ progress, index }: { progress?: number, index?: number }) => {
+  /**
+   * Sets the layer of the canvas by updating the progress or index.
+   */
+  const setLayer = ({ progress, index }: { progress?: number; index?: number }) => {
     if (context == null) {
-      throw new Error(CONTEXT_NOT_INITIALIZED)
+      throw new Error(CONTEXT_NOT_INITIALIZED);
     }
 
     if (progress === undefined && index === undefined) {
-      throw new Error('Either progress or index must be provided')
+      throw new Error("Either progress or index must be provided");
     }
 
     if (progress !== undefined) {
-      setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { progress }))
+      setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { progress }));
     } else if (index !== undefined) {
-      setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { index }))
-    }
-  }
+      const finalState = canvasTransformation.setLayer(context, artwork.layer.length, { index });
+      const currentProgress = context.transformation.layer.progress;
 
+      animateProgress({
+        startValue: currentProgress,
+        endValue: finalState.transformation.layer.progress!,
+        duration: 500, // 1 Sekunde
+        onUpdate: (value: number) => {
+          setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { progress: value }));
+        },
+        onComplete: () => {
+          setContextState(finalState);
+        },
+      });
+    }
+  };
+
+  /*
+   * Sets the artwork of the canvas context.
+   */
   const getContext = () => {
     if (context == null) {
-      throw new Error(CONTEXT_NOT_INITIALIZED)
+      throw new Error(CONTEXT_NOT_INITIALIZED);
     }
 
     return {
       transformation: context.transformation,
       artwork: artwork,
-      size: context.size
-    }
-  }
+      size: context.size,
+    };
+  };
 
+  /*
+   * Gets the transformation of the canvas context.
+   */
   const getTransformation = () => {
     if (context == null) {
-      throw new Error(CONTEXT_NOT_INITIALIZED)
+      throw new Error(CONTEXT_NOT_INITIALIZED);
     }
 
-    return context.transformation
-  }
+    return context.transformation;
+  };
 
+  /*
+   * Gets the layer of the canvas context.
+   */
   const getLayer = (index: number): CanvasLayer => {
     if (context == null) {
-      throw new Error(CONTEXT_NOT_INITIALIZED)
+      throw new Error(CONTEXT_NOT_INITIALIZED);
     }
 
-
-    artwork.layer[index]
     return {
       ...context.transformation.layer.layers[index],
-      ...artwork.layer[index]
-    }
-  }
-
+      ...artwork.layer[index],
+    };
+  };
 
   return {
     getTransformation,
@@ -123,37 +162,37 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
     getLayer,
     setView,
     resize,
-    setLayer
-  }
-}
+    setLayer,
+  };
+};
 
-const Canvas = createContext<CanvasContext | undefined>(undefined)
+const Canvas = createContext<CanvasContext | undefined>(undefined);
 
 interface CanvasStateProvider {
-  children: React.ReactNode
-  artwork: Artwork
-  size: Size
+  children: React.ReactNode;
+  artwork: Artwork;
+  size: Size;
 }
 
-export const CanvasStateProvider = ({
-  children,
-  artwork,
-  size
-}: CanvasStateProvider) => {
-  const context = useProviderContext(artwork, size)
+/**
+ * Provides the canvas context to the children components.
+ */
+export const CanvasStateProvider = ({ children, artwork, size }: CanvasStateProvider) => {
+  const context = useProviderContext(artwork, size);
   return (
-    <Canvas.Provider value={context}>
-      <CanvasWrapper>
-      {children}
-      </CanvasWrapper>
+    <Canvas.Provider value={context} key={artwork.id}>
+      <CanvasWrapper>{children}</CanvasWrapper>
     </Canvas.Provider>
-  )
-}
+  );
+};
 
+/**
+ * Custom hook to use the canvas context.
+ */
 export const useCanvasContext = () => {
-  const context = useContext(Canvas)
+  const context = useContext(Canvas);
   if (context == null) {
-    throw new Error('useCanvasContext must be used within a CanvasProvider')
+    throw new Error("useCanvasContext must be used within a CanvasProvider");
   }
-  return context
-}
+  return context;
+};

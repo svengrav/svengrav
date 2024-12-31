@@ -5,6 +5,7 @@ import { CanvasZoomControl } from './CanvasZoomControl'
 import { CanvasLayerControl } from './CanvasLayerControl'
 import { Artwork } from '@components/artwork/Artwork'
 import { ImagePreloader } from '@components/base/ImagePreloader'
+import { useEffect } from 'react'
 
 // https://bettertyped.github.io/react-zoom-pan-pinch/?path=/story/docs-props--page
 

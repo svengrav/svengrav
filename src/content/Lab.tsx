@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 const Lab = () => {
   const [state, setState] = useState<PathState>()
-  const { stopAnimation, startAnimation } = usePathAnimation('testId', 'route1', {
+  const { stopAnimation, startAnimation } = usePathAnimation('testId', 'route1', 'pathId', {
     position: 500,
     gaps: { size: 30, number: 5 },
     events: [

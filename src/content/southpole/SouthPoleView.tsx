@@ -3,11 +3,11 @@ import Page from "@components/page/Page"
 import { Canvas } from "@components/canvas/Canvas"
 import { PagePanel, PagePanelController } from "@components/page/PagePanel"
 import { usePageOverlay } from "@components/page/PageOverlay"
-import { ChevronDownIcon, ChevronUpIcon, InformationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid"
+import { CalendarIcon, ChevronDownIcon, ChevronUpIcon, InformationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import Icon from "@components/base/Icon"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { SouthpoleMap } from "./SouthPole"
-import { description, expeditions, SouthPoleSummary } from "./SouthPoleData"
+import { description, SouthPoleSummary } from "./SouthPoleData"
 import { fetchSVG } from "../Spital/svgUtils"
 import classNames from "classnames"
 
@@ -29,10 +29,9 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
   }
 
   const setActiveSection = (id: string) => {
-    if (!mapController || !mapController.setVisibility) {
-      return
-    }
+    if (!mapController || !mapController.setVisibility) return
 
+    leftSidepanel.current?.scrollTo(id)
     map.expeditions.forEach((expedition) => {
       mapController.setVisibility!(expedition.id, false)
     })
@@ -57,60 +56,66 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
         closable
         label="The Project"
         ref={leftSidepanel}
-        className="bg-gray-950/90 border-r-white/20 border-r text-gray-400"
+        className="bg-gray-950/90 border-r-white/20 border-r text-gray-200/80"
         scrollbar={{
           className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900",
         }}
       >
         <ProjectTitle />
         <ProjectInformationOverlay />
-        <p className="py-4">
+        <div className="py-4">
           {description}
-        </p>
+        </div>
         {
-          map.expeditions.map((expedition) => (
+          map.expeditions.map((expedition) => 
+
             <InformationSection
+              id={activeExpedition.id}
               key={expedition.id + activeExpedition.id}
+              className="mb-4"
               title={
-                <InformationTitle label={expedition.name} year={expedition.year} />
+                <div className="w-full flex flex-row items-center">
+                  <div>
+                    <img src={expedition.thumbnail} className="rounded-md h-10 w-10 mr-5 hover:animate-pulse"/>
+                  </div>
+                  <div className="flex flex-col w-full text-left">
+                    <h1 className="font-semibold">{expedition.name}</h1>
+                    <p className=" text-gray-400 text-sm flex">
+                      {expedition.year}, {expedition.position.latitude.toFixed(1)}° {expedition.position.longitude.toFixed(1)}°, {expedition.distance}km
+                    </p>
+                  </div>
+                 
+                </div>
               }
               open={activeExpedition.id === expedition.id}
               onClick={() => setActiveSection(expedition.id)}
             >
+              <div className="border-b border-gray-700 pb-4">
               {expedition.description}
+              </div>
+              
             </InformationSection>
-          ))
-        }
+          )}
       </PagePanel>
-      <Canvas artwork={map} />
+      <Canvas artwork={map} navigator={window.innerWidth > 1000} />
     </Page>
   )
 }
 
-type InformationTitleProps = { label: string, year: string }
-const InformationTitle = ({ label, year }: InformationTitleProps) => {
+type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void, id?: string, className?: string}
+const InformationSection = ({ title, children, open = false, onClick, id, className }: InformationSectionProps) => {
   return (
-    <div className="flex w-full justify-between">
-      <h1>{label}</h1>
-      <p className=" text-gray-500 mr-2">{year}</p>
-    </div>
-  )
-}
-
-type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void }
-const InformationSection = ({ title, children, open = false, onClick }: InformationSectionProps) => {
-  return (
-    <>
+    <div id={id}>
       <Disclosure key={title?.toString()} defaultOpen={open}>
-        <DisclosureButton className={classNames("flex w-full justify-between py-2 text-white hover:text-rose-400", {
-              "!text-rose-400": open
-          })} onClick={onClick}>
+        <DisclosureButton className={classNames("flex w-full justify-between py-2 text-white hover:text-rose-500", {
+          "!text-rose-500": open
+        })} onClick={onClick}>
           {title}
           <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
         </DisclosureButton>
-        <DisclosurePanel className="text-gray-300/80">{children}</DisclosurePanel>
+        <DisclosurePanel className={ classNames("text-gray-300/80", className)}>{children}</DisclosurePanel>
       </Disclosure>
-    </>
+    </div>
   )
 }
 
@@ -154,5 +159,5 @@ const ProjectInformationOverlay = () => {
       ),
     })
   }
-  return <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Projekt" className="text-gray-200" />
+  return <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Project" className="text-gray-200 hover:text-rose-500" />
 }

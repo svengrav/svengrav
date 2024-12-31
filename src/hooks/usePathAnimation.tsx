@@ -61,7 +61,7 @@ interface RoutePathOptions {
   onRouteStateChange?: (state: PathState) => void
 }
 
-interface RouteAnimationContext {
+export interface RouteAnimationContext {
   id: string,
   stopAnimation: () => void
   startAnimation: (reverse?: boolean) => void
@@ -73,6 +73,32 @@ interface PathAnimation {
   state: 'ready' | 'running' | 'finished'
 }
 
+/**
+ * Custom hook to animate a path within an SVG element.
+ *
+ * @param {string} id - Unique identifier for the animation context.
+ * @param {string} svgId - The ID of the SVG element containing the path.
+ * @param {string} pathId - The ID of the path element to animate.
+ * @param {RoutePathOptions} [options] - Configuration options for the path animation.
+ * @param {boolean} [options.initialize=false] - Whether to initialize the animation immediately.
+ * @param {string} [options.tip='arrow'] - The type of tip to use for the path.
+ * @param {Array} [options.events=[]] - Events to trigger during the animation.
+ * @param {Array} [options.gaps=[]] - Gaps in the path where the animation should pause.
+ * @param {boolean} [options.reverse] - Whether to start the animation in reverse.
+ * @param {number} [options.position=1] - Initial position of the animation on the path.
+ * @param {Object} [options.pathStyle] - Style properties for the path.
+ * @param {string} [options.pathStyle.fill='none'] - Fill color of the path.
+ * @param {number} [options.pathStyle.strokeWidth=2] - Stroke width of the path.
+ * @param {string} [options.pathStyle.stroke='white'] - Stroke color of the path.
+ * @param {string} [options.pathStyle.strokeDasharray='10'] - Stroke dash array of the path.
+ * @param {Object} [options.tipStyle] - Style properties for the tip.
+ * @param {string} [options.tipStyle.fill='white'] - Fill color of the tip.
+ * @param {number} [options.tipStyle.scale=1] - Scale of the tip.
+ * @param {Function} [options.onRouteStateChange] - Callback function to handle route state changes.
+ * @param {number} [options.speed=6] - Speed of the animation.
+ *
+ * @returns {RouteAnimationContext} - The animation context containing methods to start and stop the animation.
+ */
 export const usePathAnimation = (
   id: string,
   svgId: string,

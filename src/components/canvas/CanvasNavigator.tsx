@@ -49,8 +49,8 @@ export function CanvasNavigator({ className = "md:w-96 md:absolute right-0 z-20"
     <div className={className} >
 
       {/** Toggle button */}
-      <div className='z-40 absolute right-0 text-white py-2 px-1'>
-        <Icon primary={ChevronLeftIcon} secondary={XMarkIcon} active={visible} onClick={toggleVisibility} className='bg-gray-950 text-white ' />
+      <div className='z-30 absolute right-0 text-white py-2 px-1'>
+        <Icon primary={ChevronLeftIcon} secondary={XMarkIcon} active={isVisible} onClick={toggleVisibility} className='bg-gray-950 text-white ' />
       </div>
 
       {/** Navigator panel */}

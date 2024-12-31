@@ -4,9 +4,10 @@ export interface Expedition {
   id: string
   name: string
   year: string
+  thumbnail?: string
   position: {
-    latitude: string
-    longitude: string
+    latitude: number
+    longitude: number
   }
   route: {
     start: [number, number],
@@ -25,7 +26,7 @@ export interface MapPosition {
 
 export const resources = {
   'base': {
-    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.jpg'
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.png'
   },
   'thumbnail':{
     src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg'
@@ -35,7 +36,28 @@ export const resources = {
   },
   'scott': {
     src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott.jpg'
-  }
+  },
+  'beligcaThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-beligca-thumb.png'
+  },
+  'scottThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott-thumb.png'
+  },
+  'discoveryThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-discovery-thumb.png'
+  },
+  'crossThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-cross-thumb.png'
+  },
+  'nimrodThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-nimrod-thumb.png'
+  },
+  'amundsenThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-amundsen-thumb.png'
+  },
+  'cookThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-cook-thumb.png'
+  },
 }
 
 /**
@@ -55,7 +77,10 @@ export const title = {
   </>
 }
 
-export const description = "The South Pole was first reached by Norwegian explorer Roald Amundsen and his team on December 14, 1911, during the Fram Expedition. Amundsen’s team arrived ahead of British explorer Robert Falcon Scott, who reached the pole on January 17, 1912. Tragically, Scott and his entire team perished on the return journey due to harsh conditions and a lack of supplies."
+export const description = <p>The South Pole was first reached by Norwegian explorer <b>Roald Amundsen</b> and his team on December 14, 1911, 
+during the Fram Expedition. Amundsen’s team arrived ahead of British explorer <b>Robert Falcon Scott</b>, who reached the pole on January 17, 1912. 
+Tragically, Scott and his entire team perished on the return journey due to harsh conditions and a lack of supplies.
+</p>
 
 /**
  * A list of historical Antarctic expeditions with detailed information.
@@ -83,9 +108,10 @@ export const expeditions: Expedition[] = [
     id: 'scott',
     name: "Scott's Terra-Nova-Expedition",
     year: "1910 – 1913",
+    thumbnail: resources.scottThumb.src,
     position: {
-      latitude: "-90.0000",
-      longitude: "0.0000"
+      latitude: -90.0000,
+      longitude: 0.0000
     },
     route: {
       start: [2660, 738],
@@ -103,9 +129,10 @@ export const expeditions: Expedition[] = [
     id: 'amundsen',
     name: "Amundsen's Fram-Expedition",
     year: "1910 – 1912",
+    thumbnail: resources.amundsenThumb.src,
     position: {
-      latitude: "-90.0000",
-      longitude: "0.0000"
+      latitude: -90.0000,
+      longitude: 0.0000
     },
     display: {
       x: 2810,
@@ -123,9 +150,10 @@ export const expeditions: Expedition[] = [
     id: 'nimrod',
     name: "Nimrod-Expedition",
     year: "1907 – 1909",
+    thumbnail: resources.nimrodThumb.src,
     position: {
-      latitude: "-88.2300",
-      longitude: "162.0000"
+      latitude: -88.2300,
+      longitude: 162.0000
     },
     display: {
       x: 2867,
@@ -143,9 +171,10 @@ export const expeditions: Expedition[] = [
     id: 'discovery',
     name: "Discovery-Expedition",
     year: "1901 – 1904",
+    thumbnail: resources.discoveryThumb.src,
     position: {
-      latitude: "-82.1700",
-      longitude: "164.0000"
+      latitude: -82.1700,
+      longitude: 164.0000
     },
     display: {
       x: 2884,
@@ -163,9 +192,10 @@ export const expeditions: Expedition[] = [
     id: 'cross',
     name: "Southern-Cross-Expedition",
     year: "1898 – 1900",
+    thumbnail: resources.crossThumb.src,
     position: {
-      latitude: "-78.5000",
-      longitude: "163.0000"
+      latitude: -78.5000,
+      longitude: 163.0000
     },
     display: {
       x: 2865,
@@ -181,11 +211,12 @@ export const expeditions: Expedition[] = [
   },
   {
     id: 'belgica',
-    name: "Die Belgica-Expedition",
+    name: "Belgica-Expedition",
     year: "1897 – 1899",
+    thumbnail: resources.beligcaThumb.src,
     position: {
-      latitude: "-70.5000",
-      longitude: "85.0000"
+      latitude: -70.5000,
+      longitude: 85.0000
     },
     display: {
       x: 2815,
@@ -203,9 +234,10 @@ export const expeditions: Expedition[] = [
     id: 'cook',
     name: "James Cook",
     year: "1772 – 1775",
+    thumbnail: resources.cookThumb.src,
     position: {
-      latitude: "-71.0000",
-      longitude: "106.9000"
+      latitude: -71.0000,
+      longitude: 106.9000
     },
     display: {
       x: 2735,
@@ -241,7 +273,7 @@ export const SouthPoleSummary = () => <div className="flex flex-col w-full">
     </p>
     <ImageLoader src={resources.scott.src} />
     <p className="text-gray-300 text-sm mb-4">
-      The photo shows Scott's expedition to the South Pole
+      The photo shows Scott's expedition to the South Pole. <br/> (Lawrence Oates, Henry Bowers, Robert Falcon Scott, Edward Wilson, Edgar Evans)
     </p>
     <p className="mb-4 max-w-lg">
       It culminates with the famed rivalry between Roald Amundsen’s Norwegian team and Robert Falcon Scott’s British Terra Nova Expedition.

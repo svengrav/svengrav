@@ -14,7 +14,6 @@ import { useEffect, useState } from 'react'
  *
  * @example
  * const { window, isResizing } = useWindowResize();
- * console.log(window.width, window.height, isResizing);
  */
 export const useWindowResize = () => {
   const [windowSize, setWindowSize] = useState({
