@@ -181,7 +181,7 @@ export const expeditions: Expedition[] = [
   },
   {
     id: 'belgica',
-    name: "Die Belgica-Expedition",
+    name: "Belgica-Expedition",
     year: "1897 – 1899",
     position: {
       latitude: "-70.5000",
