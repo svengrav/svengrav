@@ -30,9 +30,9 @@ export const columbus: Artwork = {
 }
 
 export const columbusPage: PageDescription = {
-  title: 'Columbus',
-  id: 'columbus',
-  description: 'Columbus Artwork.',
+  title: columbus.name,
+  id: columbus.id,
+  description: columbus.description,
   tags: ['art', 'map'],
   date: date(5, 5, 2024),
   thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/columbus/columbus-panel.png' color='rose' />,

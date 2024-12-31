@@ -17,7 +17,7 @@ export type WalspergerMap = Artwork & {
 export const walspergerMap: WalspergerMap = {
   id: "walsperger",
   name: "Walsperger Weltkarte",
-  description: "Reinterpretation der Weltkarte des Andreas Walsperger",
+  description: "Reinterpretation of Andreas Walsperger's world map.",
   year: 2024,
   size: { width: 3375, height: 3375 },
   defaultIndex: 5,

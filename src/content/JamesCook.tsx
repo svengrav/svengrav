@@ -7,16 +7,16 @@ import ArtworkView from '../views/ArtworkView'
 
 export const jamesCook: Artwork = {
   id: 'jamescook',
-  name: 'James Cook',
-  description: 'James Cook artwork to test my homepage.',
+  name: 'Explorations by James Cook',
+  description: 'An artwork illustrating Captain James Cooks three voyages, highlighting his routes, discoveries, and encounters in the Pacific.',
   year: 2000,
   size: { width: 2400, height: 3400 },
   defaultIndex: 1,
   layer: [
     {
-      id: 'layer1',
+      id: 'base',
       name: 'Base Map',
-      description: '...',
+      description: 'An artwork illustrating Captain James Cooks three voyages, highlighting his routes, discoveries, and encounters in the Pacific.',
       inner: <ImageLoader src='https://stsvengrav.blob.core.windows.net/stsvengrav/jamescook/jamescook.jpg' />
     }
   ],
@@ -26,9 +26,9 @@ export const jamesCook: Artwork = {
 }
 
 export const jamesCookPage: PageDescription = {
-  title: 'James Cook',
-  id: 'jamescook',
-  description: 'NorthSouth artwork to test my homepage.',
+  title: jamesCook.name,
+  id: jamesCook.id,
+  description: jamesCook.description,
   date: date(5, 5, 2024),
   tags: ['art', 'map'],
   thumbnail: <PageThumbnail src='https://stsvengrav.blob.core.windows.net/stsvengrav/jamescook/panel.jpg' color='rose' />,
