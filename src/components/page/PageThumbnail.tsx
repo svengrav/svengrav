@@ -1,3 +1,4 @@
+import { ImagePreloader } from '@components/base/ImagePreloader'
 import classNames from 'classnames'
 
 type PanelColor = 'emerald' | 'sky' | 'rose' | 'orange' | 'indigo'
@@ -42,19 +43,21 @@ export const PageThumbnail = ({
   label = ''
 }: PanelThumbnailProps) => {
   return (
-    <div
-      className={classNames(
-        `h-full w-full rounded-md bg-gradient-to-r hover:animate-pulse transition-all transform ${panelColorVariants[color]}`
-      )}
-      style={{
-        backgroundImage: src ? `url(${src})` : backgroundPattern,
-        backgroundSize: 'cover'
-      }}
-    >
-      <span className='text-2xl flex items-center justify-center h-full '>
-        {label}
-      </span>
-    </div>
+    <ImagePreloader sources={src ? [src] : []} key={src}>
+      <div
+        className={classNames(
+          `h-full w-full rounded-md bg-gradient-to-r hover:animate-pulse transition-all transform ${panelColorVariants[color]}`
+        )}
+        style={{
+          backgroundImage: src ? `url(${src})` : backgroundPattern,
+          backgroundSize: 'cover'
+        }}
+      >
+        <span className='text-2xl flex items-center justify-center h-full '>
+          {label}
+        </span>
+      </div>
+    </ImagePreloader>
   )
 }
 

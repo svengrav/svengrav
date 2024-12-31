@@ -23,6 +23,7 @@ export const ImageLoader = ({ src, alt }: ImageProps) => {
   useEffect(() => {
     const img = new Image()
     img.src = src
+    img.complete ? setImageState(prevState => ({ ...prevState, loading: false, visible: true, img: img    })) : null
     img.onload = () => {
       setImageState(prevState => ({
         ...prevState,
@@ -41,17 +42,5 @@ export const ImageLoader = ({ src, alt }: ImageProps) => {
       </div>
     </div>
   }
-  return (
-    <Transition
-      show={imageState.visible}
-      enter='transition-opacity ease-linear duration-300'
-      enterFrom='opacity-0'
-      enterTo='opacity-100'
-      leave='transition-opacity ease-linear duration-300'
-      leaveFrom='opacity-100'
-      leaveTo='opacity-0'
-    >
-      <img src={imageState.img.src} alt={alt} />
-    </Transition>
-  )
+  return <img src={imageState.img.src} alt={alt} />
 }

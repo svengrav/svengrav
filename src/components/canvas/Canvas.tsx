@@ -52,7 +52,7 @@ export const CanvasView = ({ className }: { className?: string }) => {
             <ImagePreloader sources={resourcesToList()}>
               {
                 transformation.layer.layers.map((layer, i) => {
-                  return <CanvasLayer key={'l' + i} opacity={layer.transition.progress}>{artwork.layer[i].inner}</CanvasLayer>
+                  return <CanvasLayer key={'l' + layer.index} opacity={layer.transition.progress}>{artwork.layer[i].inner}</CanvasLayer>
                 })
               }
             </ImagePreloader>
@@ -85,7 +85,6 @@ interface CanvasLayerProps {
  */
 const CanvasLayer = ({ children, opacity }: CanvasLayerProps) => {
   const isVisible = (opacity < 0.05 ? 'none' : 'block')
-
   return (
     <div
       className='absolute h-full w-full'

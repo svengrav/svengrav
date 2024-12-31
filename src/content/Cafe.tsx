@@ -83,7 +83,6 @@ export const cafePage: PageDescription = {
           <p className='mt-4 px-4'>
             I illustrated this beautiful little Cafe Balthazar located near Rue Arcisse de Caumont in Caen in July 2024.
           </p>
-
         </PagePanel>
       }
       artwork={cafe}

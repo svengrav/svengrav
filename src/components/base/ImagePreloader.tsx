@@ -22,9 +22,7 @@ export const ImagePreloader = ({ sources = [], children }: ImageProps) => {
   
     imagePreload(sources)
       .then(() => {
-        if (isMounted) {
-          setReady(true);
-        }
+        isMounted ? setReady(true) : null
       })
       .catch((err) => {
         console.error('Error loading images:', err);
@@ -54,7 +52,7 @@ export const ImagePreloader = ({ sources = [], children }: ImageProps) => {
       leaveFrom='opacity-100'
       leaveTo='opacity-0'
     >
-      <div>{children}</div>
+      <div className='h-full w-full'>{children}</div>
     </Transition>
   )
 }
