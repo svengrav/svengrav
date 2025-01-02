@@ -3,6 +3,7 @@ import Scalable from '@components/base/Scalable'
 import { usePathAnimation } from '../../hooks/usePathAnimation'
 import { Expedition } from './SouthPoleData'
 import { fetchSVG } from '../Spital/svgUtils'
+import svgUtils from '@core/svgUtils'
 
 const SOUTPOLE_SVG = "https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg"
 const SVG_ID = 'svg-base'
@@ -61,6 +62,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
     const label = getSVGElement(getBaseSVG(), routeLabel(id))
     const route = getSVGElement(getBaseSVG(), `${id}_route-path-p-1`)
     const routeTip = getSVGElement(getBaseSVG(), `${id}_route-path-p-1-tip`)
+
     if (visible) {
       circle.style.stroke = '#c45355'
       label.style.fill = '#c45355'
@@ -113,7 +115,10 @@ const getSouthPoleSVG = async () => {
       // this is impotant to avoid conflicts with other SVGs in the page
       svgMap.id = SVG_ID
 
-      getSVGElement(svgMap, 'text').style.fill = '#333'
+      const textLabels = getSVGElement(svgMap, 'text')
+      textLabels.style.fill = '#333'
+
+
       routeIds.forEach((id) => {
         try {
           getSVGElement(svgMap, `${id}_route`).style.stroke = '#4b97d1'
@@ -122,6 +127,13 @@ const getSouthPoleSVG = async () => {
           getSVGElement(svgMap, `${id}_circle`).style.fill = 'none'
           getSVGElement(svgMap, `${id}_box`).style.fill = 'rgba(255, 0, 0, 0.001)'
           getSVGElement(svgMap, `${id}_box`).style.cursor = 'pointer'
+
+        const routeBox = getSVGElement(svgMap, `${id}_box`);
+      svgUtils.addOnHover(routeBox, {
+            onEnter: () => { getSVGElement(svgMap, `${id}_label`).style.fill = '#c45355' },
+            onLeave: () => { getSVGElement(svgMap, `${id}_label`).style.fill = '#333' }
+          })
+
         } catch {
           console.warn(`Could not find element ${id}`)
         }

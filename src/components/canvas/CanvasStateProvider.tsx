@@ -36,13 +36,23 @@ import { animateProgress } from "@core/progressAnimation";
 const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext => {
   const CONTEXT_NOT_INITIALIZED = "Canvas context is not initialized";
 
-  const [context, setState] = useState<CanvasProviderState>(
-    canvasTransformation.initialize({ index: artwork.defaultIndex, noOfLayer: artwork.layer.length, size: artwork.size }, canvasSize)
+  const [context, setState] = useState<CanvasProviderState & {i: number}>(
+    () => {
+      return{ ...canvasTransformation.initialize(
+        { index: artwork.defaultIndex, noOfLayer: artwork.layer.length, size: artwork.size },
+        canvasSize
+      ), i: 0 }
+    }
   );
 
   const setContextState = (state: CanvasProviderState) => {
-    if (JSON.stringify(context, null, 1) == JSON.stringify(state, null, 1)) return;
-    setState(state);
+    setState(prevState => {
+      const newIndex = prevState.i + 1;
+      return {
+        ...state,
+        i: newIndex
+      };
+    });
   };
 
   /**
@@ -89,18 +99,22 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
     if (progress !== undefined) {
       setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { progress }));
     } else if (index !== undefined) {
+      console.log("progress", index);
+
       const finalState = canvasTransformation.setLayer(context, artwork.layer.length, { index });
       const currentProgress = context.transformation.layer.progress;
 
       animateProgress({
         startValue: currentProgress,
         endValue: finalState.transformation.layer.progress!,
-        duration: 1000, // 1 Sekunde
+        duration: 500, // 1 Sekunde
         onUpdate: (value: number) => {
           setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { progress: value }));
         },
+        onComplete: () => {
+          setContextState(finalState);
+        },
       });
-      setContextState(finalState);
     }
   };
 
@@ -138,7 +152,6 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
       throw new Error(CONTEXT_NOT_INITIALIZED);
     }
 
-    artwork.layer[index];
     return {
       ...context.transformation.layer.layers[index],
       ...artwork.layer[index],
@@ -168,8 +181,9 @@ interface CanvasStateProvider {
  */
 export const CanvasStateProvider = ({ children, artwork, size }: CanvasStateProvider) => {
   const context = useProviderContext(artwork, size);
+  console.log("contex 123t", context.getContext().transformation.layer);
   return (
-    <Canvas.Provider value={context}>
+    <Canvas.Provider value={context} key={artwork.id}>
       <CanvasWrapper>{children}</CanvasWrapper>
     </Canvas.Provider>
   );

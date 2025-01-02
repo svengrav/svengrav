@@ -10,14 +10,16 @@ export const CanvasWrapper = ({
   children,
 }: CanvasWrapperProps) => {
   const context = useCanvasContext()
+  const contextRef = useRef(context);
 
   const transformRef = useRef<ReactZoomPanPinchContentRef>(null)
   const transformed = context.getTransformation()
 
+
   // Reset transform if wrapper rerenders (ex: window size changed)
   useEffect(() => {
-    transformRef.current?.resetTransform()
     transformRef.current?.instance.onChange((zoomPan) => {
+      const transformed = context.getTransformation()
 
       const { positionX, positionY, scale } = zoomPan.state;
       const { x, y } = transformed.position
@@ -27,7 +29,6 @@ export const CanvasWrapper = ({
       const scaleChanged = Math.abs(scale - transformed.scale.current) > 0.05
 
       if(!positionChanged && !scaleChanged) return;
-
       context.setView({
         position: {
           x: zoomPan.state.positionX,
@@ -36,7 +37,7 @@ export const CanvasWrapper = ({
         scale: zoomPan.state.scale
       })
     })
-  }, [])
+  }, [context])
 
   return (
     <TransformWrapper
