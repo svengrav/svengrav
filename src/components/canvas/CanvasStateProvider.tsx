@@ -181,7 +181,6 @@ interface CanvasStateProvider {
  */
 export const CanvasStateProvider = ({ children, artwork, size }: CanvasStateProvider) => {
   const context = useProviderContext(artwork, size);
-  console.log("contex 123t", context.getContext().transformation.layer);
   return (
     <Canvas.Provider value={context} key={artwork.id}>
       <CanvasWrapper>{children}</CanvasWrapper>
