@@ -1,20 +1,18 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Scalable from '@components/base/Scalable'
-import { usePathAnimation } from '../../hooks/usePathAnimation'
+import { RouteAnimationContext, usePathAnimation } from '../../hooks/usePathAnimation'
 import { Expedition } from './SouthPoleData'
-import { fetchSVG } from '../Spital/svgUtils'
-import svgUtils from '@core/svgUtils'
+import { SVGController } from '@core/svgUtils'
+import { southPoleIds } from './SouthPoleMapId'
 
-const SOUTPOLE_SVG = "https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg"
+const SOUTHPOLE_SVG = "https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg"
 const SVG_ID = 'svg-base'
-
-type SouthPoleRouteId = 'cook' | 'belgica' | 'cross' | 'amundsen' | 'scott' | 'nimrod' | 'discovery'
-const routeIds: SouthPoleRouteId[] = ['cook', 'belgica', 'cross', 'amundsen', 'scott', 'nimrod', 'discovery']
+const { id: mapIds, generators } = southPoleIds
 
 export interface SouthPoleMapController {
   setVisibility?: (id: string, visible: boolean) => void
   onClick?: (id: string) => void
-  startAnimation?: (id: SouthPoleRouteId) => void
+  startAnimation?: (id: string) => void
 }
 
 /**
@@ -26,79 +24,86 @@ export interface SouthPoleMapController {
  * @returns {JSX.Element} A scalable SVG map with animated expedition routes.
  */
 export const SouthPoleMap = ({ expedition, controller }: { expedition: Expedition[], controller: SouthPoleMapController }) => {
-
-  //setup
   const baseRef = useRef<HTMLDivElement>(null)
-  const pathAnimations: any[] = []
+  const expeditionAnimations: RouteAnimationContext[] = []
 
-  const pathOptions = {
+  const antarticCircleAnimation = usePathAnimation("antarticCircleId", SVG_ID, mapIds.antarticCirclePath, {
     pathStyle: {
-      stroke: '#000285',
+      stroke: '#c45355',
       strokeWidth: 4,
+      strokeDasharray: '10 10',
+      fill: 'none'
     },
     tipStyle: {
-      fill: '#000285'
-    }
-  }
-
-  const routeId = (id: string) => `${id}_route`
-  const routeLabel = (id: string) => `${id}_label`
-  const routeCircle = (id: string) => `${id}_circle`
-  const routeBox = (id: string) => `${id}_box`
-  const getBaseSVG = () => baseRef.current?.querySelector(`#${SVG_ID}`) as SVGSVGElement
-
-  expedition.forEach((expedition) => {
-    pathAnimations.push(usePathAnimation(expedition.id, SVG_ID, `${expedition.id}_route`, pathOptions))
+      fill: '#c45355'
+    },
+    speed: 20
   })
 
-  /**
-   * Controller: Sets the visibility of the specified route elements.
-   *
-   * @param {string} id - The ID of the route.
-   * @param {boolean} visible - Whether the route should be visible.
-   */
-  controller.setVisibility = (id: string, visible: boolean) => {
-    const circle = getSVGElement(getBaseSVG(), routeCircle(id))
-    const label = getSVGElement(getBaseSVG(), routeLabel(id))
-    const route = getSVGElement(getBaseSVG(), `${id}_route-path-p-1`)
-    const routeTip = getSVGElement(getBaseSVG(), `${id}_route-path-p-1-tip`)
+  expedition.forEach((expedition) => {
+    expeditionAnimations.push(usePathAnimation(expedition.id, SVG_ID, generators.getRouteId(expedition.id), {
+      pathStyle: {
+        stroke: '#c45355',
+        strokeWidth: 4,
+      },
+      tipStyle: {
+        fill: '#c45355'
+      }
+    }))
+  })
 
-    if (visible) {
-      circle.style.stroke = '#c45355'
-      label.style.fill = '#c45355'
-      circle.style.strokeWidth = '6'
-      route.style.stroke = '#c45355'
-      routeTip.style.fill = '#c45355'
-    } else {
-      circle.style.stroke = '#4b97d1'
-      label.style.fill = '#333'
-      circle.style.strokeWidth = '3'
-      route.style.stroke = '#000285'
-      routeTip.style.fill = '#000285'
-    }
-  }
+  const configureSouthPoleMap = () => createSouthPoleMap(controller).then((svgController) => {
+    let activeExpeditionID = ''
+    baseRef.current?.replaceChildren(svgController.base)
+    expedition.forEach((expedition) => {
+      const routeBoxId = generators.getRouteBoxId(expedition.id)
+      const routeCircleId = generators.getRouteCircleId(expedition.id)
+      const routeLabelId = generators.getRouteLabelId(expedition.id)
+      const routeStartId = generators.getRouteStartId(expedition.id)
 
-  controller.startAnimation = (id: SouthPoleRouteId) => {    
-    const expedition = pathAnimations.find((expedition) => expedition.id === id)
-    expedition.startAnimation()
-  }
+      const routeLabelStyle = { fill: '#333', }
+      const routeCircleStyle = { stroke: '#2b8af7', strokeWidth: 3, fill: 'none' }
+      const routeStartStyle = { fill: '#333', strokeWidth: 3 }
+      const routeBoxStyle = { fill: '#ffffff00', cursor: 'pointer' }
+
+      svgController.applyStyle(routeLabelId, routeLabelStyle)
+      svgController.applyStyle(routeCircleId, routeCircleStyle)
+      svgController.applyStyle(routeStartId, routeStartStyle)
+      svgController.applyStyle(routeBoxId, routeBoxStyle)
+
+      svgController.getElement(routeBoxId).onclick = () => controller.onClick && controller.onClick(expedition.id)
+
+      svgController.addOnHover(routeBoxId, {
+        onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#c45355' }) },
+        onLeave: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#333' }) }
+      })
+
+      controller.setVisibility = (id: string, visible: boolean) => {
+        if (visible) {
+          activeExpeditionID = id
+          svgController?.applyStyle(`${id}_circle`, { stroke: '#c45355' })
+          svgController?.applyStyle(`${id}_label`, { fill: '#c45355' })
+        } else {
+          svgController?.applyStyle(`${id}_circle`, { stroke: '#2b8af7' })
+          svgController?.applyStyle(`${id}_label`, { fill: '#333' })
+        }
+      }
+
+      controller.startAnimation = (id: string) => {
+        const expedition = expeditionAnimations.find((expedition) => expedition.id === id)
+        if(expedition) expedition.startAnimation()
+      }
+    })
+  }).then(() => {
+    antarticCircleAnimation.startAnimation()
+    expeditionAnimations.forEach((expedition) => {
+      expedition.startAnimation()
+    })
+  })
 
   useEffect(() => {
-    getSouthPoleSVG().then((svg) => {
-      if (!getBaseSVG()) {
-        baseRef.current?.appendChild(svg)
-      }
-      expedition.forEach((expedition) => {
-        getSVGElement(svg, routeId(expedition.id)).style.stroke = 'none'
-        getSVGElement(svg, routeBox(expedition.id)).onclick = () => controller.onClick && controller.onClick(expedition.id)
-      })
-
-    }).then(() => {
-      pathAnimations.forEach((expedition) => {
-        expedition.startAnimation()
-      })
-    })
-  }, [])
+    configureSouthPoleMap()
+  }, [baseRef.current])
 
   return (
     <Scalable width={3400} height={2600}>
@@ -109,54 +114,32 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 export default SouthPoleMap
 //#region privates
 
-const getSouthPoleSVG = async () => {
-  return await fetchSVG(SOUTPOLE_SVG)
-    .then((svgMap) => {
-      // this is impotant to avoid conflicts with other SVGs in the page
-      svgMap.id = SVG_ID
+const createSouthPoleMap = async (mapController: SouthPoleMapController) => {
+  return await SVGController.createFromUrl(SOUTHPOLE_SVG, SVG_ID, Object.values(mapIds))
+    .then((controller) => {
 
-      const textLabels = getSVGElement(svgMap, 'text')
-      textLabels.style.fill = '#333'
+      controller.applyStyle(mapIds.captionTitle, { fill: '#333' })
+      controller.applyStyle(mapIds.captionDescription, { fill: '#333' })
+
+      controller.applyStyle(mapIds.frame, { fill: '#ffffff00' })
+      controller.applyStyle(mapIds.antarticSurface, { stroke: '#213c58f6', fill: 'none' })
+      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#425364f6', fill: 'none' })
+
+      controller.applyStyle(mapIds.antarticText, { fill: '#333' })
+      controller.applyStyle(mapIds.antarticCircleText, { fill: '#333' })
+      controller.applyStyle(mapIds.antarticCircle, { fill: 'none' })
 
 
-      routeIds.forEach((id) => {
-        try {
-          getSVGElement(svgMap, `${id}_route`).style.stroke = '#4b97d1'
-          getSVGElement(svgMap, `${id}_circle`).style.stroke = '#4b97d1'
-          getSVGElement(svgMap, `${id}_circle`).style.strokeWidth = '3'
-          getSVGElement(svgMap, `${id}_circle`).style.fill = 'none'
-          getSVGElement(svgMap, `${id}_box`).style.fill = 'rgba(255, 0, 0, 0.001)'
-          getSVGElement(svgMap, `${id}_box`).style.cursor = 'pointer'
+      controller.applyStyle(mapIds.antarticMountErebusLabel, { fill: '#333' })
+      controller.applyStyle(mapIds.antarticMountVinsonLabel, { fill: '#333' })
+      controller.applyStyle(mapIds.antarticMountErebusIcon, { fill: '#333' })
+      controller.applyStyle(mapIds.antarticMountVinsonIcon, { fill: '#333' })
 
-        const routeBox = getSVGElement(svgMap, `${id}_box`);
-      svgUtils.addOnHover(routeBox, {
-            onEnter: () => { getSVGElement(svgMap, `${id}_label`).style.fill = '#c45355' },
-            onLeave: () => { getSVGElement(svgMap, `${id}_label`).style.fill = '#333' }
-          })
 
-        } catch {
-          console.warn(`Could not find element ${id}`)
-        }
-      })
-      try {
-        getSVGElement(svgMap, `polar_circle`).style.fill = 'none'
-        getSVGElement(svgMap, `polar_circle`).style.stroke = '#4b97d1'
-        getSVGElement(svgMap, `polar_circle`).style.strokeWidth = '5'
-        getSVGElement(svgMap, `frame`).style.fill = 'none'
-        getSVGElement(svgMap, `outer_circle`).style.fill = 'none'
-        getSVGElement(svgMap, `outer_circle`).style.stroke = 'none'
-        getSVGElement(svgMap, `outer_circle`).style.strokeWidth = '5'
-        getSVGElement(svgMap, `frame`).style.fill = 'none'
-      } catch {
-        console.warn(`Could not find element a svg element.`)
-      }
-      return svgMap
+      return controller
     }).catch((error) => {
       throw (`Error loading SVG: ${error}`)
     })
 }
 
-const getSVGElement = (svg: SVGSVGElement, id: string): SVGElement => {
-  return svg.querySelectorAll(`#${id}`)[0] as SVGElement
-}
 //#endregion

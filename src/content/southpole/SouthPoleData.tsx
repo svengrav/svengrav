@@ -55,7 +55,10 @@ export const title = {
   </>
 }
 
-export const description = "The South Pole was first reached by Norwegian explorer Roald Amundsen and his team on December 14, 1911, during the Fram Expedition. Amundsen’s team arrived ahead of British explorer Robert Falcon Scott, who reached the pole on January 17, 1912. Tragically, Scott and his entire team perished on the return journey due to harsh conditions and a lack of supplies."
+export const description = <p>The South Pole was first reached by Norwegian explorer <b>Roald Amundsen</b> and his team on December 14, 1911, 
+during the Fram Expedition. Amundsen’s team arrived ahead of British explorer <b>Robert Falcon Scott</b>, who reached the pole on January 17, 1912. 
+Tragically, Scott and his entire team perished on the return journey due to harsh conditions and a lack of supplies.
+</p>
 
 /**
  * A list of historical Antarctic expeditions with detailed information.

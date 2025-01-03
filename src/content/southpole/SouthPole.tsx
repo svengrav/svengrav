@@ -72,13 +72,13 @@ export const southPole: SouthpoleMap = {
     {
       id: 'map',
       name: 'South Pole',
-      description: 'The seven most important voyages of discovery to the South Pole.',
+      description: 'The watercolor-style basemap of Antarctica.',
       inner: <ImageLoader src={resources.base.src} />
     },
     {
       id: 'base',
       name: 'Watercolor Basemap',
-      description: 'The watercolor-style basemap of Antarctica.',
+      description: 'The seven most important voyages of discovery to the South Pole.',
       inner: <SouthPoleMap expedition={expeditions} controller={controller} />
     },
     {
@@ -95,9 +95,9 @@ export const southPole: SouthpoleMap = {
  * Represents the page description for the South Pole page.
  */
 export const southPolePage: PageDescription = {
-  title: 'The Race to the South Pole',
-  id: 'southpole',
-  description: 'The seven most important voyages of discovery to the South Pole.',
+  title: southPole.name,
+  id: southPole.id,
+  description: southPole.description,
   tags: ['map'],
   date: date(12, 10, 2024),
   thumbnail: <PageThumbnail src={resources.thumbnail.src} />,

@@ -33,6 +33,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
       return
     }
 
+    leftSidepanel.current?.scrollTo(id)
     map.expeditions.forEach((expedition) => {
       mapController.setVisibility!(expedition.id, false)
     })
@@ -70,6 +71,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
         {
           map.expeditions.map((expedition) => (
             <InformationSection
+              id={activeExpedition.id}
               key={expedition.id + activeExpedition.id}
               title={
                 <InformationTitle label={expedition.name} year={expedition.year} />
@@ -97,20 +99,20 @@ const InformationTitle = ({ label, year }: InformationTitleProps) => {
   )
 }
 
-type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void }
-const InformationSection = ({ title, children, open = false, onClick }: InformationSectionProps) => {
+type InformationSectionProps = { title: ReactNode, children: ReactNode, open?: boolean, onClick?: () => void, id?: string }
+const InformationSection = ({ title, children, open = false, onClick, id }: InformationSectionProps) => {
   return (
-    <>
+    <div id={id}>
       <Disclosure key={title?.toString()} defaultOpen={open}>
         <DisclosureButton className={classNames("flex w-full justify-between py-2 text-white hover:text-rose-400", {
-              "!text-rose-400": open
-          })} onClick={onClick}>
+          "!text-rose-400": open
+        })} onClick={onClick}>
           {title}
           <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
         </DisclosureButton>
         <DisclosurePanel className="text-gray-300/80">{children}</DisclosurePanel>
       </Disclosure>
-    </>
+    </div>
   )
 }
 
