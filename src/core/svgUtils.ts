@@ -51,7 +51,7 @@ function addSVG(id: string, svg: SVGSVGElement): void {
  * Loads an SVG from a given URI, optionally sets an id and style properties,
  * and returns the parsed SVG element.
  */
-export async function loadSVG(
+export async function fetchSVG(
   uri: string,
   id?: string,
   style?: CSSProperties
@@ -82,6 +82,18 @@ export async function loadSVG(
   return svg;
 }
 
+const applyStyle = (svg: SVGElement, style: CSSProperties) => {
+  Object.assign(svg.style, style);
+
+}
+
+const tryApplyStyle = (svg?: SVGElement, style?: CSSProperties) => {
+  if(svg && style)
+    Object.assign(svg.style, style);
+}
+
+
+
 /**
  * Recursively removes empty text nodes (whitespace) from an SVG/HTML element.
  */
@@ -100,11 +112,29 @@ export function removeEmptyTextNodes(element: Node): void {
 }
 
 const svgUtils = {
+  applyStyle,
+  tryApplyStyle,
   addOnHover,
   getElement,
   getElements,
   addSVG,
-  loadSVG,
+  loadSVG: fetchSVG,
   removeEmptyTextNodes,
 }
 export default svgUtils;
+
+
+class SvgBox {
+  svg: SVGElement;
+
+  constructor(id: string, svgbase: SVGAElement) {
+    this.svg =  svgbase.querySelector(`#${id}`) as SVGElement;
+  }
+
+  applyStyle(style: CSSProperties) : SvgBox {
+    Object.assign({...this.svg.style, style})
+
+    return this;
+  }
+
+}

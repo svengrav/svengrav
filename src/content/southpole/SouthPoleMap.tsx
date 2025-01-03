@@ -11,6 +11,11 @@ const SVG_ID = 'svg-base'
 type SouthPoleRouteId = 'cook' | 'belgica' | 'cross' | 'amundsen' | 'scott' | 'nimrod' | 'discovery'
 const routeIds: SouthPoleRouteId[] = ['cook', 'belgica', 'cross', 'amundsen', 'scott', 'nimrod', 'discovery']
 
+const routeId = (id: string) => `${id}_route`
+const routeLabel = (id: string) => `${id}_label`
+const routeCircle = (id: string) => `${id}_circle`
+const routeBox = (id: string) => `${id}_box`
+
 export interface SouthPoleMapController {
   setVisibility?: (id: string, visible: boolean) => void
   onClick?: (id: string) => void
@@ -41,10 +46,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
     }
   }
 
-  const routeId = (id: string) => `${id}_route`
-  const routeLabel = (id: string) => `${id}_label`
-  const routeCircle = (id: string) => `${id}_circle`
-  const routeBox = (id: string) => `${id}_box`
+
   const getBaseSVG = () => baseRef.current?.querySelector(`#${SVG_ID}`) as SVGSVGElement
 
   expedition.forEach((expedition) => {
@@ -78,7 +80,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
     }
   }
 
-  controller.startAnimation = (id: SouthPoleRouteId) => {    
+  controller.startAnimation = (id: SouthPoleRouteId) => {
     const expedition = pathAnimations.find((expedition) => expedition.id === id)
     expedition.startAnimation()
   }
@@ -118,18 +120,17 @@ const getSouthPoleSVG = async () => {
       const textLabels = getSVGElement(svgMap, 'text')
       textLabels.style.fill = '#333'
 
-
       routeIds.forEach((id) => {
         try {
-          getSVGElement(svgMap, `${id}_route`).style.stroke = '#4b97d1'
-          getSVGElement(svgMap, `${id}_circle`).style.stroke = '#4b97d1'
-          getSVGElement(svgMap, `${id}_circle`).style.strokeWidth = '3'
-          getSVGElement(svgMap, `${id}_circle`).style.fill = 'none'
-          getSVGElement(svgMap, `${id}_box`).style.fill = 'rgba(255, 0, 0, 0.001)'
-          getSVGElement(svgMap, `${id}_box`).style.cursor = 'pointer'
+          getSVGElement(svgMap, routeId(id)).style.stroke = 'rgb(0,0,0)'
+          getSVGElement(svgMap, routeCircle(id)).style.stroke = '#4b97d1'
+          getSVGElement(svgMap, routeCircle(id)).style.strokeWidth = '3'
+          getSVGElement(svgMap, routeCircle(id)).style.fill = 'none'
+          getSVGElement(svgMap, routeBox(id)).style.fill = 'rgba(255, 0, 0, 0.001)'
+          getSVGElement(svgMap, routeBox(id)).style.cursor = 'pointer'
 
-        const routeBox = getSVGElement(svgMap, `${id}_box`);
-      svgUtils.addOnHover(routeBox, {
+          const routeBox2 = getSVGElement(svgMap, `${id}_box`)
+          svgUtils.addOnHover(routeBox2, {
             onEnter: () => { getSVGElement(svgMap, `${id}_label`).style.fill = '#c45355' },
             onLeave: () => { getSVGElement(svgMap, `${id}_label`).style.fill = '#333' }
           })
@@ -140,7 +141,8 @@ const getSouthPoleSVG = async () => {
       })
       try {
         getSVGElement(svgMap, `polar_circle`).style.fill = 'none'
-        getSVGElement(svgMap, `polar_circle`).style.stroke = '#4b97d1'
+        getSVGElement(svgMap, `polar_circle`).style.stroke = '#904bd1'
+        getSVGElement(svgMap, `polar_circle`).style.strokeDasharray = '15,10'
         getSVGElement(svgMap, `polar_circle`).style.strokeWidth = '5'
         getSVGElement(svgMap, `frame`).style.fill = 'none'
         getSVGElement(svgMap, `outer_circle`).style.fill = 'none'
