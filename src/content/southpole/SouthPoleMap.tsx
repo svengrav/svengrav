@@ -29,9 +29,9 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 
   const antarticCircleAnimation = usePathAnimation("antarticCircleId", SVG_ID, mapIds.antarticCirclePath, {
     pathStyle: {
-      stroke: '#c45355',
-      strokeWidth: 4,
-      strokeDasharray: '10 10',
+      stroke: '#1dcaff',
+      strokeWidth: 6,
+      strokeDasharray: '20 10',
       fill: 'none'
     },
     tipStyle: {
@@ -43,16 +43,17 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   expedition.forEach((expedition) => {
     expeditionAnimations.push(usePathAnimation(expedition.id, SVG_ID, generators.getRouteId(expedition.id), {
       pathStyle: {
-        stroke: '#c45355',
-        strokeWidth: 4,
+        stroke: '#f81b5d',
+        strokeWidth: 5,
       },
       tipStyle: {
-        fill: '#c45355'
+        fill: '#ff5052'
+        
       }
     }))
   })
 
-  const configureSouthPoleMap = () => createSouthPoleMap(controller).then((svgController) => {
+  const configureSouthPoleMap = () => createSouthPoleMap().then((svgController) => {
     let activeExpeditionID = ''
     baseRef.current?.replaceChildren(svgController.base)
     expedition.forEach((expedition) => {
@@ -61,9 +62,9 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       const routeLabelId = generators.getRouteLabelId(expedition.id)
       const routeStartId = generators.getRouteStartId(expedition.id)
 
-      const routeLabelStyle = { fill: '#333', }
-      const routeCircleStyle = { stroke: '#2b8af7', strokeWidth: 3, fill: 'none' }
-      const routeStartStyle = { fill: '#333', strokeWidth: 3 }
+      const routeLabelStyle = { fill: '#f1f1f1', }
+      const routeCircleStyle = { stroke: '#1997ff', strokeWidth: 4, fill: 'none' }
+      const routeStartStyle = { fill: '#333', strokeWidth: 5 }
       const routeBoxStyle = { fill: '#ffffff00', cursor: 'pointer' }
 
       svgController.applyStyle(routeLabelId, routeLabelStyle)
@@ -74,15 +75,15 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       svgController.getElement(routeBoxId).onclick = () => controller.onClick && controller.onClick(expedition.id)
 
       svgController.addOnHover(routeBoxId, {
-        onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#c45355' }) },
-        onLeave: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#333' }) }
+        onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#ff5052' }) },
+        onLeave: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#f1f1f1' }) }
       })
 
       controller.setVisibility = (id: string, visible: boolean) => {
         if (visible) {
           activeExpeditionID = id
-          svgController?.applyStyle(`${id}_circle`, { stroke: '#c45355' })
-          svgController?.applyStyle(`${id}_label`, { fill: '#c45355' })
+          svgController?.applyStyle(`${id}_circle`, { stroke: '#f81b5d' })
+          svgController?.applyStyle(`${id}_label`, { fill: '#ff5052' })
         } else {
           svgController?.applyStyle(`${id}_circle`, { stroke: '#2b8af7' })
           svgController?.applyStyle(`${id}_label`, { fill: '#333' })
@@ -114,27 +115,24 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 export default SouthPoleMap
 //#region privates
 
-const createSouthPoleMap = async (mapController: SouthPoleMapController) => {
+const createSouthPoleMap = async () => {
   return await SVGController.createFromUrl(SOUTHPOLE_SVG, SVG_ID, Object.values(mapIds))
     .then((controller) => {
 
-      controller.applyStyle(mapIds.captionTitle, { fill: '#333' })
-      controller.applyStyle(mapIds.captionDescription, { fill: '#333' })
+      controller.applyStyle(mapIds.captionTitle, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.captionDescription, { fill: '#f1f1f1' })
 
       controller.applyStyle(mapIds.frame, { fill: '#ffffff00' })
       controller.applyStyle(mapIds.antarticSurface, { stroke: '#213c58f6', fill: 'none' })
       controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#425364f6', fill: 'none' })
 
-      controller.applyStyle(mapIds.antarticText, { fill: '#333' })
-      controller.applyStyle(mapIds.antarticCircleText, { fill: '#333' })
-      controller.applyStyle(mapIds.antarticCircle, { fill: 'none' })
+      controller.applyStyle(mapIds.elementsItemsTextPole, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsCircleText, { fill: '#f1f1f1' })
 
-
-      controller.applyStyle(mapIds.antarticMountErebusLabel, { fill: '#333' })
-      controller.applyStyle(mapIds.antarticMountVinsonLabel, { fill: '#333' })
-      controller.applyStyle(mapIds.antarticMountErebusIcon, { fill: '#333' })
-      controller.applyStyle(mapIds.antarticMountVinsonIcon, { fill: '#333' })
-
+      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsMountVinsonLabel, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsMountErebusIcon, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#f1f1f1' })
 
       return controller
     }).catch((error) => {
