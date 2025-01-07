@@ -244,7 +244,7 @@ export const SouthPoleSummary = () => <div className="flex flex-col w-full">
     </p>
     <ImageLoader src={resources.scott.src} />
     <p className="text-gray-300 text-sm mb-4">
-      The photo shows Scott's expedition to the South Pole
+      The photo shows Scott's expedition to the South Pole. <br/> (Lawrence Oates, Henry Bowers, Robert Falcon Scott, Edward Wilson, Edgar Evans)
     </p>
     <p className="mb-4 max-w-lg">
       It culminates with the famed rivalry between Roald Amundsen’s Norwegian team and Robert Falcon Scott’s British Terra Nova Expedition.

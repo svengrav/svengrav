@@ -86,7 +86,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
           svgController?.applyStyle(`${id}_label`, { fill: '#ff5052' })
         } else {
           svgController?.applyStyle(`${id}_circle`, { stroke: '#2b8af7' })
-          svgController?.applyStyle(`${id}_label`, { fill: '#333' })
+          svgController?.applyStyle(`${id}_label`, { fill: '#f1f1f1' })
         }
       }
 
@@ -123,16 +123,21 @@ const createSouthPoleMap = async () => {
       controller.applyStyle(mapIds.captionDescription, { fill: '#f1f1f1' })
 
       controller.applyStyle(mapIds.frame, { fill: '#ffffff00' })
-      controller.applyStyle(mapIds.antarticSurface, { stroke: '#213c58f6', fill: 'none' })
-      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#425364f6', fill: 'none' })
+      controller.applyStyle(mapIds.antarticSurface, { stroke: '#41d8ec', fill: 'none', strokeWidth: '4' })
+      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#f838e8', fill: 'none', strokeWidth: '4' })
 
-      controller.applyStyle(mapIds.elementsItemsTextPole, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsItemsTextDeg0, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsItemsTextDeg90, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsItemsText2600, { fill: '#333' })
+      controller.applyStyle(mapIds.elementsItemsTextPole, { fill: '#333' })
+
+
       controller.applyStyle(mapIds.elementsCircleText, { fill: '#f1f1f1' })
 
-      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.elementsMountVinsonLabel, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.elementsMountErebusIcon, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#333' })
+      controller.applyStyle(mapIds.elementsMountVinsonLabel, { fill: '#333' })
+      controller.applyStyle(mapIds.elementsMountErebusIcon, { fill: '#333' })
+      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#333' })
 
       return controller
     }).catch((error) => {
