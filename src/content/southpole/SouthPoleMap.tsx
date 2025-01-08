@@ -133,6 +133,9 @@ const createSouthPoleMap = async () => {
 
 
       controller.applyStyle(mapIds.elementsCircleText, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsTextWeddellSea, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsTextRossIce, { fill: '#333' })
+      controller.applyStyle(mapIds.elementsTextRossSea, { fill: '#f1f1f1' })
 
       controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#333' })
       controller.applyStyle(mapIds.elementsMountVinsonLabel, { fill: '#333' })

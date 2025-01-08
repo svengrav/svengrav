@@ -99,8 +99,6 @@ const useProviderContext = (artwork: Artwork, canvasSize: Size): CanvasContext =
     if (progress !== undefined) {
       setContextState(canvasTransformation.setLayer(context, artwork.layer.length, { progress }));
     } else if (index !== undefined) {
-      console.log("progress", index);
-
       const finalState = canvasTransformation.setLayer(context, artwork.layer.length, { index });
       const currentProgress = context.transformation.layer.progress;
 

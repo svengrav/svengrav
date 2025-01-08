@@ -14,7 +14,6 @@ const addOnHover = (svg: SVGElement, hoverEvent: OnHoverEvent) => {
 
   if(typeof svg === 'string') { 
     svg = document.getElementById(`#${svg}`) as unknown as SVGElement;
-    console.log(svg);
   }
 
   svg.addEventListener("mouseenter", (event: MouseEvent) => {
@@ -163,7 +162,6 @@ export class SVGController {
   }
 
   private constructor(base: SVGSVGElement, ids: string[]) {
-    console.log(base)
     removeAllStylesFromSvg(base);
     this.base = base;
     ids = Array.from(new Set(ids));
