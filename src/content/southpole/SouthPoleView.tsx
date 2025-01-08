@@ -94,7 +94,7 @@ const InformationTitle = ({ label, year }: InformationTitleProps) => {
   return (
     <div className="flex w-full justify-between">
       <h1>{label}</h1>
-      <p className=" text-gray-500 mr-2">{year}</p>
+      <p className=" text-gray-400 mr-2">{year}</p>
     </div>
   )
 }
@@ -104,8 +104,8 @@ const InformationSection = ({ title, children, open = false, onClick, id }: Info
   return (
     <div id={id}>
       <Disclosure key={title?.toString()} defaultOpen={open}>
-        <DisclosureButton className={classNames("flex w-full justify-between py-2 text-white hover:text-rose-400", {
-          "!text-rose-400": open
+        <DisclosureButton className={classNames("flex w-full justify-between py-2 text-white hover:text-rose-500", {
+          "!text-rose-500": open
         })} onClick={onClick}>
           {title}
           <Icon primary={ChevronDownIcon} secondary={ChevronUpIcon} active={open} />
@@ -156,5 +156,5 @@ const ProjectInformationOverlay = () => {
       ),
     })
   }
-  return <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Projekt" className="text-gray-200" />
+  return <Icon onClick={showOverlay} primary={InformationCircleIcon} label="Project" className="text-gray-200 hover:text-rose-500" />
 }
