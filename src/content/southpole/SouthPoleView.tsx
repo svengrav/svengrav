@@ -63,11 +63,11 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
       >
         <ProjectTitle />
         <ProjectInformationOverlay />
-        <p className="py-4">
+        <div className="py-4">
           {description}
-        </p>
+        </div>
         {
-          map.expeditions.map((expedition) => <>
+          map.expeditions.map((expedition) => 
 
             <InformationSection
               id={activeExpedition.id}
@@ -93,7 +93,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
               {expedition.description}
             </InformationSection>
             
-          </>
+       
           )}
       </PagePanel>
       <Canvas artwork={map} />
