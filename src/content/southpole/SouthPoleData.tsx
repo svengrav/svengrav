@@ -4,9 +4,10 @@ export interface Expedition {
   id: string
   name: string
   year: string
+  thumbnail?: string
   position: {
-    latitude: string
-    longitude: string
+    latitude: number
+    longitude: number
   }
   route: {
     start: [number, number],
@@ -35,7 +36,28 @@ export const resources = {
   },
   'scott': {
     src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott.jpg'
-  }
+  },
+  'beligcaThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-beligca-thumb.png'
+  },
+  'scottThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-scott-thumb.png'
+  },
+  'discoveryThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-discovery-thumb.png'
+  },
+  'crossThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-cross-thumb.png'
+  },
+  'nimrodThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-nimrod-thumb.png'
+  },
+  'amundsenThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-amundsen-thumb.png'
+  },
+  'cookThumb': {
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-cook-thumb.png'
+  },
 }
 
 /**
@@ -86,9 +108,10 @@ export const expeditions: Expedition[] = [
     id: 'scott',
     name: "Scott's Terra-Nova-Expedition",
     year: "1910 – 1913",
+    thumbnail: resources.scottThumb.src,
     position: {
-      latitude: "-90.0000",
-      longitude: "0.0000"
+      latitude: -90.0000,
+      longitude: 0.0000
     },
     route: {
       start: [2660, 738],
@@ -106,9 +129,10 @@ export const expeditions: Expedition[] = [
     id: 'amundsen',
     name: "Amundsen's Fram-Expedition",
     year: "1910 – 1912",
+    thumbnail: resources.amundsenThumb.src,
     position: {
-      latitude: "-90.0000",
-      longitude: "0.0000"
+      latitude: -90.0000,
+      longitude: 0.0000
     },
     display: {
       x: 2810,
@@ -126,9 +150,10 @@ export const expeditions: Expedition[] = [
     id: 'nimrod',
     name: "Nimrod-Expedition",
     year: "1907 – 1909",
+    thumbnail: resources.nimrodThumb.src,
     position: {
-      latitude: "-88.2300",
-      longitude: "162.0000"
+      latitude: -88.2300,
+      longitude: 162.0000
     },
     display: {
       x: 2867,
@@ -146,9 +171,10 @@ export const expeditions: Expedition[] = [
     id: 'discovery',
     name: "Discovery-Expedition",
     year: "1901 – 1904",
+    thumbnail: resources.discoveryThumb.src,
     position: {
-      latitude: "-82.1700",
-      longitude: "164.0000"
+      latitude: -82.1700,
+      longitude: 164.0000
     },
     display: {
       x: 2884,
@@ -166,9 +192,10 @@ export const expeditions: Expedition[] = [
     id: 'cross',
     name: "Southern-Cross-Expedition",
     year: "1898 – 1900",
+    thumbnail: resources.crossThumb.src,
     position: {
-      latitude: "-78.5000",
-      longitude: "163.0000"
+      latitude: -78.5000,
+      longitude: 163.0000
     },
     display: {
       x: 2865,
@@ -186,9 +213,10 @@ export const expeditions: Expedition[] = [
     id: 'belgica',
     name: "Belgica-Expedition",
     year: "1897 – 1899",
+    thumbnail: resources.beligcaThumb.src,
     position: {
-      latitude: "-70.5000",
-      longitude: "85.0000"
+      latitude: -70.5000,
+      longitude: 85.0000
     },
     display: {
       x: 2815,
@@ -206,9 +234,10 @@ export const expeditions: Expedition[] = [
     id: 'cook',
     name: "James Cook",
     year: "1772 – 1775",
+    thumbnail: resources.cookThumb.src,
     position: {
-      latitude: "-71.0000",
-      longitude: "106.9000"
+      latitude: -71.0000,
+      longitude: 106.9000
     },
     display: {
       x: 2735,

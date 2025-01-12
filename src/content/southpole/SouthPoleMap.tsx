@@ -35,7 +35,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       fill: 'none'
     },
     tipStyle: {
-      fill: '#c45355'
+      fill: '#1dcaff'
     },
     speed: 20
   })
@@ -45,6 +45,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       pathStyle: {
         stroke: '#f81b5d',
         strokeWidth: 5,
+        strokeDasharray: '40 5',
       },
       tipStyle: {
         fill: '#ff5052'
@@ -75,7 +76,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       svgController.getElement(routeBoxId).onclick = () => controller.onClick && controller.onClick(expedition.id)
 
       svgController.addOnHover(routeBoxId, {
-        onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#ff5052' }) },
+        onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#f81b5d' }) },
         onLeave: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#f1f1f1' }) }
       })
 
@@ -83,7 +84,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
         if (visible) {
           activeExpeditionID = id
           svgController?.applyStyle(`${id}_circle`, { stroke: '#f81b5d' })
-          svgController?.applyStyle(`${id}_label`, { fill: '#ff5052' })
+          svgController?.applyStyle(`${id}_label`, { fill: '#f81b5d' })
         } else {
           svgController?.applyStyle(`${id}_circle`, { stroke: '#2b8af7' })
           svgController?.applyStyle(`${id}_label`, { fill: '#f1f1f1' })
@@ -123,8 +124,8 @@ const createSouthPoleMap = async () => {
       controller.applyStyle(mapIds.captionDescription, { fill: '#f1f1f1' })
 
       controller.applyStyle(mapIds.frame, { fill: '#ffffff00' })
-      controller.applyStyle(mapIds.antarticSurface, { stroke: '#41d8ec', fill: 'none', strokeWidth: '4' })
-      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#f838e8', fill: 'none', strokeWidth: '4' })
+      controller.applyStyle(mapIds.antarticSurface, { stroke: '#ffffff', fill: 'none', strokeWidth: '4' })
+      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#ffffff', fill: 'none', strokeWidth: '4' })
 
       controller.applyStyle(mapIds.elementsItemsTextDeg0, { fill: '#f1f1f1' })
       controller.applyStyle(mapIds.elementsItemsTextDeg90, { fill: '#f1f1f1' })
