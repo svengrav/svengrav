@@ -26,7 +26,7 @@ export interface MapPosition {
 
 export const resources = {
   'base': {
-    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base2.jpg'
+    src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-base.png'
   },
   'thumbnail':{
     src: 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole-thumbnail.jpg'

@@ -76,7 +76,7 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
               title={
                 <div className="w-full flex flex-row items-center">
                   <div>
-                    <img src={expedition.thumbnail} className="rounded-md h-8 w-8 mr-4 hover:animate-pulse"/>
+                    <img src={expedition.thumbnail} className="rounded-md h-10 w-10 mr-5 hover:animate-pulse"/>
                   </div>
                   <div className="flex flex-col w-full text-left">
                     <h1 className="font-semibold">{expedition.name}</h1>
@@ -90,10 +90,11 @@ export default function SouthPoleView({ map, inner }: SouthPoleViewProps) {
               open={activeExpedition.id === expedition.id}
               onClick={() => setActiveSection(expedition.id)}
             >
+              <div className="border-b border-gray-700 pb-4">
               {expedition.description}
+              </div>
+              
             </InformationSection>
-            
-       
           )}
       </PagePanel>
       <Canvas artwork={map} />

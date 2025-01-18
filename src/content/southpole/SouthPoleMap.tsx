@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { startTransition, useEffect, useMemo, useRef, useState } from 'react'
 import Scalable from '@components/base/Scalable'
 import { RouteAnimationContext, usePathAnimation } from '../../hooks/usePathAnimation'
 import { Expedition } from './SouthPoleData'
@@ -23,14 +23,16 @@ export interface SouthPoleMapController {
  *
  * @returns {JSX.Element} A scalable SVG map with animated expedition routes.
  */
+
 export const SouthPoleMap = ({ expedition, controller }: { expedition: Expedition[], controller: SouthPoleMapController }) => {
   const baseRef = useRef<HTMLDivElement>(null)
+  const didRunRef  = useRef<boolean>(false)
   const expeditionAnimations: RouteAnimationContext[] = []
 
   const antarticCircleAnimation = usePathAnimation("antarticCircleId", SVG_ID, mapIds.antarticCirclePath, {
     pathStyle: {
       stroke: '#1dcaff',
-      strokeWidth: 6,
+      strokeWidth: 5,
       strokeDasharray: '20 10',
       fill: 'none'
     },
@@ -43,9 +45,8 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   expedition.forEach((expedition) => {
     expeditionAnimations.push(usePathAnimation(expedition.id, SVG_ID, generators.getRouteId(expedition.id), {
       pathStyle: {
-        stroke: '#f81b5d',
-        strokeWidth: 5,
-        strokeDasharray: '40 5',
+        stroke: '#ff5052',
+        strokeWidth: 4,
       },
       tipStyle: {
         fill: '#ff5052'
@@ -56,6 +57,10 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 
   const configureSouthPoleMap = () => createSouthPoleMap().then((svgController) => {
     let activeExpeditionID = ''
+    // 1. Anfangszustand setzen
+    svgController.base.style.opacity = '0';
+    svgController.base.style.transition = 'opacity 2s ease';
+
     baseRef.current?.replaceChildren(svgController.base)
     expedition.forEach((expedition) => {
       const routeBoxId = generators.getRouteBoxId(expedition.id)
@@ -64,8 +69,8 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       const routeStartId = generators.getRouteStartId(expedition.id)
 
       const routeLabelStyle = { fill: '#f1f1f1', }
-      const routeCircleStyle = { stroke: '#1997ff', strokeWidth: 4, fill: 'none' }
-      const routeStartStyle = { fill: '#333', strokeWidth: 5 }
+      const routeCircleStyle = { stroke: '#1997ff', strokeWidth: 3, fill: 'none' }
+      const routeStartStyle = { fill: '#333', strokeWidth: 4}
       const routeBoxStyle = { fill: '#ffffff00', cursor: 'pointer' }
 
       svgController.applyStyle(routeLabelId, routeLabelStyle)
@@ -95,17 +100,23 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
         const expedition = expeditionAnimations.find((expedition) => expedition.id === id)
         if(expedition) expedition.startAnimation()
       }
+
     })
-  }).then(() => {
+    return svgController;
+  }).then((svgController: SVGController) => {
     antarticCircleAnimation.startAnimation()
     expeditionAnimations.forEach((expedition) => {
       expedition.startAnimation()
     })
+    svgController.base.style.opacity = '1';
   })
 
   useEffect(() => {
+    if(didRunRef.current) return; 
+    didRunRef.current = true
+
     configureSouthPoleMap()
-  }, [baseRef.current])
+  }, [])
 
   return (
     <Scalable width={3400} height={2600}>
@@ -124,8 +135,8 @@ const createSouthPoleMap = async () => {
       controller.applyStyle(mapIds.captionDescription, { fill: '#f1f1f1' })
 
       controller.applyStyle(mapIds.frame, { fill: '#ffffff00' })
-      controller.applyStyle(mapIds.antarticSurface, { stroke: '#ffffff', fill: 'none', strokeWidth: '4' })
-      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#ffffff', fill: 'none', strokeWidth: '4' })
+      controller.applyStyle(mapIds.antarticSurface, { stroke: '#030303', fill: 'none', strokeWidth: '1' })
+      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#000000', fill: 'none', strokeWidth: '1' })
 
       controller.applyStyle(mapIds.elementsItemsTextDeg0, { fill: '#f1f1f1' })
       controller.applyStyle(mapIds.elementsItemsTextDeg90, { fill: '#f1f1f1' })
