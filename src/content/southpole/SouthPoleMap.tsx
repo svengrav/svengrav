@@ -24,10 +24,11 @@ export interface SouthPoleMapController {
  * @returns {JSX.Element} A scalable SVG map with animated expedition routes.
  */
 
-export const SouthPoleMap = ({ expedition, controller }: { expedition: Expedition[], controller: SouthPoleMapController }) => {
+export const SouthPoleMap = ({ expedition, controller: mapController }: { expedition: Expedition[], controller: SouthPoleMapController }) => {
   const baseRef = useRef<HTMLDivElement>(null)
   const didRunRef  = useRef<boolean>(false)
   const expeditionAnimations: RouteAnimationContext[] = []
+  const raceState = useRef({ amundsenVisible: false, scottVisible: false })
 
   const antarticCircleAnimation = usePathAnimation("antarticCircleId", SVG_ID, mapIds.antarticCirclePath, {
     pathStyle: {
@@ -43,7 +44,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   })
 
   expedition.forEach((expedition) => {
-    expeditionAnimations.push(usePathAnimation(expedition.id, SVG_ID, generators.getRouteId(expedition.id), {
+    expeditionAnimations.push(usePathAnimation(expedition.id, mapIds.routes, generators.getRouteId(expedition.id), {
       pathStyle: {
         stroke: '#ff5052',
         strokeWidth: 4,
@@ -57,11 +58,95 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
 
   const configureSouthPoleMap = () => createSouthPoleMap().then((svgController) => {
     let activeExpeditionID = ''
-    // 1. Anfangszustand setzen
     svgController.base.style.opacity = '0';
     svgController.base.style.transition = 'opacity 2s ease';
-
     baseRef.current?.replaceChildren(svgController.base)
+
+    //#region setup map controller
+    mapController.setVisibility = (id: string, visible: boolean) => {
+      if (visible) {
+        activeExpeditionID = id
+        svgController?.applyStyle(`${id}_circle`, { stroke: '#f81b5d' })
+        svgController?.applyStyle(`${id}_label`, { fill: '#f81b5d' })
+      } else {
+        svgController?.applyStyle(`${id}_circle`, { stroke: '#2b8af7' })
+        svgController?.applyStyle(`${id}_label`, { fill: '#f1f1f1' })
+      }
+    }
+
+    mapController.startAnimation = (id: string) => {
+      const expedition = expeditionAnimations.find((expedition) => expedition.id === id)
+      if(expedition) expedition.startAnimation()
+    }
+    //#endregion
+
+    //#region setup elements
+    const applyRaceActiveStyle = (id: string) => {
+      svgController.applyStyle(generators.getRaceIconFlagId(id), { fill: '#f81b5d'})
+      svgController.applyStyle(generators.getRacePathId(id), { stroke: '#f81b5d'})
+      svgController.applyStyle(generators.getRaceStartId(id), { fill: '#f81b5d'})
+    }
+
+    const applyRaceDefaultStyle = (id: string) => {
+      svgController.applyStyle(generators.getRaceIconFlagId(id), { fill: '#f1f1f1'})
+      svgController.applyStyle(generators.getRacePathId(id), { stroke: '#7a7a7a'})
+      svgController.applyStyle(generators.getRaceStartId(id), { fill: '#7a7a7a'})
+    }
+    
+    const toggleRaceStyle = (visible: boolean) => {
+      if(visible) {
+        svgController.applyStyle(mapIds.routes, { display: 'none' })
+        svgController.applyStyle(mapIds.raceAmundsenRoutePath, { display: 'block' })
+        svgController.applyStyle(mapIds.raceScottRoutePath, { display: 'block' })
+        svgController.applyStyle(mapIds.raceAmundsenRouteStart, { display: 'block' })
+        svgController.applyStyle(mapIds.raceScottRouteStart, { display: 'block' })
+      } else {
+        svgController.applyStyle(mapIds.routes, { display: 'block' })
+        svgController.applyStyle(mapIds.raceAmundsenRoutePath, { display: 'none' })
+        svgController.applyStyle(mapIds.raceScottRoutePath, { display: 'none' })
+        svgController.applyStyle(mapIds.raceAmundsenRouteStart, { display: 'none' })
+        svgController.applyStyle(mapIds.raceScottRouteStart, { display: 'none' })
+      }
+    }
+    //#endregion
+    
+    svgController.getElement(mapIds.raceScottIconFlagFrame).onclick = () => {
+      if(raceState.current.scottVisible) {
+        raceState.current = { amundsenVisible: false, scottVisible: false }
+        applyRaceDefaultStyle(mapIds.scott)
+        toggleRaceStyle(raceState.current.scottVisible || raceState.current.amundsenVisible)
+      } else {
+        raceState.current = { amundsenVisible: false, scottVisible: true }
+        toggleRaceStyle(true)
+        applyRaceDefaultStyle(mapIds.amundsen)
+        applyRaceActiveStyle(mapIds.scott)
+      }
+   }
+
+    svgController.getElement(mapIds.raceAmundsenIconFlagFrame).onclick = () => {
+      if(raceState.current.amundsenVisible) {
+        raceState.current = { amundsenVisible: false, scottVisible: false }
+        toggleRaceStyle(raceState.current.scottVisible || raceState.current.amundsenVisible)
+        applyRaceDefaultStyle(mapIds.amundsen)
+      } else {
+        raceState.current = { amundsenVisible: true, scottVisible: false }
+        toggleRaceStyle(true)
+        applyRaceActiveStyle(mapIds.amundsen)
+        applyRaceDefaultStyle(mapIds.scott)
+      }
+    }
+
+    svgController.addOnHover(mapIds.raceAmundsenIconFlagFrame, {
+      onEnter: () => { svgController.applyStyle(mapIds.raceAmundsenIconFlag, { fill: '#f81b5d' }) },
+      onLeave: () => { !raceState.current.amundsenVisible && svgController.applyStyle(mapIds.raceAmundsenIconFlag, { fill: '#f1f1f1' }) }
+    })
+    svgController.addOnHover(mapIds.raceScottIconFlagFrame, {
+      onEnter: () => { svgController.applyStyle(mapIds.raceScottIconFlag, { fill: '#f81b5d' }) },
+      onLeave: () => { !raceState.current.scottVisible && svgController.applyStyle(mapIds.raceScottIconFlag, { fill: '#f1f1f1' }) }
+    })
+
+
+    //#region setup expedition routes
     expedition.forEach((expedition) => {
       const routeBoxId = generators.getRouteBoxId(expedition.id)
       const routeCircleId = generators.getRouteCircleId(expedition.id)
@@ -78,30 +163,16 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
       svgController.applyStyle(routeStartId, routeStartStyle)
       svgController.applyStyle(routeBoxId, routeBoxStyle)
 
-      svgController.getElement(routeBoxId).onclick = () => controller.onClick && controller.onClick(expedition.id)
+      svgController.getElement(routeBoxId).onclick = () => mapController.onClick && mapController.onClick(expedition.id)
 
       svgController.addOnHover(routeBoxId, {
         onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#f81b5d' }) },
         onLeave: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#f1f1f1' }) }
       })
 
-      controller.setVisibility = (id: string, visible: boolean) => {
-        if (visible) {
-          activeExpeditionID = id
-          svgController?.applyStyle(`${id}_circle`, { stroke: '#f81b5d' })
-          svgController?.applyStyle(`${id}_label`, { fill: '#f81b5d' })
-        } else {
-          svgController?.applyStyle(`${id}_circle`, { stroke: '#2b8af7' })
-          svgController?.applyStyle(`${id}_label`, { fill: '#f1f1f1' })
-        }
-      }
-
-      controller.startAnimation = (id: string) => {
-        const expedition = expeditionAnimations.find((expedition) => expedition.id === id)
-        if(expedition) expedition.startAnimation()
-      }
-
     })
+    //#endregion
+
     return svgController;
   }).then((svgController: SVGController) => {
     antarticCircleAnimation.startAnimation()
@@ -112,8 +183,8 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   })
 
   useEffect(() => {
-    if(didRunRef.current) return; 
-    didRunRef.current = true
+    // if(didRunRef.current) return; 
+    // didRunRef.current = true
 
     configureSouthPoleMap()
   }, [])
@@ -125,7 +196,7 @@ export const SouthPoleMap = ({ expedition, controller }: { expedition: Expeditio
   )
 }
 export default SouthPoleMap
-//#region privates
+//#region privates  
 
 const createSouthPoleMap = async () => {
   return await SVGController.createFromUrl(SOUTHPOLE_SVG, SVG_ID, Object.values(mapIds))
@@ -143,6 +214,18 @@ const createSouthPoleMap = async () => {
       controller.applyStyle(mapIds.elementsItemsText2600, { fill: '#333' })
       controller.applyStyle(mapIds.elementsItemsTextPole, { fill: '#333' })
 
+      controller.applyStyle(mapIds.raceAmundsenIconFlag, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.raceAmundsenIconFlagFrame, { stroke: '#f1f1f1', strokeWidth: 2, cursor: 'pointer', fill: 'hsla(0, 0%, 0%, 0)'})
+      controller.applyStyle(mapIds.raceAmundsenIconText, { fill: '#f1f1f1', strokeWidth: 2 })
+
+      controller.applyStyle(mapIds.raceScottRoutePath, { stroke: '#7a7a7a', strokeWidth: 5, display: 'none' })
+      controller.applyStyle(mapIds.raceAmundsenRoutePath, { stroke: '#7a7a7a', strokeWidth: 5, display: 'none' })
+      controller.applyStyle(mapIds.raceAmundsenRouteStart, { fill: '#7a7a7a', display: 'none' })
+      controller.applyStyle(mapIds.raceScottRouteStart, { fill: '#7a7a7a', display: 'none' })
+
+      controller.applyStyle(mapIds.raceScottIconFlag, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.raceScottIconFlagFrame, { stroke: '#f1f1f1', strokeWidth: 2, cursor: 'pointer', fill: 'hsla(0, 0%, 0%, 0)' })
+      controller.applyStyle(mapIds.raceScottIconText, { fill: '#f1f1f1', strokeWidth: 2 })
 
       controller.applyStyle(mapIds.elementsCircleText, { fill: '#f1f1f1' })
       controller.applyStyle(mapIds.elementsTextWeddellSea, { fill: '#f1f1f1' })

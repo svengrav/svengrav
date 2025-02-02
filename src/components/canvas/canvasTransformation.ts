@@ -111,7 +111,8 @@ const calculateAllLayerStates = (totalLayers: number, currentState: number): Lay
     const start = i === 0 ? 0 : roundTo((i - 1) * layerSize, 2);
     const end = i === 0 ? 0 : roundTo(i * layerSize, 2);
     const isLayerZeroAndCurrent = currentState === 0 && i === 0;
-    const isCurrentLayer = (currentState > start && currentState <= end) || isLayerZeroAndCurrent;
+    const isLastLayer = currentState === 100 && i === totalLayers - 1;
+    const isCurrentLayer = (currentState > start && currentState <= end) || isLayerZeroAndCurrent || isLastLayer;
     const isLayerVisible = currentState > end || isLayerZeroAndCurrent;
     const progress = isLayerVisible ? 1 : isCurrentLayer ? roundTo((currentState - start) / (end - start), 2) : 0;
 
@@ -129,13 +130,14 @@ const calculateAllLayerStates = (totalLayers: number, currentState: number): Lay
     });
   }
 
+  console.log(layerState)
   guard(!isNaN(layerState.progress), "Progress has to be a number");
   return layerState;
 };
 
 const calculateLayerStateByIndex = (totalLayers: number, activeLayer: number): LayerState => {
   const currentState = (100 / (totalLayers - 1)) * (activeLayer - 1);
-  return calculateAllLayerStates(totalLayers, currentState);
+  return calculateAllLayerStates(totalLayers, Math.floor(currentState));
 };
 
 function calcArtworkRatio(artworkSize: Size, canvasSize: Size): { widthRatio: number; heightRatio: number } {

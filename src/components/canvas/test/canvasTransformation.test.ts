@@ -31,4 +31,15 @@ describe('transformation', () => {
     expect(result.transformation.layer.progress).toBe(100)
     expect(result.transformation.layer.layers.length).toBe(1)
   })
+
+
+  it('initialize should calculate the correct canvas layers', () => {
+    const artworkProperties = { index: 2, noOfLayer: 4, size: { width: 100, height: 200 }}
+    const canvasSize: Size = { width: 100, height: 100 }
+
+    const result = canvasTransformation.initialize(artworkProperties, canvasSize)
+    expect(result.transformation.layer.index).toBe(2)
+    expect(result.transformation.layer.progress).toBe(33)
+    expect(result.transformation.layer.layers.length).toBe(4)
+  })
 })
