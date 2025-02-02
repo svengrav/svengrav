@@ -4,10 +4,20 @@ import { RouteAnimationContext, usePathAnimation } from '../../hooks/usePathAnim
 import { Expedition } from './SouthPoleData'
 import { SVGController } from '@core/svgUtils'
 import { southPoleIds } from './SouthPoleMapId'
+import { c } from 'vite/dist/node/types.d-aGj9QkWt'
 
-const SOUTHPOLE_SVG = "https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg"
+const SOUTHPOLE_SVG = 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg'
 const SVG_ID = 'svg-base'
 const { id: mapIds, generators } = southPoleIds
+
+const colors = {
+  primary: '#f81b5d',
+  secondary: '#1997ff',
+  tertiary: '#1dcaff',
+  light: '#f1f1f1',
+  dark: '#333',
+  clear: 'rgba(0,0,0,0)'
+}
 
 export interface SouthPoleMapController {
   setVisibility?: (id: string, visible: boolean) => void
@@ -46,12 +56,11 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
   expedition.forEach((expedition) => {
     expeditionAnimations.push(usePathAnimation(expedition.id, mapIds.routes, generators.getRouteId(expedition.id), {
       pathStyle: {
-        stroke: '#ff5052',
+        stroke: colors.primary,
         strokeWidth: 4,
       },
       tipStyle: {
-        fill: '#ff5052'
-        
+        fill: colors.primary
       }
     }))
   })
@@ -66,11 +75,11 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
     mapController.setVisibility = (id: string, visible: boolean) => {
       if (visible) {
         activeExpeditionID = id
-        svgController?.applyStyle(`${id}_circle`, { stroke: '#f81b5d' })
-        svgController?.applyStyle(`${id}_label`, { fill: '#f81b5d' })
+        svgController?.applyStyle(`${id}_circle`, { stroke: colors.primary })
+        svgController?.applyStyle(`${id}_label`, { fill: colors.primary })
       } else {
-        svgController?.applyStyle(`${id}_circle`, { stroke: '#2b8af7' })
-        svgController?.applyStyle(`${id}_label`, { fill: '#f1f1f1' })
+        svgController?.applyStyle(`${id}_circle`, { stroke: colors.secondary })
+        svgController?.applyStyle(`${id}_label`, { fill: colors.light })
       }
     }
 
@@ -82,55 +91,37 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
 
     //#region setup elements
     const applyRaceActiveStyle = (id: string) => {
-      svgController.applyStyle(generators.getRaceIconFlagId(id), { fill: '#f81b5d'})
-      svgController.applyStyle(generators.getRacePathId(id), { stroke: '#f81b5d'})
-      svgController.applyStyle(generators.getRaceStartId(id), { fill: '#f81b5d'})
+      svgController.applyStyle(generators.getRaceIconFlagId(id), { fill: colors.primary})
+      svgController.applyStyle(generators.getRacePathId(id), { stroke: colors.primary})
+      svgController.applyStyle(generators.getRaceStartId(id), { fill: colors.primary})
     }
 
     const applyRaceDefaultStyle = (id: string) => {
-      svgController.applyStyle(generators.getRaceIconFlagId(id), { fill: '#f1f1f1'})
-      svgController.applyStyle(generators.getRacePathId(id), { stroke: '#7a7a7a'})
-      svgController.applyStyle(generators.getRaceStartId(id), { fill: '#7a7a7a'})
+      svgController.applyStyle(generators.getRaceIconFlagId(id), { fill: colors.light})
+      svgController.applyStyle(generators.getRacePathId(id), { stroke: colors.dark})
+      svgController.applyStyle(generators.getRaceStartId(id), { fill: colors.dark})
     }
     
     const toggleRaceStyle = (visible: boolean) => {
-      if(visible) {
-        svgController.applyStyle(mapIds.routes, { display: 'none' })
-        svgController.applyStyle(mapIds.raceAmundsenRoutePath, { display: 'block' })
-        svgController.applyStyle(mapIds.raceScottRoutePath, { display: 'block' })
-        svgController.applyStyle(mapIds.raceAmundsenRouteStart, { display: 'block' })
-        svgController.applyStyle(mapIds.raceScottRouteStart, { display: 'block' })
+        svgController.fade(mapIds.routes, !visible)
 
-        svgController.applyStyle(mapIds.raceScottEvansDied, { display: 'block' })
-        svgController.applyStyle(mapIds.raceScottEvansDiedPointer, { display: 'block' })
-        svgController.applyStyle(mapIds.raceScottEvansDiedLabel, { display: 'block'})
-  
-        svgController.applyStyle(mapIds.raceScottDied, { display: 'block' })
-        svgController.applyStyle(mapIds.raceScottDiedPointer, { display: 'block'})
-        svgController.applyStyle(mapIds.raceScottDiedLabel, { display: 'block' })
-  
-        svgController.applyStyle(mapIds.raceScottOatesDied, { display: 'block' })
-        svgController.applyStyle(mapIds.raceScottOatesDiedPointer, { display: 'block'})
-        svgController.applyStyle(mapIds.raceScottOatesDiedLabel, { display: 'block'})
-      } else {
-        svgController.applyStyle(mapIds.routes, { display: 'block' })
-        svgController.applyStyle(mapIds.raceAmundsenRoutePath, { display: 'none' })
-        svgController.applyStyle(mapIds.raceScottRoutePath, { display: 'none' })
-        svgController.applyStyle(mapIds.raceAmundsenRouteStart, { display: 'none' })
-        svgController.applyStyle(mapIds.raceScottRouteStart, { display: 'none' })
+        svgController.fade(mapIds.raceScottEvansDiedPointer, visible)
+        svgController.fade(mapIds.raceAmundsenRoutePath, visible)
+        svgController.fade(mapIds.raceScottRoutePath, visible)
+        svgController.fade(mapIds.raceAmundsenRouteStart, visible)
+        svgController.fade(mapIds.raceScottRouteStart, visible)
 
-        svgController.applyStyle(mapIds.raceScottEvansDied, { display: 'none' })
-        svgController.applyStyle(mapIds.raceScottEvansDiedPointer, { display: 'none' })
-        svgController.applyStyle(mapIds.raceScottEvansDiedLabel, { display: 'none'})
-  
-        svgController.applyStyle(mapIds.raceScottDied, { display: 'none' })
-        svgController.applyStyle(mapIds.raceScottDiedPointer, { display: 'none'})
-        svgController.applyStyle(mapIds.raceScottDiedLabel, { display: 'none' })
-  
-        svgController.applyStyle(mapIds.raceScottOatesDied, { display: 'none' })
-        svgController.applyStyle(mapIds.raceScottOatesDiedPointer, { display: 'none'})
-        svgController.applyStyle(mapIds.raceScottOatesDiedLabel, { display: 'none'})
-      }
+        svgController.fade(mapIds.raceScottEvansDied, visible)
+        svgController.fade(mapIds.raceScottEvansDiedPointer, visible)
+        svgController.fade(mapIds.raceScottEvansDiedLabel, visible)
+        
+        svgController.fade(mapIds.raceScottDied, visible)
+        svgController.fade(mapIds.raceScottDiedPointer, visible)
+        svgController.fade(mapIds.raceScottDiedLabel, visible)
+        
+        svgController.fade(mapIds.raceScottOatesDied, visible)
+        svgController.fade(mapIds.raceScottOatesDiedPointer, visible)
+        svgController.fade(mapIds.raceScottOatesDiedLabel, visible)
     }
     //#endregion
     
@@ -161,12 +152,12 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
     }
 
     svgController.addOnHover(mapIds.raceAmundsenIconFlagFrame, {
-      onEnter: () => { svgController.applyStyle(mapIds.raceAmundsenIconFlag, { fill: '#f81b5d' }) },
-      onLeave: () => { !raceState.current.amundsenVisible && svgController.applyStyle(mapIds.raceAmundsenIconFlag, { fill: '#f1f1f1' }) }
+      onEnter: () => { svgController.applyStyle(mapIds.raceAmundsenIconFlag, { fill: colors.primary }) },
+      onLeave: () => { !raceState.current.amundsenVisible && svgController.applyStyle(mapIds.raceAmundsenIconFlag, { fill: colors.light }) }
     })
     svgController.addOnHover(mapIds.raceScottIconFlagFrame, {
-      onEnter: () => { svgController.applyStyle(mapIds.raceScottIconFlag, { fill: '#f81b5d' }) },
-      onLeave: () => { !raceState.current.scottVisible && svgController.applyStyle(mapIds.raceScottIconFlag, { fill: '#f1f1f1' }) }
+      onEnter: () => { svgController.applyStyle(mapIds.raceScottIconFlag, { fill: colors.primary }) },
+      onLeave: () => { !raceState.current.scottVisible && svgController.applyStyle(mapIds.raceScottIconFlag, { fill: colors.light }) }
     })
 
 
@@ -177,10 +168,10 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
       const routeLabelId = generators.getRouteLabelId(expedition.id)
       const routeStartId = generators.getRouteStartId(expedition.id)
 
-      const routeLabelStyle = { fill: '#f1f1f1', }
-      const routeCircleStyle = { stroke: '#1997ff', strokeWidth: 3, fill: 'none' }
-      const routeStartStyle = { fill: '#333', strokeWidth: 4}
-      const routeBoxStyle = { fill: '#ffffff00', cursor: 'pointer' }
+      const routeLabelStyle = { fill: colors.light, }
+      const routeCircleStyle = { stroke: colors.secondary, strokeWidth: 3, fill: colors.clear }
+      const routeStartStyle = { fill: colors.dark, strokeWidth: 4}
+      const routeBoxStyle = { fill: colors.clear, cursor: 'pointer' }
 
       svgController.applyStyle(routeLabelId, routeLabelStyle)
       svgController.applyStyle(routeCircleId, routeCircleStyle)
@@ -190,8 +181,8 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
       svgController.getElement(routeBoxId).onclick = () => mapController.onClick && mapController.onClick(expedition.id)
 
       svgController.addOnHover(routeBoxId, {
-        onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#f81b5d' }) },
-        onLeave: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: '#f1f1f1' }) }
+        onEnter: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: colors.primary, transition: 'fill 0.3s ease-in-out' }) },
+        onLeave: () => { activeExpeditionID !== expedition.id && svgController.applyStyle(routeLabelId, { fill: colors.light, transition: 'fill 0.5s ease-in-out'}) }
       })
 
     })
@@ -209,7 +200,6 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
   useEffect(() => {
     // if(didRunRef.current) return; 
     // didRunRef.current = true
-
     configureSouthPoleMap()
   }, [])
 
@@ -226,56 +216,58 @@ const createSouthPoleMap = async () => {
   return await SVGController.createFromUrl(SOUTHPOLE_SVG, SVG_ID, Object.values(mapIds))
     .then((controller) => {
 
-      controller.applyStyle(mapIds.captionTitle, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.captionDescription, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.captionTitle, { fill: colors.light })
+      controller.applyStyle(mapIds.captionDescription, { fill: colors.light })
 
-      controller.applyStyle(mapIds.frame, { fill: '#ffffff00' })
-      controller.applyStyle(mapIds.antarticSurface, { stroke: '#030303', fill: 'none', strokeWidth: '1' })
-      controller.applyStyle(mapIds.antarticIceSurface, { stroke: '#000000', fill: 'none', strokeWidth: '1' })
+      controller.applyStyle(mapIds.frame, { fill: colors.clear })
+      controller.applyStyle(mapIds.antarticSurface, { stroke: colors.dark, fill: 'none', strokeWidth: '1' })
+      controller.applyStyle(mapIds.antarticIceSurface, { stroke: colors.dark, fill: 'none', strokeWidth: '1' })
 
-      controller.applyStyle(mapIds.elementsItemsTextDeg0, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.elementsItemsTextDeg90, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.elementsItemsText2600, { fill: '#333' })
-      controller.applyStyle(mapIds.elementsItemsTextPole, { fill: '#333' })
+      controller.applyStyle(mapIds.elementsItemsTextDeg0, { fill: colors.light })
+      controller.applyStyle(mapIds.elementsItemsTextDeg90, { fill: colors.light })
+      controller.applyStyle(mapIds.elementsItemsText2600, { fill: colors.dark })
+      controller.applyStyle(mapIds.elementsItemsTextPole, { fill: colors.dark })
 
-      controller.applyStyle(mapIds.raceAmundsenIconFlag, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.raceAmundsenIconFlagFrame, { stroke: '#f1f1f1', strokeWidth: 2, cursor: 'pointer', fill: 'hsla(0, 0%, 0%, 0)'})
-      controller.applyStyle(mapIds.raceAmundsenIconText, { fill: '#f1f1f1', strokeWidth: 2 })
-      controller.applyStyle(mapIds.raceAmundsenLabelPointer, { stroke:'#333', strokeWidth: 2 })
-      controller.applyStyle(mapIds.raceAmundsenLabel, { fill:'#333', strokeWidth: 2 })
+      controller.applyStyle(mapIds.routes, { transition: 'opacity 0.5s ease-in-out, visibility 0.5s ease-in-out', opacity: 1, visibility: 'visible' })
 
-      controller.applyStyle(mapIds.raceScottEvansDied, { stroke:'#333', strokeWidth: 4, display: 'none' })
-      controller.applyStyle(mapIds.raceScottEvansDiedPointer, { stroke:'#333', strokeWidth: 2, display: 'none' })
-      controller.applyStyle(mapIds.raceScottEvansDiedLabel, { fill:'#333', display: 'none'})
+      controller.applyStyle(mapIds.raceAmundsenIconFlag, { fill: colors.light })
+      controller.applyStyle(mapIds.raceAmundsenIconFlagFrame, { stroke: colors.light, strokeWidth: 2, cursor: 'pointer', fill: colors.clear })
+      controller.applyStyle(mapIds.raceAmundsenIconText, { fill: colors.light, strokeWidth: 2 })
+      controller.applyStyle(mapIds.raceAmundsenLabelPointer, { stroke:colors.dark, strokeWidth: 2 })
+      controller.applyStyle(mapIds.raceAmundsenLabel, { fill:colors.dark, strokeWidth: 2 })
 
-      controller.applyStyle(mapIds.raceScottDied, { stroke:'#333', strokeWidth: 4, display: 'none' })
-      controller.applyStyle(mapIds.raceScottDiedPointer, { stroke:'#333', strokeWidth: 2, display: 'none'})
-      controller.applyStyle(mapIds.raceScottDiedLabel, { fill:'#333', display: 'none' })
+      controller.applyStyle(mapIds.raceScottEvansDied, { stroke:colors.dark, strokeWidth: 4, display: 'none'})
+      controller.applyStyle(mapIds.raceScottEvansDiedPointer, { stroke:colors.dark, strokeWidth: 2, display: 'none' })
+      controller.applyStyle(mapIds.raceScottEvansDiedLabel, { fill:colors.dark, display: 'none'})
 
-      controller.applyStyle(mapIds.raceScottOatesDied, { stroke:'#333', strokeWidth: 4, display: 'none' })
-      controller.applyStyle(mapIds.raceScottOatesDiedPointer, { stroke:'#333', strokeWidth: 2, display: 'none'})
-      controller.applyStyle(mapIds.raceScottOatesDiedLabel, { fill:'#333', display: 'none'})
+      controller.applyStyle(mapIds.raceScottDied, { stroke:colors.dark, strokeWidth: 4, display: 'none' })
+      controller.applyStyle(mapIds.raceScottDiedPointer, { stroke:colors.dark, strokeWidth: 2, display: 'none'})
+      controller.applyStyle(mapIds.raceScottDiedLabel, { fill:colors.dark, display: 'none' })
+
+      controller.applyStyle(mapIds.raceScottOatesDied, { stroke:colors.dark, strokeWidth: 4, display: 'none' })
+      controller.applyStyle(mapIds.raceScottOatesDiedPointer, { stroke:colors.dark, strokeWidth: 2, display: 'none'})
+      controller.applyStyle(mapIds.raceScottOatesDiedLabel, { fill:colors.dark, display: 'none'})
       
-      controller.applyStyle(mapIds.raceScottLabel, { fill:'#333', strokeWidth: 2 })
-      controller.applyStyle(mapIds.raceScottLabelPointer, { stroke:'#333', strokeWidth: 2 })
+      controller.applyStyle(mapIds.raceScottLabel, { fill:colors.dark, strokeWidth: 2 })
+      controller.applyStyle(mapIds.raceScottLabelPointer, { stroke:colors.dark, strokeWidth: 2 })
       controller.applyStyle(mapIds.raceScottRoutePath, { stroke: '#7a7a7a', strokeWidth: 5, display: 'none' })
       controller.applyStyle(mapIds.raceAmundsenRoutePath, { stroke: '#7a7a7a', strokeWidth: 5, display: 'none' })
       controller.applyStyle(mapIds.raceAmundsenRouteStart, { fill: '#7a7a7a', display: 'none' })
       controller.applyStyle(mapIds.raceScottRouteStart, { fill: '#7a7a7a', display: 'none' })
 
-      controller.applyStyle(mapIds.raceScottIconFlag, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.raceScottIconFlagFrame, { stroke: '#f1f1f1', strokeWidth: 2, cursor: 'pointer', fill: 'hsla(0, 0%, 0%, 0)' })
-      controller.applyStyle(mapIds.raceScottIconText, { fill: '#f1f1f1', strokeWidth: 2 })
+      controller.applyStyle(mapIds.raceScottIconFlag, { fill: colors.light })
+      controller.applyStyle(mapIds.raceScottIconFlagFrame, { stroke: colors.light, strokeWidth: 2, cursor: 'pointer', fill: colors.clear })
+      controller.applyStyle(mapIds.raceScottIconText, { fill: colors.light, strokeWidth: 2 })
 
-      controller.applyStyle(mapIds.elementsCircleText, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.elementsTextWeddellSea, { fill: '#f1f1f1' })
-      controller.applyStyle(mapIds.elementsTextRossIce, { fill: '#333' })
-      controller.applyStyle(mapIds.elementsTextRossSea, { fill: '#f1f1f1' })
+      controller.applyStyle(mapIds.elementsCircleText, { fill: colors.light })
+      controller.applyStyle(mapIds.elementsTextWeddellSea, { fill: colors.light })
+      controller.applyStyle(mapIds.elementsTextRossIce, { fill: colors.dark })
+      controller.applyStyle(mapIds.elementsTextRossSea, { fill: colors.light })
 
-      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#333' })
-      controller.applyStyle(mapIds.elementsMountVinsonLabel, { fill: '#333' })
-      controller.applyStyle(mapIds.elementsMountErebusIcon, { fill: '#333' })
-      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: '#333' })
+      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: colors.dark })
+      controller.applyStyle(mapIds.elementsMountVinsonLabel, { fill: colors.dark })
+      controller.applyStyle(mapIds.elementsMountErebusIcon, { fill: colors.dark })
+      controller.applyStyle(mapIds.elementsMountVinsonIcon, { fill: colors.dark })
 
       return controller
     }).catch((error) => {
