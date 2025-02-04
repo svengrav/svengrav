@@ -11,7 +11,7 @@ const SVG_ID = 'svg-base'
 const { id: mapIds, generators } = southPoleIds
 
 const colors = {
-  primary: '#1bf8c8',
+  primary: '#f43f5e',
   secondary: '#1997ff',
   tertiary: '#1dcaff',
   light: '#f1f1f1',
@@ -67,12 +67,15 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
 
   const configureSouthPoleMap = () => createSouthPoleMap().then((svgController) => {
     let activeExpeditionID = ''
+    raceState.current = { amundsenVisible: false, scottVisible: false }
     svgController.base.style.opacity = '0'
     svgController.base.style.transition = 'opacity 2s ease'
     baseRef.current?.replaceChildren(svgController.base)
 
     //#region setup map controller
     mapController.setVisibility = (id: string, visible: boolean) => {
+      toggleRaceStyle(false)
+
       if (visible) {
         activeExpeditionID = id
         svgController?.applyStyle(`${id}_circle`, { stroke: colors.primary })
@@ -160,7 +163,6 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
       onLeave: () => { !raceState.current.scottVisible && svgController.applyStyle(mapIds.raceScottIconFlag, { fill: colors.light }) }
     })
 
-
     //#region setup expedition routes
     expedition.forEach((expedition) => {
       const routeBoxId = generators.getRouteBoxId(expedition.id)
@@ -187,7 +189,6 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
 
     })
     //#endregion
-
     return svgController
   }).then((svgController: SVGController) => {
     antarticCircleAnimation.startAnimation()
@@ -198,8 +199,8 @@ export const SouthPoleMap = ({ expedition, controller: mapController }: { expedi
   })
 
   useEffect(() => {
-    // if(didRunRef.current) return; 
-    // didRunRef.current = true
+    if(didRunRef.current) return; 
+    didRunRef.current = true
     configureSouthPoleMap()
   }, [])
 
@@ -215,7 +216,7 @@ export default SouthPoleMap
 const createSouthPoleMap = async () => {
   return await SVGController.createFromUrl(SOUTHPOLE_SVG, SVG_ID, Object.values(mapIds))
     .then((controller) => {
-      generateWaves(controller.base.getElementById('frame') as SVGSVGElement)
+      addWaves(controller.base.getElementById('frame') as SVGSVGElement)
       controller.applyStyle(mapIds.captionTitle, { fill: colors.light })
       controller.applyStyle(mapIds.captionDescription, { fill: colors.light })
 
@@ -276,7 +277,7 @@ const createSouthPoleMap = async () => {
     })
 }
 
-const fixedPoints = [
+const wavePoints = [
   { x: 2046.96, y: 73.51 }, { x: 923.86, y: 1694.37 }, { x: 395.48, y: 2075.09 }, { x: 518.92, y: 2001.05 },
   { x: 2956.71, y: 2068.2 }, { x: 466.5, y: 506.9 }, { x: 112.88, y: 2300.64 }, { x: 843.71, y: 2511.54 },
   { x: 164.32, y: 1403.58 }, { x: 177.0, y: 2168.58 }, { x: 296.4, y: 183.53 }, { x: 1319.48, y: 2527.97 },
@@ -301,12 +302,11 @@ const fixedPoints = [
 ]
 
 
-const generateWaves = (svg: SVGSVGElement) => {
+const addWaves = (svg: SVGSVGElement) => {
   const svgNS = "http://www.w3.org/2000/svg"
-
   const lines: SVGElement[] = []
 
-  fixedPoints.forEach(({ x, y }) => { 
+  wavePoints.forEach(({ x, y }) => { 
     const line = document.createElementNS(svgNS, "line")
     const length = 20 + Math.random() * 40 // Zufällige Länge der Linie
     line.setAttribute("x1", x.toString())
@@ -322,7 +322,6 @@ const generateWaves = (svg: SVGSVGElement) => {
     lines.push(line)
   })
 
-  // Linien animieren statt neu zu generieren
   setInterval(() => {
     for (let i = 0; i < 40; i++) {
       const pointIndex = Math.floor(Math.random() * 84)
@@ -333,30 +332,10 @@ const generateWaves = (svg: SVGSVGElement) => {
       }, Math.random() * 500)
       setTimeout(() => {
         line.setAttribute("opacity", "0")
-        // Nach der Fade-Out-Animation die Position zurücksetzen
         setTimeout(() => {
           line.style.transform = "translateX(0px)"
         }, 1000)
       }, 2000 + Math.random() * 3000)
     }
-  
-
-
-    // const numActiveLines = Math.floor(Math.random() * 20) + 1
-    // lines.forEach((line, index) => {
-    //   if (index < numActiveLines) {
-    //     setTimeout(() => {
-    //       line.setAttribute("opacity", "1")
-    //       line.style.transform = `translateX(${Math.random() * 100}px)`
-    //     }, Math.random() * 500)
-    //     setTimeout(() => {
-    //       line.setAttribute("opacity", "0")
-    //       // Nach der Fade-Out-Animation die Position zurücksetzen
-    //       setTimeout(() => {
-    //         line.style.transform = "translateX(0px)"
-    //       }, 1000)
-    //     }, 2000 + Math.random() * 3000)
-    //   }
-    // })
   }, 1000)
 }
