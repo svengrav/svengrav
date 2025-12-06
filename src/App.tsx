@@ -13,8 +13,9 @@ import southPolePage from "./content/southpole/SouthPole";
 import spitalPage from "./content/Spital/SpitalPage";
 import { threePage } from "./content/Three";
 import walspergerPage from "./content/walsperger/WalspergMap";
+import happyHourPage from "./content/HappyHour";
 import { PageDescription } from "./components/page/PageDescription";
-import HomeView from "views/HomeView"
+import HomeView from "./views/HomeView";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -31,6 +32,7 @@ const contentPages = [
   southPolePage,
   spitalPage,
   walspergerPage,
+  happyHourPage,
 ];
 
 // Home / Root page element
