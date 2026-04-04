@@ -49,7 +49,7 @@ export default function HomeView ({ panels }: HomeProps) {
         </div>
 
         <div className='m-auto flex flex-initialflex-wrap w-full max-w-screen-xl justify-center mb-4 items-center px-4 text-gray-400'>
-          A site about software architecture, art and maps. 
+          A site about software architecture, art and maps.
         </div>
 
         <div className='m-auto flex w-full max-w-screen-xl justify-center mb-2 text-xs text-gray-600'>

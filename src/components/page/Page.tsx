@@ -44,9 +44,12 @@ export const Page = ({ children }: PageProps) => {
           </a>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-end items-center gap-2">
+          <div className='text-xs text-gray-400'>
+            v{import.meta.env.VITE_APP_VERSION}.{__BUILD_NUMBER__}
+          </div>
           <Icon primary={GithubIcon} href="https://github.com/svengrav" />
-          <Icon primary={LinkedInIcon} href="https://www.linkedin.com/in/svengrav/" className="ml-4 mr-2" />
+          <Icon primary={LinkedInIcon} href="https://www.linkedin.com/in/svengrav/" className="mr-2" />
         </div>
       </div>
 
