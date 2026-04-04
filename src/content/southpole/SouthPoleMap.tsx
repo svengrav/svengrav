@@ -4,7 +4,6 @@ import { RouteAnimationContext, usePathAnimation } from '../../hooks/usePathAnim
 import { Expedition } from './SouthPoleData'
 import { SVGController } from '@core/svgUtils'
 import { southPoleIds } from './SouthPoleMapId'
-import { c } from 'vite/dist/node/types.d-aGj9QkWt'
 
 const SOUTHPOLE_SVG = 'https://stsvengrav.blob.core.windows.net/stsvengrav/southpole/southpole.svg'
 const SVG_ID = 'svg-base'

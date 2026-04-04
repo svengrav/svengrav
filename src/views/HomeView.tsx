@@ -52,6 +52,10 @@ export default function HomeView ({ panels }: HomeProps) {
           A site about software architecture, art and maps. 
         </div>
 
+        <div className='m-auto flex w-full max-w-screen-xl justify-center mb-2 text-xs text-gray-600'>
+          v{import.meta.env.VITE_APP_VERSION}+{__BUILD_NUMBER__}
+        </div>
+
         <div className='m-auto flex flex-initial flex-wrap w-full max-w-screen-xl justify-center'>
           {panels
             .filter((panel) => !panel.hidden)
