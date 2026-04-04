@@ -35,7 +35,7 @@ export const montSaintMichelPage: PageDescription = {
   title: montSaintMichel.name,
   id: montSaintMichel.id,
   description: montSaintMichel.description,
-  date: date(1, 1, 2025),
+  date: date(4, 4, 2026),
   tags: ['art'],
   thumbnail: (
     <PageThumbnail
