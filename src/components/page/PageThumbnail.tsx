@@ -1,5 +1,6 @@
 import { ImagePreloader } from '@components/base/ImagePreloader'
 import classNames from 'classnames'
+import { resolveStoreUrl } from '@assets/store'
 
 type PanelColor = 'emerald' | 'sky' | 'rose' | 'orange' | 'indigo'
 
@@ -42,14 +43,15 @@ export const PageThumbnail = ({
   color = 'emerald',
   label = ''
 }: PanelThumbnailProps) => {
+  const resolvedSrc = src ? resolveStoreUrl(src) : undefined
   return (
-    <ImagePreloader sources={src ? [src] : []} key={src}>
+    <ImagePreloader sources={resolvedSrc ? [resolvedSrc] : []} key={resolvedSrc}>
       <div
         className={classNames(
           `h-full w-full rounded-md bg-gradient-to-r hover:animate-pulse transition-all transform ${panelColorVariants[color]}`
         )}
         style={{
-          backgroundImage: src ? `url(${src})` : backgroundPattern,
+          backgroundImage: resolvedSrc ? `url(${resolvedSrc})` : backgroundPattern,
           backgroundSize: 'cover'
         }}
       >

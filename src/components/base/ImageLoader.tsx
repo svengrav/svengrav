@@ -1,8 +1,7 @@
 import { Transition } from '@headlessui/react'
 import { useEffect, useState } from 'react'
 import { Logo } from '@assets/icons'
-
-const BASE_STORE = 'https://stsvengrav.blob.core.windows.net/stsvengrav'
+import { resolveStoreUrl } from '@assets/store'
 
 interface ImageProps {
   src: string
@@ -16,7 +15,7 @@ interface ImageProps {
  * @returns image element
  */
 export const ImageLoader = ({ src, alt }: ImageProps) => {
-  const resolvedSrc = src.startsWith('http') ? src : `${BASE_STORE}${src}`
+  const resolvedSrc = resolveStoreUrl(src)
   const [imageState, setImageState] = useState({
     loading: true,
     visible: false,
