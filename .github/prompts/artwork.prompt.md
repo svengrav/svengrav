@@ -1,43 +1,44 @@
 ---
 name: artwork
-description: Describe when to use this prompt
+description: Use this prompt to create a new artwork content page for the project.
 ---
 
 # New Content Page
 
-Erstelle eine neue Content-Seite für das Projekt. Folge dem bestehenden Muster.
+Create a new content page for the project. Follow the existing patterns.
 
-Je Content Page erstelle ein Verzeichnis unter src/content
+Each content page gets its own directory under `src/content/<name>/`.
+After creating the page, add a row to the **Artworks** table in `README.md` with the artwork name linked to its live URL (`https://www.svengrav.de/<id>`).
 
-## Struktur
+## Structure
 
-Jede Content-Seite besteht aus zwei Objekten:
+Every content page consists of two objects:
 
-1. **`Artwork`** — Bilddaten, Layer, Größe
-2. **`PageDescription`** — Metadaten, Thumbnail, View-Element
+1. **`Artwork`** — image data, layers, dimensions
+2. **`PageDescription`** — metadata, thumbnail, view element
 
-## Einfache Seite (einzelne Datei)
+## Simple Page
 
-Für reine Artwork-Seiten ohne eigene Logik (wie `HappyHour.tsx`, `Cafe.tsx`):
+For pure artwork pages without custom logic (like `HappyHour.tsx`, `Cafe.tsx`):
 
 ```tsx
-// src/content/MyContent.tsx
+// src/content/mycontent/MyContent.tsx
 
 import { ImageLoader } from '@components/base/ImageLoader'
 import PageThumbnail from '@components/page/PageThumbnail'
 import { Artwork } from '@components/artwork/Artwork'
 import { PageDescription } from '@components/page/PageDescription'
 import { date } from '@core/date'
-import ArtworkView from '../views/ArtworkView'
+import ArtworkView from '../../views/ArtworkView'
 import { PagePanel } from '@components/page/PagePanel'
 
 export const myContent: Artwork = {
-  id: 'mycontent',               // URL-slug, lowercase, keine Leerzeichen
-  name: 'My Content', 
+  id: 'mycontent',               // URL slug — lowercase, no spaces
+  name: 'My Content',
   description: 'Short description.',
-  year: 2025, // Jahr
-  size: { width: 2000, height: 2700 }, // Standard Size des Images
-  defaultIndex: 0,               // Index des Standard-Layers (0-basiert)
+  year: 2025,
+  size: { width: 2000, height: 2700 }, // original image dimensions in px
+  defaultIndex: 0,               // active layer on open (0-based)
   layer: [
     {
       id: 'layer1',
@@ -53,7 +54,7 @@ export const myContentPage: PageDescription = {
   title: myContent.name,
   id: myContent.id,
   description: myContent.description,
-  date: date(1, 1, 2025),        // date(tag, monat, jahr)
+  date: date(1, 1, 2025),        // date(day, month, year)
   tags: ['art'],                 // 'art' | 'map'
   thumbnail: (
     <PageThumbnail
@@ -86,50 +87,58 @@ export const myContentPage: PageDescription = {
 export default myContentPage
 ```
 
-## Komplexe Seite (Unterordner)
+## Complex Page (subfolder)
 
-Verwende einen Unterordner (`src/content/mycontent/`) wenn:
-- eigene Datentypen oder Interfaces nötig sind
-- separate Map- oder Route-Komponenten existieren
-- der Artwork-Typ erweitert wird (z.B. `Artwork & { chapters: Chapter[] }`)
+Use a subfolder (`src/content/mycontent/`) when:
+- custom data types or interfaces are needed
+- separate map or route components exist
+- the `Artwork` type is extended (e.g. `Artwork & { chapters: Chapter[] }`)
 
-Orientiere dich an `southpole/` oder `Spital/`.
+Use `southpole/` or `Spital/` as a reference.
 
-## Registrierung in App.tsx
+## Register in App.tsx
 
-Nach dem Erstellen der Datei muss die Seite in `src/App.tsx` eingetragen werden:
+After creating the file, register the page in `src/App.tsx`:
 
 ```tsx
-// 1. Import hinzufügen
-import myContentPage from './content/MyContent'
+// 1. Add import
+import myContentPage from './content/mycontent/MyContent'
 
-// 2. In contentPages[] eintragen
+// 2. Add to contentPages[]
 const contentPages = [
-  // ... bestehende Seiten ...
+  // ... existing pages ...
   myContentPage,
 ]
 ```
 
-Die Route wird automatisch aus `PageDescription.id` generiert.
+The route is generated automatically from `PageDescription.id`.
 
-## Pflichtfelder
+## Add to README.md
 
-| Feld | Typ | Beschreibung |
-|------|-----|--------------|
-| `id` | `string` | URL-slug, eindeutig, lowercase |
-| `name` | `string` | Anzeigename |
-| `description` | `string` | Kurzbeschreibung |
-| `year` | `number` | Entstehungsjahr |
-| `size` | `{ width, height }` | Originalmaße in px |
-| `defaultIndex` | `number` | Aktiver Layer beim Öffnen |
-| `layer` | `ArtworkLayer[]` | Mind. 1 Layer |
-| `date` | `Date` | via `date(tag, monat, jahr)` |
-| `tags` | `PageTag[]` | `'art'` oder `'map'` |
+Add a row to the **Artworks** table in `README.md`:
+
+```md
+| [**My Content**](https://www.svengrav.de/mycontent) | Short description. |
+```
+
+## Required Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | URL slug — unique, lowercase |
+| `name` | `string` | Display name |
+| `description` | `string` | Short description |
+| `year` | `number` | Year of creation |
+| `size` | `{ width, height }` | Original dimensions in px |
+| `defaultIndex` | `number` | Active layer on open |
+| `layer` | `ArtworkLayer[]` | At least one layer |
+| `date` | `Date` | via `date(day, month, year)` |
+| `tags` | `PageTag[]` | `'art'` or `'map'` |
 | `thumbnail` | `ReactNode` | `<PageThumbnail src="..." />` |
-| `element` | `ReactElement` | View-Komponente |
+| `element` | `ReactElement` | View component |
 
-## Optionale Felder
+## Optional Fields
 
-- `hidden: true` — Seite nicht in der Übersicht anzeigen
-- `navigator: false` auf `ArtworkView` — Layer-Navigation ausblenden
-- `points` auf `Artwork` — Interaktive Punkte auf dem Artwork
+- `hidden: true` — hide page from the overview
+- `navigator: false` on `ArtworkView` — hide layer navigation
+- `points` on `Artwork` — interactive points on the artwork
