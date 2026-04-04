@@ -2,6 +2,8 @@ import { Transition } from '@headlessui/react'
 import { useEffect, useState } from 'react'
 import { Logo } from '@assets/icons'
 
+const BASE_STORE = 'https://stsvengrav.blob.core.windows.net/stsvengrav'
+
 interface ImageProps {
   src: string
   alt?: string
@@ -14,6 +16,7 @@ interface ImageProps {
  * @returns image element
  */
 export const ImageLoader = ({ src, alt }: ImageProps) => {
+  const resolvedSrc = src.startsWith('http') ? src : `${BASE_STORE}${src}`
   const [imageState, setImageState] = useState({
     loading: true,
     visible: false,
@@ -22,7 +25,7 @@ export const ImageLoader = ({ src, alt }: ImageProps) => {
 
   useEffect(() => {
     const img = new Image()
-    img.src = src
+    img.src = resolvedSrc
     img.complete ? setImageState(prevState => ({ ...prevState, loading: false, visible: true, img: img    })) : null
     img.onload = () => {
       setImageState(prevState => ({
@@ -32,7 +35,7 @@ export const ImageLoader = ({ src, alt }: ImageProps) => {
         img: img
       }))
     }
-  }, [src])
+  }, [resolvedSrc])
 
   if (imageState.loading) {
     return <div className=" text-white h-full w-full bg-gray-950 items-center justify-center flex">

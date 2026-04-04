@@ -14,6 +14,7 @@ import spitalPage from "./content/Spital/SpitalPage";
 import { threePage } from "./content/three/Three";
 import walspergerPage from "./content/walsperger/WalspergMap";
 import happyHourPage from "./content/happyhour/HappyHour";
+import montSaintMichelPage from "./content/montsaintmichel/MontSaintMichel";
 import { PageDescription } from "./components/page/PageDescription";
 import HomeView from "./views/HomeView";
 
@@ -33,6 +34,7 @@ const contentPages = [
   spitalPage,
   walspergerPage,
   happyHourPage,
+  montSaintMichelPage,
 ];
 
 // Home / Root page element

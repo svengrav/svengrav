@@ -20,6 +20,7 @@ Each piece lives under `src/content/<name>/` and is composed of layered SVG/imag
 | [**Haus Spital**](https://www.svengrav.de/spital) | History of the Spital prisoner-of-war camp in Münster |
 | [**Walsperger Map**](https://www.svengrav.de/walsperger) | Interactive medieval world map |
 | [**Happy Hour**](https://www.svengrav.de/happyhour) | Illustration (2025) |
+| [**Mont Saint-Michel**](https://www.svengrav.de/montsaintmichel) | Illustration of Mont Saint-Michel, created with Procreate in 2025. |
 | [**Three**](https://www.svengrav.de/three) | Sample layered artwork |
 
 ## Getting Started
