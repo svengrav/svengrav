@@ -22,14 +22,6 @@ Each piece lives under `src/content/<name>/` and is composed of layered SVG/imag
 | [**Happy Hour**](https://www.svengrav.de/happyhour) | Illustration (2025) |
 | [**Three**](https://www.svengrav.de/three) | Sample layered artwork |
 
-## Tech Stack
-
-- **React 18** + **TypeScript**
-- **Vite** — build tool
-- **Tailwind CSS** — styling
-- **Vitest** — unit tests
-- **Azure Static Web Apps** — hosting
-
 ## Getting Started
 
 ```bash
@@ -60,6 +52,3 @@ src/
   hooks/              # Custom React hooks
   views/              # Page-level view components
 ```
-
-
-- Artwork Loader: The canvas should be shown when the full artwork is loaded.
