@@ -9,9 +9,9 @@ import { PagePanel } from '@components/page/PagePanel'
 export const montSaintMichel: Artwork = {
   id: 'montsaintmichel',
   name: 'Mont Saint-Michel',
-  description: 'Illustration of Mont Saint-Michel, created with Procreate in 2025.',
+  description: 'Illustration of Mont Saint-Michel, created with Procreate in 2025. I visited Mont Saint-Michel in 2024 and was inspired by its unique architecture and stunning location. This artwork captures the beauty and grandeur of the iconic island commune, showcasing its medieval structures and picturesque surroundings.',
   year: 2025,
-  size: { width: 4950, height: 3600 },
+  size: { width: 3960, height: 2880 },
   defaultIndex: 0,
   layer: [
     {
@@ -39,7 +39,7 @@ export const montSaintMichelPage: PageDescription = {
   tags: ['art'],
   thumbnail: (
     <PageThumbnail
-      src='/montsaintmichel/mont-saint-michel-thumb.png'
+      src='/montsaintmichel/mont-saint-michel-thumb.jpg'
     />
   ),
   element: (
