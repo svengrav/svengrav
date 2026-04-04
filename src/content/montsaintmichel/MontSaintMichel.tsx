@@ -12,7 +12,7 @@ export const montSaintMichel: Artwork = {
   description: 'Illustration of Mont Saint-Michel, created with Procreate in 2025.',
   year: 2025,
   size: { width: 4950, height: 3600 },
-  defaultIndex: 1,
+  defaultIndex: 0,
   layer: [
     {
       id: 'outlines',
