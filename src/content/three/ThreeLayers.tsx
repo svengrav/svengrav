@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Logo } from '../assets/icons'
+import { Logo } from '@assets/icons'
 import Scalable from '@components/base/Scalable'
 
 interface LayerPath {

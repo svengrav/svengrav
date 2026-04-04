@@ -1,8 +1,8 @@
 import NorthSouth from './NorthSouthRoutes'
 import { ImageLoader } from '@components/base/ImageLoader'
-import { Artwork } from '../components/artwork/Artwork'
+import { Artwork } from '../../components/artwork/Artwork'
 import { date } from '@core/date'
-import ArtworkView from '../views/ArtworkView'
+import ArtworkView from '../../views/ArtworkView'
 import PageThumbnail from '@components/page/PageThumbnail'
 import { PageDescription } from '@components/page/PageDescription'
 

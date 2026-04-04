@@ -1,10 +1,10 @@
 import NewZealandRoutes from './NewZealandRoutes'
 import { ImageLoader } from '@components/base/ImageLoader'
 import PageThumbnail from '@components/page/PageThumbnail'
-import { Artwork } from '../components/artwork/Artwork'
+import { Artwork } from '../../components/artwork/Artwork'
 import { date } from '@core/date'
 import { PageDescription } from '@components/page/PageDescription'
-import ArtworkView from '../views/ArtworkView'
+import ArtworkView from '../../views/ArtworkView'
 
 export const newZealand: Artwork = {
   id: 'newzealand',

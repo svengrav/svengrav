@@ -1,8 +1,8 @@
 import Page from '@components/page/Page'
 import { PageDescription } from '@components/page/PageDescription'
 import { date } from '@core/date'
-import { usePathAnimation } from '../hooks/usePathAnimation'
-import { PathState } from '../core/pathAnimation'
+import { usePathAnimation } from '../../hooks/usePathAnimation'
+import { PathState } from '../../core/pathAnimation'
 import { useState } from 'react'
 
 // #region svg elements interfaces

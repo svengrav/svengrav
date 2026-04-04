@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "app: check",
+      "type": "shell",
+      "command": "npx tsc --noEmit",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "app: publish",
+      "type": "shell",
+      "command": "bash publish.sh",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "dependsOn": "app: check",
+      "problemMatcher": []
+    }
+  ]
+}

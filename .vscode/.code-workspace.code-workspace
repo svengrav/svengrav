@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+      "name": "⬛ root",
+			"path": ".."
+		},
+    {
+      "name": "🟩 src",
+			"path": "../src/"
+		},
+    {
+      "name": "🟦 content",
+			"path": "../src/content"
+		}
+	]
+}
