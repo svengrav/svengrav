@@ -12,7 +12,7 @@ export const montSaintMichel: Artwork = {
   description: 'Illustration of Mont Saint-Michel, created with Procreate in 2025. I visited Mont Saint-Michel in 2024 and was inspired by its unique architecture and stunning location. This artwork captures the beauty and grandeur of the iconic island commune, showcasing its medieval structures and picturesque surroundings.',
   year: 2025,
   size: { width: 3960, height: 2880 },
-  defaultIndex: 0,
+  defaultIndex: 2,
   layer: [
     {
       id: 'outlines',
