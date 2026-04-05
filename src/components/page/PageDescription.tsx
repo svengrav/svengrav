@@ -24,7 +24,7 @@ export const getPageTagColor = (tag: PageTag) => tagColors[tag]
 export interface PageDescription {
   title: string;
   id: string;
-  description: string;
+  description: string | string[];
   date: Date;
   hidden?: boolean;
   tags?: PageTag[];

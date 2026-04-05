@@ -9,7 +9,7 @@ import { PagePanel } from '@components/page/PagePanel'
 export const montSaintMichel: Artwork = {
   id: 'montsaintmichel',
   name: 'Mont Saint-Michel',
-  description: 'Illustration of Mont Saint-Michel, created with Procreate in 2025. I visited Mont Saint-Michel in 2024 and was inspired by its unique architecture and stunning location. This artwork captures the beauty and grandeur of the iconic island commune, showcasing its medieval structures and picturesque surroundings.',
+  description: ['Illustration of Mont Saint-Michel, created with Procreate in 2025. I visited Mont Saint-Michel in 2024 and was inspired by its unique architecture and stunning location.', 'This artwork captures the beauty and grandeur of the iconic island commune, showcasing its medieval structures and picturesque surroundings.'],
   year: 2025,
   size: { width: 3960, height: 2880 },
   defaultIndex: 2,
@@ -59,8 +59,10 @@ export const montSaintMichelPage: PageDescription = {
           {montSaintMichel.name}
         </h1>        
         <div className='h-0.5 bg-gray-500 w-10 m-auto my-6' />
-        <div className='leading-relaxed'>
-          {montSaintMichel.description}
+        <div className='leading-relaxed flex flex-col gap-3'>
+          {Array.isArray(montSaintMichel.description)
+            ? montSaintMichel.description.map((p, i) => <p key={i}>{p}</p>)
+            : montSaintMichel.description}
         </div>
         <div className='h-0.5 bg-gray-500 w-10 m-auto my-6'/>
         <div className='flex gap-2 justify-center'>

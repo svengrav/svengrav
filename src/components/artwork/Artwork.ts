@@ -30,7 +30,7 @@ interface ArtworkResourceMap {
 export interface Artwork {
   id: string;
   name: string;
-  description: string;
+  description: string | string[];
   year: number;
   size: Size;
   defaultIndex: number;
