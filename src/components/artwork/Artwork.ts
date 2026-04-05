@@ -34,6 +34,7 @@ export interface Artwork {
   year: number;
   size: Size;
   defaultIndex: number;
+  tags?: string[];
   resources?: ArtworkResourceMap;
   layer: ArtworkLayer[];
   points?: ArtworkPoint[];

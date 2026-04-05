@@ -13,6 +13,7 @@ export const montSaintMichel: Artwork = {
   year: 2025,
   size: { width: 3960, height: 2880 },
   defaultIndex: 2,
+  tags: ['digital art', 'procreate', 'history'],
   layer: [
     {
       id: 'outlines',
@@ -50,15 +51,27 @@ export const montSaintMichelPage: PageDescription = {
         closable
         visible
         label=""
-        className="bg-gray-950 text-gray-200"
-        scrollbar={{ className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900" }}
-      >
-        <h1 className='text-white text-2xl text-center py-4'>
+        className="bg-gray-950/95 text-gray-200"
+        scrollbar={{ className: "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 gap-2" }}
+      >       
+        <div className='text-center text-sm bg-gray-900 self-center rounded-full px-2 py-0.5'>{montSaintMichel.year}</div>
+        <h1 className='text-white text-2xl text-center gap-12'>
           {montSaintMichel.name}
-        </h1>
-        <div className='h-0.5 bg-gray-500 w-10 m-auto my-5' />
-        <div className='text-center'>
+        </h1>        
+        <div className='h-0.5 bg-gray-500 w-10 m-auto my-6' />
+        <div className='leading-relaxed'>
           {montSaintMichel.description}
+        </div>
+        <div className='h-0.5 bg-gray-500 w-10 m-auto my-6'/>
+        <div className='flex gap-2 justify-center'>
+          {montSaintMichel.tags?.map((tag) => (
+            <span
+              key={tag} 
+              className="inline-block bg-gray-300  text-gray-800 rounded-full px-3 py-1 text-xs text-nowrap cursor-pointer"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </PagePanel>
     } />

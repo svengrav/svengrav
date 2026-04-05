@@ -143,7 +143,7 @@ export const PagePanel = forwardRef<PagePanelController, PagePanelProps>((props:
           )}
           <div
             className={classNames(
-              'grow p-4 overflow-y-auto scrollbar-thin scrollbar-track-rounded-full',
+              'grow p-4 overflow-y-auto scrollbar-thin scrollbar-track-rounded-full flex flex-col',
               scrollbar?.className
             )}
           >
