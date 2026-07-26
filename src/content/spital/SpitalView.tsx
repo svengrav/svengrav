@@ -66,6 +66,7 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
   const textIntroExtended = getChapterById(artwork, "intro-extended")
   const textSources = getChapterById(artwork, "quellen")
   const textThanks = getChapterById(artwork, "thanks")
+  const textProjektbeteiligte = getChapterById(artwork, "projektbeteiligte")
 
 
   // Get window size and initialize state
@@ -197,13 +198,12 @@ export default function SpitalView({ artwork }: SpitalViewProps) {
           summary={textIntro?.inner}
           details={
             <>
-              <h1 className="font-semibold mt-4">{textIntroExtended?.label}</h1>
               {textIntroExtended?.inner}
 
-              <h1 className="font-semibold mt-4">{textThanks?.label}</h1>
               {textThanks?.inner}
 
-              <h1 className="font-semibold mt-4">{textSources?.label}</h1>
+              {textProjektbeteiligte?.inner}
+
               {textSources?.inner}
             </>
           }

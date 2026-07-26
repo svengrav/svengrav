@@ -8,7 +8,7 @@ import Icon from "@components/base/Icon"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { SouthpoleMap } from "./SouthPole"
 import { description, SouthPoleSummary } from "./SouthPoleData"
-import { fetchSVG } from "../Spital/svgUtils"
+import { fetchSVG } from "../spital/svgUtils"
 import classNames from "classnames"
 
 interface SouthPoleViewProps {

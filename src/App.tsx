@@ -10,11 +10,14 @@ import { routeLabPage } from "./content/lab/Lab";
 import newZealandPage from "./content/newzealand/NewZealand";
 import northSouthPage from "./content/northsouth/NorthSouth";
 import southPolePage from "./content/southpole/SouthPole";
-import spitalPage from "./content/Spital/SpitalPage";
+import spitalPage from "./content/spital/SpitalPage";
 import { threePage } from "./content/three/Three";
 import walspergerPage from "./content/walsperger/WalspergMap";
 import happyHourPage from "./content/happyhour/HappyHour";
 import montSaintMichelPage from "./content/montsaintmichel/MontSaintMichel";
+import rathausPage from "./content/rathaus/Rathaus";
+import lisbonPage from "./content/lisbon/Lisbon";
+import stockholmPage from "./content/stockholm/Stockholm";
 import { PageDescription } from "./components/page/PageDescription";
 import HomeView from "./views/HomeView";
 
@@ -35,6 +38,9 @@ const contentPages = [
   walspergerPage,
   happyHourPage,
   montSaintMichelPage,
+  rathausPage,
+  lisbonPage,
+  stockholmPage,
 ];
 
 // Home / Root page element

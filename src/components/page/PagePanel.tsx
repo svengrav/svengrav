@@ -40,7 +40,7 @@ export const PagePanel = forwardRef<PagePanelController, PagePanelProps>((props:
     width = window.screen.width < 400 ? window.screen.width : 400, 
     label = "", 
     closable, 
-    visible = false, 
+    visible = window.screen.width > 500, 
     position = 'left', 
     full = window.screen.width < 400,
     scrollbar,

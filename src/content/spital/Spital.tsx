@@ -229,10 +229,36 @@ export const spital: SpitalArtwork = {
           <p>
             Studenten der Fachhochschule Münster und der Universität Münster liefern anhand von Fotos, Berichten und Archivunterlagen
             Einblicke in die Geschichte des Lagers. Das Studienprojekt ist Teil der
-            <Link href="http://www.expedition-muensterland.de/" className="font-mono hover:text-spital-primary text-spital-secondary" label={"Expedition Münsterland"} />
+            <Link href="http://www.expedition-muensterland.de/" className="font-mono hover:text-spital-primary text-spital-primary" label={"Expedition Münsterland"} />
             und wird in einer Kooperationdes Historischen Seminars, des Fachbereichs Geowissenschaften der Universität Münster und des Fachbereichs Design der
             Fachhochschule Münster durchgeführt.
           </p>
+        </>
+      ),
+    },
+    {
+      id: "projektbeteiligte",
+      label: "Projektbeteiligte",
+      image: "",
+      index: 99,
+      inner: (
+        <>
+          <h2 className="text-lg font-semibold mb-2">Projektbeteiligte Studenten</h2>
+          <ul className="list-disc ml-6 mb-4">
+            <li>Bastian Bochinski (FH Münster, Bachelor Design)</li>
+            <li>Sven Gravermann (FH Münster, Bachelor Design)</li>
+            <li>Darius Gehlman (WWU Münster, Zwei-Fach Bachelor Geographie und Politikwissenschaft)</li>
+            <li>Tobias Lehmkuhl (WWU Münster, B.Sc. Geographie)</li>
+            <li>Bill Trainer (WWU Münster, Zwei-Fach Bachelor Archäologie-Geschichte-Landschaft und Kunstgeschichte)</li>
+            <li>Johannes Wagner (WWU Münster, Zwei-Fach Bachelor Archäologie-Geschichte-Landschaft und Geographie)</li>
+          </ul>
+          <h2 className="text-lg font-semibold mb-2">Seminarbetreuung</h2>
+          <ul className="list-disc ml-6">
+            <li>Prof. Hermann Dornhege (FH Münster, Medien-Design)</li>
+            <li>Prof. Claudia Grönebaum (FH Münster, Kommunikations Design)</li>
+            <li>Dr. Sabine Kittel (WWU Münster, Historisches Seminar)</li>
+            <li>Dr. Petra Lütke (WWU Münster, Fachbereich Geowissenschaften)</li>
+          </ul>
         </>
       ),
     },
@@ -243,6 +269,7 @@ export const spital: SpitalArtwork = {
       index: 99,
       inner: (
         <>
+          <h1 className="font-semibold mt-4">Danke!</h1>
           <ul className="list-disc ml-6">
             <li>Leistungskurs Geschichte des Gymnasium Paulinum, Münster unter der Leitung von Thomas Deibert (Verortung des Lagers)</li>
             <li>Michael Bieber (Beratung)</li>
@@ -263,6 +290,7 @@ export const spital: SpitalArtwork = {
       index: 99,
       inner: (
         <>
+          <h1 className="font-semibold mt-4">Quellen</h1>
           <ul className="list-disc ml-6">
             <li>W. Hoffmann (Hrsg.), Hygiene. Handbuch der Ärztlichen Erfahrungen im Weltkriege 1914/1918. Bd. VII (Leipzig 1920);</li>
             <li>G. Pierre/A. Potage, Un Parc à Prisonnier. Haus-Spital près Münster-En-Westphalie (Lille 1920 – 1922);</li>
